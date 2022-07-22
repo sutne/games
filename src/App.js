@@ -8,7 +8,8 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Stay Tuned for actual games here, im just setting things up to make
+          sure my stack works as intended.
         </p>
         <a
           className="App-link"
