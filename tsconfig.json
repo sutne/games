@@ -1,8 +1,7 @@
 {
     "compilerOptions": {
-        // ...
+        "allowJs": true,
         "rootDir": "src",
         "outDir": "build"
-        // ...
     },
 }

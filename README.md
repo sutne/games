@@ -17,4 +17,11 @@ For this purpose i set up this repo where the idea is that i can add/tweak games
 - Tetris
 - Snake
 - Sudoku
-- 
+
+## Tech Stack
+
+- React using mix of JavaScript and TypeScript
+- Github Pages for hosting 
+  - Deployment done using the `gh-pages` package
+- Storage/database with:
+  - Firebase Firestore database
