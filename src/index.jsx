@@ -4,16 +4,17 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider, useMediaQuery } from "@material-ui/core";
 
 import "./style.css";
-import { Main, games } from "./pages/main";
+import { games } from "./games";
+import { Main } from "./pages/main";
 import { darkTheme, lightTheme } from "./themes";
 
 function App() {
   const useDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-  const theme = useDarkMode ? darkTheme : lightTheme;
+  const theme = !useDarkMode ? darkTheme : lightTheme;
 
   const backgroundStyle = {
-    backgroundColor: theme.palette.background,
-    color: theme.palette.text,
+    backgroundColor: theme.palette.myBackground,
+    color: theme.palette.myText,
     minHeight: "100vh",
     display: "flex",
     alignItems: "center",
@@ -22,8 +23,10 @@ function App() {
   const wrapperStyle = {
     maxWidth: "1200px",
     minHeight: "100vh",
-    border: "1px solid rgb(27, 29, 42)",
-    backgroundColor: "rgb(19, 23, 35)",
+    backgroundColor: theme.palette.myWrapperBackground,
+    borderColor: theme.palette.myWrapperBorder,
+    borderStyle: "solid",
+    borderWidth: "0 3px 0 3px",
   };
 
   return (

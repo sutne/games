@@ -19,10 +19,10 @@ function Minesweeper() {
   }, []);
 
   return (
-    <div>
+    <>
       <p>Testing getting from database</p>
       {listDocs(docs)}
-    </div>
+    </>
   );
 }
 
