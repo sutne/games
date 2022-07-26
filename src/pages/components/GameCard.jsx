@@ -20,10 +20,13 @@ export function GameCard(game) {
   const imageBoxStyle = {
     height: "160px",
     overflow: "hidden",
-    "-webkit-mask-image":
-      "-webkit-gradient(linear, top, bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)))",
     "mask-image":
-      "linear-gradient(to bottom, black 52px,black calc(100% - 52px),transparent)",
+      "-moz-linear-gradient(-90deg, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%)",
+    "-webkit-mask-image":
+      "-webkit-linear-gradient(-90deg, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%)",
+    maskImage: "linear-gradient(180deg, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%)",
+    filter:
+      "progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000',endColorstr='#00d4ff',GradientType=1)",
   };
   const imageStyle = {
     height: "160%",
