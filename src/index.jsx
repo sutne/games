@@ -3,22 +3,22 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider, useMediaQuery } from "@material-ui/core";
 
-import "./style.css";
 import { games } from "./games";
 import { Main } from "./pages/main";
 import { darkTheme, lightTheme } from "./themes";
 
 function App() {
   const useDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-  const theme = !useDarkMode ? darkTheme : lightTheme;
+  const theme = useDarkMode ? darkTheme : lightTheme;
 
-  const backgroundStyle = {
-    backgroundColor: theme.palette.myBackground,
-    color: theme.palette.myText,
-    minHeight: "100vh",
+  document.body.style.background = theme.palette.myBackground;
+  document.body.style.margin = 0;
+  document.body.style.color = theme.palette.myText;
+
+  const contentStyle = {
     display: "flex",
-    alignItems: "center",
     flexDirection: "column",
+    alignItems: "center",
   };
   const wrapperStyle = {
     maxWidth: "1200px",
@@ -30,9 +30,9 @@ function App() {
   };
 
   return (
-    <div style={backgroundStyle}>
-      <ThemeProvider theme={theme}>
-        <div style={wrapperStyle}>
+    <div style={contentStyle}>
+      <div style={wrapperStyle}>
+        <ThemeProvider theme={theme}>
           <BrowserRouter>
             <Routes>
               <Route path="/games" element={<Main />} />
@@ -41,8 +41,8 @@ function App() {
               ))}
             </Routes>
           </BrowserRouter>
-        </div>
-      </ThemeProvider>
+        </ThemeProvider>
+      </div>
     </div>
   );
 }
