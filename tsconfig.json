@@ -1,7 +1,31 @@
 {
     "compilerOptions": {
-        "allowJs": true,
         "rootDir": "src",
-        "outDir": "build"
+        "outDir": "build",
+        "module": "commonjs",
+        "target": "es5",
+        "lib": [
+            "es6",
+            "dom"
+        ],
+        "allowJs": true,
+        "jsx": "react",
+        "moduleResolution": "node",
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true
     },
+    "exclude": [
+        "node_modules",
+        "build",
+        "scripts",
+        "acceptance-tests",
+        "webpack",
+        "jest",
+        "src/setupTests.ts"
+    ],
+    "types": [
+        "typePatches"
+    ]
 }
