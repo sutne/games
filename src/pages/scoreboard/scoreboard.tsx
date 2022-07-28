@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getCollection } from "../services/firestore";
 import { MinesweeperDocument } from "../services/models/minesweeperDocument";
 
-function Minesweeper() {
+export function Scoreboard() {
   const [docs, setDocs] = useState([]);
 
   useEffect(() => {
@@ -41,5 +41,3 @@ function listDocs(docs) {
     return <h3>...</h3>;
   }
 }
-
-export default Minesweeper;

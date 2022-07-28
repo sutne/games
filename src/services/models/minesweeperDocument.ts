@@ -1,5 +1,6 @@
 import { DocumentReference, DocumentSnapshot } from "firebase/firestore";
-import { FirestoreDocument, Difficulty } from "./firestoreDocument";
+import { FirestoreDocument } from "./firestoreDocument";
+import { Difficulty } from "../../pages/minesweeper/logic";
 
 export class MinesweeperDocument extends FirestoreDocument {
   collectionName = "minesweeper";

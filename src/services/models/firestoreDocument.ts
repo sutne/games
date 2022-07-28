@@ -11,9 +11,3 @@ export abstract class FirestoreDocument {
   abstract toFirestore(): { [x: string]: any };
   static fromFirestore(snapshot: DocumentSnapshot): any {}
 }
-
-export const enum Difficulty {
-  EASY = 1,
-  NORMAL = 2,
-  HARD = 3,
-}
