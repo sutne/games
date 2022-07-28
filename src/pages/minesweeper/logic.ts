@@ -31,6 +31,7 @@ export class Game {
 
   hasInitializedBombs: boolean = false;
   hasLost: boolean = false;
+  hasWon: boolean = false;
 
   constructor(difficulty: Difficulty) {
     this.difficulty = difficulty;
@@ -139,15 +140,16 @@ export class Game {
   }
 
   /** Game is won if all non-bomb tiles are no longer hidden */
-  hasWon(): boolean {
+  checkIfWon() {
+    if (this.hasWon) return;
     for (let x = 0; x < this.width; x++) {
       for (let y = 0; y < this.height; y++) {
         let tile = this.getTile(x, y)!;
         if (tile.isBomb) continue;
-        if (tile.isHidden) return false;
+        if (tile.isHidden) return;
       }
     }
-    return true;
+    this.hasWon = true;
   }
 
   /** Set all bomb tiles `is_hidden` to `false`*/
@@ -166,6 +168,7 @@ export class Game {
     newGame.board = [...this.board];
     newGame.hasInitializedBombs = this.hasInitializedBombs;
     newGame.hasLost = this.hasLost;
+    newGame.hasWon = this.hasWon;
     return newGame;
   }
 }
