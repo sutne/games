@@ -1,7 +1,7 @@
 import { ThemeProvider, useMediaQuery } from "@material-ui/core";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 
 import "./index.css";
 import { darkTheme, lightTheme } from "./themes";
@@ -21,9 +21,9 @@ function App() {
       <div className="content">
         <div className="wrapper">
           <ThemeProvider theme={theme}>
-            <BrowserRouter>
+            <HashRouter>
               <Routes>
-                <Route path="/games" element={<Main />} />
+                <Route path="/" element={<Main />} />
                 <Route path="/scoreboard" element={<Scoreboard />} />
                 {games.map((game) => (
                   <Route
@@ -33,7 +33,7 @@ function App() {
                   />
                 ))}
               </Routes>
-            </BrowserRouter>
+            </HashRouter>
           </ThemeProvider>
         </div>
       </div>
