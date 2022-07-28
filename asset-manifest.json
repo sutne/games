@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/games/static/css/main.450af6a8.css",
-    "main.js": "/games/static/js/main.78829e54.js",
+    "main.js": "/games/static/js/main.a765d4e0.js",
     "static/media/tetris.jpeg": "/games/static/media/tetris.f5514824411678775a2d.jpeg",
     "static/media/sudoku.png": "/games/static/media/sudoku.e83e66967d98180d9cba.png",
     "static/media/pacman.png": "/games/static/media/pacman.022357a6e65d48457b01.png",
     "index.html": "/games/index.html",
     "main.450af6a8.css.map": "/games/static/css/main.450af6a8.css.map",
-    "main.78829e54.js.map": "/games/static/js/main.78829e54.js.map"
+    "main.a765d4e0.js.map": "/games/static/js/main.a765d4e0.js.map"
   },
   "entrypoints": [
     "static/css/main.450af6a8.css",
-    "static/js/main.78829e54.js"
+    "static/js/main.a765d4e0.js"
   ]
 }
