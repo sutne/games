@@ -96,9 +96,10 @@ export class Game {
     // add bombs
     for (var bomb = 0; bomb < this.numBombs; bomb++) {
       // extract random coordinates from valid bombIds
-      let [x, y] = this.getCoordinates(
-        Math.floor(Math.random() * validBombIds.length)
-      );
+      let randomIndex = Math.floor(Math.random() * validBombIds.length);
+      let newRandomId = validBombIds[randomIndex];
+      validBombIds = validBombIds.filter((id) => id !== newRandomId);
+      let [x, y] = this.getCoordinates(newRandomId);
       let newBomb = this.getTile(x, y)!;
       // Set this tile as a bomb
       newBomb.isBomb = true;
