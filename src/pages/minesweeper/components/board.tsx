@@ -3,14 +3,20 @@ import { useState } from "react";
 import { Difficulty, Game } from "../logic";
 import { Tile } from "./tile";
 
-export function Board(props) {
+import "./board.css";
+
+export type propsBoard = {
+  difficulty: Difficulty;
+};
+
+export function Board(props: propsBoard) {
   const theme = useTheme();
   const [game, updateGame] = useState(new Game(props.difficulty));
 
-  function onTileLeftClick(x, y) {
+  function onTileLeftClick(x: number, y: number) {
     if (game.hasLost || game.hasWon()) return;
     let gameCopy = game.copy();
-    const tile = gameCopy.getTile(x, y);
+    const tile = gameCopy.getTile(x, y)!;
     if (tile.isFlagged) return;
     if (!tile.isHidden) return;
     if (!gameCopy.hasInitializedBombs) gameCopy.initBombs(tile);
@@ -19,44 +25,27 @@ export function Board(props) {
     updateGame(gameCopy);
   }
 
-  function onTileRightClick(x, y) {
+  function onTileRightClick(x: number, y: number) {
     if (game.hasLost || game.hasWon()) return;
     let gameCopy = game.copy();
-    const tile = gameCopy.getTile(x, y);
+    const tile = gameCopy.getTile(x, y)!;
     if (!tile.isHidden) return;
     tile.isFlagged = !tile.isFlagged;
     updateGame(gameCopy);
   }
 
-  const style = {
-    table: {
-      borderSpacing: 0,
-      padding: 0,
-      marginLeft: "auto",
-      marginRight: "auto",
-      border: `6px solid ${theme.palette.game.black}`,
-      boxShadow: "0 0 12px 12px rgba(0,0,0,0.2)",
-    },
-    tile: {
-      borderSpacing: 0,
-      border: 0,
-      padding: 0,
-    },
-  };
-
   return (
-    <table style={style.table}>
+    <table className="sweeper-table">
       <tbody>
         {game.board.map((row, i) => (
-          <tr key={i} style={style.tile}>
+          <tr key={i} className="sweeper-row">
             {row.map((tile, i) => (
-              <td key={i} style={style.tile}>
+              <td key={i} className="sweeper-cell">
                 <Tile
                   {...tile}
-                  shadowDirections={game.getShadowDirections(tile)}
                   onLeftClick={onTileLeftClick}
                   onRightClick={onTileRightClick}
-                  isTutorial={game.difficulty === Difficulty.TUTORIAL}
+                  playingTutorial={game.difficulty === Difficulty.TUTORIAL}
                 />
               </td>
             ))}

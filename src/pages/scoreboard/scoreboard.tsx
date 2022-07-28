@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 
-import { getCollection } from "../services/firestore";
-import { MinesweeperDocument } from "../services/models/minesweeperDocument";
+import { getCollection } from "../../services/firestore";
+import { MinesweeperDocument } from "../../services/models/minesweeperDocument";
 
 export function Scoreboard() {
-  const [docs, setDocs] = useState([]);
+  let list: MinesweeperDocument[] = [];
+  const [docs, setDocs] = useState(list);
 
   useEffect(() => {
     const getDocs = async () => {
@@ -12,7 +13,7 @@ export function Scoreboard() {
         "minesweeper",
         MinesweeperDocument.fromFirestore
       );
-      setDocs(data);
+      setDocs(data as MinesweeperDocument[]);
     };
 
     getDocs();
@@ -26,7 +27,7 @@ export function Scoreboard() {
   );
 }
 
-function listDocs(docs) {
+function listDocs(docs: MinesweeperDocument[]) {
   if (docs.length > 0) {
     return docs.map((doc) => (
       <div key={doc.ref.id}>

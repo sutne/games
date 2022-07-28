@@ -6,13 +6,6 @@ export enum Difficulty {
   EXPERT,
 }
 
-export enum Direction {
-  NORTH,
-  SOUTH,
-  EAST,
-  WEST,
-}
-
 export class GameTile {
   isHidden: boolean = true;
   isFlagged: boolean = false;
@@ -60,10 +53,6 @@ export class Game {
         this.numBombs = 99;
         break;
     }
-    this.initBoard();
-  }
-
-  initBoard() {
     this.board = [];
     for (var y = 0; y < this.height; y++) {
       let row = [];
@@ -177,23 +166,5 @@ export class Game {
     newGame.hasInitializedBombs = this.hasInitializedBombs;
     newGame.hasLost = this.hasLost;
     return newGame;
-  }
-
-  getShadowDirections(tile: GameTile): Direction[] {
-    let directions: Direction[] = [];
-    if (!tile.isHidden) return directions;
-    let offsets = [
-      [0, -1], // NORTH
-      [0, 1], // SOUTH
-      [-1, 0], // EAST
-      [0, 1], // WEST
-    ];
-    for (let i = 0; i < offsets.length; i++) {
-      let t = this.getTile(tile.x + offsets[i][0], tile.y + offsets[i][1]);
-      if (t === undefined) continue;
-      if (t.isHidden) continue;
-      directions.push(i);
-    }
-    return directions;
   }
 }

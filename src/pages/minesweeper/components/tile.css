@@ -1,0 +1,32 @@
+.sweeper-tile {
+  height: 42px;
+  width: 42px;
+  flex: 1px;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  font-size: 22pt;
+  font-weight: bold;
+  /* zIndex: props.hover ? -1 : auto; */
+  /* Disable highlighting of the numbers, and make cursor be pointer */
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.sweeper-tile:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  box-shadow: -5px 5px 20px 5px #000;
+}
