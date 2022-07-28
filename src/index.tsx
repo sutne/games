@@ -1,4 +1,4 @@
-import { ThemeProvider, useMediaQuery } from "@material-ui/core";
+import { ThemeProvider, useMediaQuery } from "@mui/material";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { HashRouter, Route, Routes } from "react-router-dom";
@@ -25,13 +25,16 @@ function App() {
               <Routes>
                 <Route path="/" element={<Main />} />
                 <Route path="/scoreboard" element={<Scoreboard />} />
-                {games.map((game) => (
-                  <Route
-                    key={game.name}
-                    path={"/games/" + game.name}
-                    element={<game.element />}
-                  />
-                ))}
+                {games.map((game) => {
+                  if (game.disabled) return <></>;
+                  return (
+                    <Route
+                      key={game.name}
+                      path={"/games/" + game.name}
+                      element={<game.element />}
+                    />
+                  );
+                })}
               </Routes>
             </HashRouter>
           </ThemeProvider>

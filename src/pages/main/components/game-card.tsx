@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Box, Typography, useTheme } from "@material-ui/core";
+import { Box, Typography, useTheme } from "@mui/material";
 
 import "./game-card.css";
 import { Game } from "../../../assets/game-list";
