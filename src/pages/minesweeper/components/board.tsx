@@ -35,7 +35,7 @@ export function Board(props: propsBoard) {
 
   const theme = useTheme();
   const colors = {
-    borderColor: theme.game.black,
+    borderColor: theme.game.gray,
   };
 
   return (

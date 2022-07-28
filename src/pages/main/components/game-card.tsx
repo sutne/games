@@ -18,10 +18,10 @@ export function GameCard(props: Game) {
   return (
     <div className={"game-card"} style={colors.gameCard}>
       <Link to={"/games/" + props.name} className="link" style={colors.link}>
-        <Box className="imageBox" component="div">
+        <Box className="image-box" component="div">
           <img src={props.image} alt={props.image} className="image" />
         </Box>
-        <Box className="textBox">
+        <Box className="text-box">
           <Typography variant="h5">{props.name}</Typography>
           <Typography className="description" variant="body1">
             {props.description}

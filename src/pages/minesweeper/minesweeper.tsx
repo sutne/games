@@ -7,7 +7,7 @@ import { Board } from "./components/board";
 export function Minesweeper() {
   return (
     <Box>
-      <Box className="boardContainer">
+      <Box className="board-container">
         <Board difficulty={Difficulty.TUTORIAL} />
       </Box>
     </Box>

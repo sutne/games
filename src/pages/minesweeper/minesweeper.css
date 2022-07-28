@@ -1,8 +1,9 @@
-.boardContainer {
+.board-container {
+  height: 100vh;
+  /* Center board vertically in parent */
   display: flex;
   text-align: center;
   flex-direction: column;
   justify-content: center;
   align-content: center;
-  height: 100vh;
 }
