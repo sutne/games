@@ -30,6 +30,12 @@ export function Tile(props: TileProps) {
   };
 
   const color = () => {
+    if (props.isHidden) {
+      if (hover && props.playingTutorial && props.isBomb) {
+        return theme.game.red;
+      }
+      return theme.game.black;
+    }
     if (props.isHidden) return theme.game.black;
     if (props.isBomb) return theme.game.red;
     return theme.game.gray;
@@ -80,7 +86,9 @@ export function Tile(props: TileProps) {
 
   return (
     <div
-      className="sweeper-tile"
+      className={`sweeper-tile ${
+        props.isHidden || props.isFlagged ? "hidden" : ""
+      }`}
       style={colors}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}

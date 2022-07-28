@@ -1,8 +1,14 @@
+:root {
+  --size: 42px;
+}
+
 .sweeper-tile {
-  height: 42px;
-  width: 42px;
+  position: relative;
+  height: var(--size);
+  width: var(--size);
   font-size: 22pt;
   font-weight: bold;
+  transition: all ease-in-out 0.3s;
   /* Center til content*/
   flex: 1px;
   display: flex;
@@ -20,6 +26,22 @@
   user-select: none;
 }
 
-.sweeper-tile:hover {
-  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.8);
+.hidden {
+  height: var(--size);
+  width: var(--size);
+}
+
+/* .hidden:hover {
+    
+} */
+
+.hidden::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  box-shadow: 0 0 5px 2px #000;
 }

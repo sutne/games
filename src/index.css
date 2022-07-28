@@ -16,5 +16,5 @@ body {
 .wrapper {
   width: min(1024px, 100%);
   min-height: 100vh;
-  background: rgba(0, 0, 255, 0.1);
+  /* background: rgba(0, 0, 255, 0.1); */
 }
