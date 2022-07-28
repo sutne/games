@@ -17,7 +17,8 @@ export type Game = {
 export const games: Game[] = [
   {
     name: "Minesweeper",
-    description: "Classic Minesweeper game with difficulties",
+    description:
+      "Dodge the bombs in this classic game. Comes in three difficulties.",
     image: minesweeperImage,
     element: Minesweeper,
     disabled: false,
