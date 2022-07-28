@@ -1,21 +1,23 @@
 import { Link } from "react-router-dom";
-import { Box, makeStyles, Typography, useTheme } from "@material-ui/core";
+import { Box, Typography, useTheme } from "@material-ui/core";
 
 import "./game-card.css";
 import { Game } from "../../../assets/game-list";
 
-const useStyles = makeStyles((theme) => ({
-  gameCard: {
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
-
 export function GameCard(props: Game) {
-  const classes = useStyles();
+  const theme = useTheme();
+  const colors = {
+    gameCard: {
+      background: theme.palette.background.paper,
+    },
+    link: {
+      color: theme.palette.text.primary,
+    },
+  };
 
   return (
-    <div className={classes.gameCard}>
-      <Link to={"/games/" + props.name} className="link">
+    <div className={"game-card"} style={colors.gameCard}>
+      <Link to={"/games/" + props.name} className="link" style={colors.link}>
         <Box className="imageBox" component="div">
           <img src={props.image} alt={props.image} className="image" />
         </Box>

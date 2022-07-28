@@ -10,7 +10,6 @@ export type propsBoard = {
 };
 
 export function Board(props: propsBoard) {
-  const theme = useTheme();
   const [game, updateGame] = useState(new Game(props.difficulty));
 
   function onTileLeftClick(x: number, y: number) {
@@ -34,8 +33,13 @@ export function Board(props: propsBoard) {
     updateGame(gameCopy);
   }
 
+  const theme = useTheme();
+  const colors = {
+    borderColor: theme.game.black,
+  };
+
   return (
-    <table className="sweeper-table">
+    <table className="sweeper-table" style={colors}>
       <tbody>
         {game.board.map((row, i) => (
           <tr key={i} className="sweeper-row">

@@ -2,7 +2,6 @@
   width: 355px;
   height: 100%;
   border-radius: 16px;
-  /* background: theme.palette.myCard; */
   overflow: hidden;
   transition: all 0.2s ease;
   transform: scale(1); /* Prevents image corner flickering */
@@ -34,7 +33,6 @@
   object-fit: cover;
 }
 .link {
-  /* color: theme.palette.myText; */
   text-decoration: none;
 }
 .textBox {

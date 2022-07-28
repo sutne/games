@@ -29,34 +29,34 @@ export function Tile(props: TileProps) {
     props.onRightClick(props.x, props.y);
   };
 
-  // const color = () => {
-  //   if (props.isHidden) return theme.game.black;
-  //   if (props.isBomb) return theme.game.red;
-  //   return theme.game.gray;
-  // };
+  const color = () => {
+    if (props.isHidden) return theme.game.black;
+    if (props.isBomb) return theme.game.red;
+    return theme.game.gray;
+  };
 
-  // const textColor = () => {
-  //   switch (props.connectedBombs) {
-  //     case 8:
-  //       return theme.game.brown;
-  //     case 7:
-  //       return theme.game.brown;
-  //     case 6:
-  //       return theme.game.brown;
-  //     case 5:
-  //       return theme.game.red;
-  //     case 4:
-  //       return theme.game.orange;
-  //     case 3:
-  //       return theme.game.yellow;
-  //     case 2:
-  //       return theme.game.green;
-  //     case 1:
-  //       return theme.game.blue;
-  //     default:
-  //       return theme.palette.text;
-  //   }
-  // };
+  const textColor = () => {
+    switch (props.connectedBombs) {
+      case 8:
+        return theme.game.brown;
+      case 7:
+        return theme.game.brown;
+      case 6:
+        return theme.game.brown;
+      case 5:
+        return theme.game.red;
+      case 4:
+        return theme.game.orange;
+      case 3:
+        return theme.game.yellow;
+      case 2:
+        return theme.game.green;
+      case 1:
+        return theme.game.blue;
+      default:
+        return theme.palette.text.primary;
+    }
+  };
 
   const getContent = () => {
     if (props.isFlagged) return "🚩";
@@ -73,9 +73,15 @@ export function Tile(props: TileProps) {
     return content;
   };
 
+  const colors = {
+    background: color(),
+    color: textColor(),
+  };
+
   return (
     <div
       className="sweeper-tile"
+      style={colors}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       onClick={onLeftClick}
