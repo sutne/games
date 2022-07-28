@@ -1,16 +1,14 @@
 import { useTheme } from "@mui/material";
 import { useState } from "react";
+import { GameTile } from "../logic";
 
 import "./tile.css";
 
 type TileProps = {
-  x: number;
-  y: number;
-  connectedBombs: number;
-  isBomb: boolean;
-  isHidden: boolean;
-  isFlagged: boolean;
+  tile: GameTile;
   playingTutorial: boolean;
+  hasLost: boolean;
+  hasWon: boolean;
   onLeftClick: (x: number, y: number) => void;
   onRightClick: (x: number, y: number) => void;
 };
@@ -21,28 +19,30 @@ export function Tile(props: TileProps) {
   const theme = useTheme();
 
   const onLeftClick = (e: any) => {
-    props.onLeftClick(props.x, props.y);
+    props.onLeftClick(props.tile.x, props.tile.y);
   };
 
   const onRightClick = (e: any) => {
     e.preventDefault();
-    props.onRightClick(props.x, props.y);
+    props.onRightClick(props.tile.x, props.tile.y);
   };
 
   const color = () => {
-    if (props.isHidden) {
-      if (hover && props.playingTutorial && props.isBomb) {
+    if (props.hasWon && props.tile.isBomb && props.tile.isFlagged)
+      return theme.game.green;
+    if (props.tile.isHidden) {
+      if (hover && props.playingTutorial && props.tile.isBomb) {
         return theme.game.red;
       }
       return theme.game.black;
     }
-    if (props.isHidden) return theme.game.black;
-    if (props.isBomb) return theme.game.red;
-    return theme.game.gray;
+    if (props.tile.isBomb && props.hasWon) return theme.game.black;
+    if (props.tile.isBomb && !props.tile.isFlagged) return theme.game.red;
+    return "";
   };
 
   const textColor = () => {
-    switch (props.connectedBombs) {
+    switch (props.tile.connectedBombs) {
       case 8:
         return theme.game.brown;
       case 7:
@@ -65,17 +65,18 @@ export function Tile(props: TileProps) {
   };
 
   const getContent = () => {
-    if (props.isFlagged) return "🚩";
-    if (props.isBomb) return "💣";
-    if (props.connectedBombs !== 0) return props.connectedBombs;
+    if (props.tile.isFlagged) return "🚩";
+    if (props.tile.isBomb) return "💣";
+    if (props.tile.connectedBombs !== 0) return props.tile.connectedBombs;
     return "";
   };
 
   const showContent = () => {
     const content = getContent();
-    if (props.isFlagged) return content;
+    if (props.tile.isBomb && props.hasWon) return content;
+    if (props.tile.isFlagged) return content;
     if (props.playingTutorial && hover) return content;
-    if (props.isHidden) return "";
+    if (props.tile.isHidden) return "";
     return content;
   };
 
@@ -87,7 +88,7 @@ export function Tile(props: TileProps) {
   return (
     <div
       className={`sweeper-tile ${
-        props.isHidden || props.isFlagged ? "hidden" : ""
+        props.tile.isHidden || props.tile.isFlagged ? "hidden" : ""
       }`}
       style={colors}
       onMouseEnter={() => setHover(true)}

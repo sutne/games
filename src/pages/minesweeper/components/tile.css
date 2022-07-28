@@ -32,7 +32,7 @@
 }
 
 /* .hidden:hover {
-    
+  z-index: -1;
 } */
 
 .hidden::before {

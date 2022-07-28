@@ -13,19 +13,23 @@ export function Board(props: propsBoard) {
   const [game, updateGame] = useState(new Game(props.difficulty));
 
   function onTileLeftClick(x: number, y: number) {
-    if (game.hasLost || game.hasWon()) return;
+    if (game.hasLost || game.hasWon) return;
+    game.checkIfWon();
     let gameCopy = game.copy();
     const tile = gameCopy.getTile(x, y)!;
     if (tile.isFlagged) return;
     if (!tile.isHidden) return;
     if (!gameCopy.hasInitializedBombs) gameCopy.initBombs(tile);
     gameCopy.reveal(tile);
-    if (tile.isBomb) gameCopy.revealBombs();
+    if (tile.isBomb) {
+      gameCopy.hasLost = true;
+      gameCopy.revealBombs();
+    }
     updateGame(gameCopy);
   }
 
   function onTileRightClick(x: number, y: number) {
-    if (game.hasLost || game.hasWon()) return;
+    if (game.hasLost || game.hasWon) return;
     let gameCopy = game.copy();
     const tile = gameCopy.getTile(x, y)!;
     if (!tile.isHidden) return;
@@ -36,6 +40,7 @@ export function Board(props: propsBoard) {
   const theme = useTheme();
   const colors = {
     borderColor: theme.game.gray,
+    background: theme.game.gray,
   };
 
   return (
@@ -46,10 +51,12 @@ export function Board(props: propsBoard) {
             {row.map((tile, i) => (
               <td key={i} className="sweeper-cell">
                 <Tile
-                  {...tile}
+                  tile={tile}
                   onLeftClick={onTileLeftClick}
                   onRightClick={onTileRightClick}
                   playingTutorial={game.difficulty === Difficulty.TUTORIAL}
+                  hasLost={game.hasLost}
+                  hasWon={game.hasWon}
                 />
               </td>
             ))}
