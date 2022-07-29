@@ -1,29 +1,5 @@
 import { createTheme } from "@mui/material";
 
-// Force themes to declare these colors,
-// and give them as type hint when using the theme
-declare module "@mui/material/styles" {
-  interface MyGameColors {
-    game: {
-      black: React.CSSProperties["color"];
-      gray: React.CSSProperties["color"];
-      brown: React.CSSProperties["color"];
-      red: React.CSSProperties["color"];
-      orange: React.CSSProperties["color"];
-      yellow: React.CSSProperties["color"];
-      green: React.CSSProperties["color"];
-      blue: React.CSSProperties["color"];
-    };
-  }
-
-  interface Theme extends MyGameColors {}
-  interface ThemeOptions extends MyGameColors {}
-
-  interface TypeBackground {
-    disabled: React.CSSProperties["color"];
-  }
-}
-
 export const darkTheme = createTheme({
   palette: {
     mode: "dark",
@@ -32,9 +8,6 @@ export const darkTheme = createTheme({
       paper: "rgb(25,35,45)",
       disabled: "rgb(17,20,26)",
     },
-    // text: {
-    //   primary: "rgb(255,255,255)",
-    // },
   },
   game: {
     black: "rgb(20,30,40)",
@@ -56,9 +29,9 @@ export const lightTheme = createTheme({
       paper: "#FOFOF3",
       disabled: "#FOFOF3",
     },
-    // text: {
-    //   primary: "rgb(13,17,23)",
-    // },
+    text: {
+      primary: "rgb(13,17,23)",
+    },
   },
   game: {
     black: "rgb(20,30,40)",

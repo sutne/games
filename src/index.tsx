@@ -5,7 +5,7 @@ import { HashRouter, Route, Routes } from "react-router-dom";
 
 import "./index.css";
 import { darkTheme, lightTheme } from "./themes";
-import { games } from "./assets/game-list";
+import { games } from "./game-list";
 import { Main } from "./pages/main/main";
 import { Scoreboard } from "./pages/scoreboard/scoreboard";
 
@@ -30,7 +30,7 @@ function App() {
                   return (
                     <Route
                       key={game.name}
-                      path={"/games/" + game.name}
+                      path={`/${game.name}`}
                       element={<game.element />}
                     />
                   );

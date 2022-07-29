@@ -1,7 +1,7 @@
 import { Box, Grid, Typography } from "@mui/material";
 
 import "./main.css";
-import { games } from "../../assets/game-list";
+import { games } from "../../game-list";
 import { GameCard } from "./components/game-card";
 
 export function Main() {

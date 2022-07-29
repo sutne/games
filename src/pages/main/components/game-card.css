@@ -9,19 +9,12 @@
   border-radius: 16px;
   overflow: hidden;
   transition: all 0.2s ease;
-  transform: scale(1); /* Prevents image corner flickering */
+  transform: scale(1);
   box-shadow: 5px 5px 15px 0 rgba(0, 0, 0, 0.3);
 }
-
-.game-card:hover {
-  transform: translate3d(0, -7px, 10px) scale(1.01);
-  box-shadow: 5px 5px 25px 0 rgba(0, 0, 0, 0.3);
-}
-
 .link {
   text-decoration: none;
 }
-
 .image-box {
   height: var(--image-height);
   overflow: hidden;
@@ -37,31 +30,38 @@
     rgba(0, 0, 0, 0) 100%
   );
 }
-
 .image {
   height: 170%;
   width: 110%;
   transform: rotate(-17deg) translate(-8px, -55px);
   object-fit: cover;
 }
-
 .text-box {
   padding: 0px 20px 0px 20px;
   transform: translate(0, -16px);
 }
-
 .description {
   padding-top: 8px;
 }
 
+/* Game is available */
+.game-card:hover {
+  transform: translate(0px, -5px) scale(1.01);
+  box-shadow: 5px 5px 25px 0 rgba(0, 0, 0, 0.3);
+}
+
 /* Game is disabled */
 .game-card.disabled {
+  transform: scale(1);
   box-shadow: 0px 0px 3px 0 rgba(0, 0, 0, 0.3);
 }
 .game-card.disabled img {
   -webkit-filter: grayscale(0.97) blur(3px);
   filter: grayscale(0.97) blur(3px);
 }
-.game-card.disabled:hover {
-  transform: scale(1);
+.game-card.disabled > * {
+  cursor: default;
+}
+.game-card.disabled.description {
+  font-weight: bold;
 }

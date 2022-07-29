@@ -5,17 +5,17 @@ import { Tile } from "./tile";
 
 import "./board.css";
 
-export type propsBoard = {
+export type BoardProps = {
   difficulty: Difficulty;
 };
 
-export function Board(props: propsBoard) {
+export function Board(props: BoardProps) {
   const [game, updateGame] = useState(new Game(props.difficulty));
 
   function onTileLeftClick(x: number, y: number) {
     if (game.hasLost || game.hasWon) return;
-    game.checkIfWon();
     let gameCopy = game.copy();
+    gameCopy.checkIfWon();
     const tile = gameCopy.getTile(x, y)!;
     if (tile.isFlagged) return;
     if (!tile.isHidden) return;
