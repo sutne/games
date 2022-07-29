@@ -1,8 +1,10 @@
 import "@mui/material/styles";
-// Force themes to declare these colors,
+
+// Force custom themes to declare these colors,
 // and give them as type hint when using the theme
 declare module "@mui/material/styles" {
-  interface MyGameColors {
+  // theme.<>
+  interface ThemeExtension {
     game: {
       black: React.CSSProperties["color"];
       gray: React.CSSProperties["color"];
@@ -14,14 +16,14 @@ declare module "@mui/material/styles" {
       blue: React.CSSProperties["color"];
     };
   }
-
-  interface Theme extends MyGameColors {}
-  interface ThemeOptions extends MyGameColors {}
-
-  interface TypeBackground {
+  // theme.background.<>
+  interface BackgroundExtension {
     disabled: React.CSSProperties["color"];
   }
-  interface TypeBackgroundOptions {
-    disabled: React.CSSProperties["color"];
-  }
+
+  // Apply to both give typehints and declaration warnings
+  interface Theme extends ThemeExtension {}
+  interface ThemeOptions extends ThemeExtension {}
+  interface TypeBackground extends BackgroundExtension {}
+  interface TypeBackgroundOptions extends BackgroundExtensions {}
 }
