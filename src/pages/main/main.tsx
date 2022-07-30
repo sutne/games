@@ -5,6 +5,9 @@ import { games } from "../../game-list";
 import { GameCard } from "./components/game-card";
 
 export function Main() {
+  const disabledGames = games.filter((game) => game.disabled);
+  const enabledGames = games.filter((game) => !game.disabled);
+
   return (
     <>
       <Box className="header">
@@ -14,15 +17,26 @@ export function Main() {
           then you have come to the right place!
         </Typography>
       </Box>
-      <Box className="game-grid">
-        <Grid container spacing={3} justifyContent="center">
-          {games.map((game) => (
-            <Grid item key={game.name}>
-              <GameCard {...game} />
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
+      <Typography variant="h4" textAlign="center" padding="30px 0px 10px 0px">
+        Available Games
+      </Typography>
+      <Grid container spacing={3} justifyContent="center" alignItems="stretch">
+        {enabledGames.map((game) => (
+          <Grid item key={game.name}>
+            <GameCard {...game} />
+          </Grid>
+        ))}
+      </Grid>
+      <Typography variant="h4" textAlign="center" padding="30px 0px 10px 0px">
+        Under Construction
+      </Typography>
+      <Grid container spacing={3} justifyContent="center" alignItems="stretch">
+        {disabledGames.map((game) => (
+          <Grid item key={game.name}>
+            <GameCard {...game} />
+          </Grid>
+        ))}
+      </Grid>
     </>
   );
 }
