@@ -52,7 +52,7 @@ export const games: Game[] = [
     disabled: true,
   },
   {
-    name: "Other",
+    name: "Human Benchmark",
     description: "Classic Minesweeper game with difficulties",
     image: minesweeperImage,
     element: Minesweeper,

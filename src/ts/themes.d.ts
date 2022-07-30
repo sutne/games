@@ -6,14 +6,20 @@ declare module "@mui/material/styles" {
   // theme.<>
   interface ThemeExtension {
     game: {
-      black: React.CSSProperties["color"];
-      gray: React.CSSProperties["color"];
-      brown: React.CSSProperties["color"];
-      red: React.CSSProperties["color"];
-      orange: React.CSSProperties["color"];
-      yellow: React.CSSProperties["color"];
-      green: React.CSSProperties["color"];
-      blue: React.CSSProperties["color"];
+      features: {
+        background: React.CSSProperties["color"];
+        obstacle: React.CSSProperties["color"];
+      };
+      colors: {
+        black: React.CSSProperties["color"];
+        gray: React.CSSProperties["color"];
+        brown: React.CSSProperties["color"];
+        red: React.CSSProperties["color"];
+        orange: React.CSSProperties["color"];
+        yellow: React.CSSProperties["color"];
+        green: React.CSSProperties["color"];
+        blue: React.CSSProperties["color"];
+      };
     };
   }
   // theme.background.<>

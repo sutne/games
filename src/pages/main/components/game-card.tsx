@@ -1,67 +1,53 @@
-import { Typography, useTheme } from "@mui/material";
+import { makeStyles, Typography, useTheme } from "@mui/material";
 
 import "./game-card.css";
 import { Game } from "../../../game-list";
 import { Link } from "../../../utils/components/link";
 
-export function GameCard(props: Game) {
-  const { name, disabled, image, description } = props;
-  const theme = useTheme();
-
-  if (!disabled) {
-    return (
-      <Link to={`/${name}`}>
-        <Card
-          className="game-card"
-          name={name}
-          image={image}
-          description={{
-            value: description,
-            color: theme.palette.text.primary,
-          }}
-          background={theme.palette.background.paper}
-        />
-      </Link>
-    );
-  } else {
-    return (
-      <Card
-        className="game-card disabled"
-        name={name}
-        image={image}
-        description={{ value: "Under Construction", color: theme.game.red }}
-        background={theme.palette.background.disabled}
-      />
-    );
-  }
+export function GameCard(game: Game) {
+  if (game.disabled) return <GameCardDisabled {...game} />;
+  return <GameCardEnabled {...game} />;
 }
 
-type CardProps = {
-  className: string;
-  name: string;
-  description: {
-    value: string;
-    color: string | undefined;
-  };
-  background: string | undefined;
-  image: any;
-};
+function GameCardEnabled({ name, image, description }: Game) {
+  const theme = useTheme();
 
-function Card(props: CardProps) {
   return (
-    <div className={props.className} style={{ background: props.background }}>
+    <Link to={`/${name}`}>
+      <div
+        className="game-card-enabled"
+        style={{ background: theme.palette.background.paper }}
+      >
+        <div className="image-box">
+          <img src={image} alt={name} className="image" />
+        </div>
+        <div className="text-box">
+          <Typography variant="h5">{name}</Typography>
+          <Typography className="description" variant="body1">
+            {description}
+          </Typography>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function GameCardDisabled({ name, image }: Game) {
+  const theme = useTheme();
+
+  return (
+    <div
+      className="game-card-disabled"
+      style={{
+        background: theme.palette.background.disabled,
+        borderColor: theme.palette.grey[400],
+      }}
+    >
       <div className="image-box">
-        <img src={props.image} alt={props.name} className="image" />
+        <img src={image} alt={name} className="image" />
       </div>
       <div className="text-box">
-        <Typography variant="h5">{props.name}</Typography>
-        <Typography
-          className="description"
-          variant="body1"
-          style={{ color: props.description.color }}
-        >
-          {props.description.value}
-        </Typography>
+        <Typography variant="h5">{name}</Typography>
       </div>
     </div>
   );
