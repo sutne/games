@@ -26,7 +26,7 @@ export class Game {
   width: number;
   height: number;
   numBombs: number;
-  numFlags: number = 0;
+  numRemainingFlags: number;
   hasInitializedBombs: boolean = false;
   isLost: boolean = false;
   isWon: boolean = false;
@@ -58,6 +58,7 @@ export class Game {
       }
       this.board.push(row);
     }
+    this.numRemainingFlags = this.numBombs;
   }
 
   /** Return tile at `(x,y)`, or undefined if coord is invalid */
@@ -130,8 +131,9 @@ export class Game {
   reveal(x: number, y: number): void {
     let tile = this.getTile(x, y)!;
     tile.isHidden = false;
-    if (tile.numConnectedBombs !== 0) return;
+    if (tile.numConnectedBombs > 0) return;
     for (let neighbor of this.getNeighbors(tile)) {
+      if (tile.isFlagged) continue;
       if (!neighbor.isHidden) continue;
       this.reveal(neighbor.x, neighbor.y);
     }
@@ -162,12 +164,25 @@ export class Game {
     }
   }
 
+  toggleFlag(x: number, y: number) {
+    if (this.numRemainingFlags === 0) return;
+    let tile = this.getTile(x, y)!;
+    if (tile.isFlagged) {
+      tile.isFlagged = false;
+      this.numRemainingFlags += 1;
+    } else {
+      tile.isFlagged = true;
+      this.numRemainingFlags -= 1;
+    }
+  }
+
   copy(): Game {
     let newGame = new Game(this.difficulty);
     newGame.board = [...this.board];
     newGame.hasInitializedBombs = this.hasInitializedBombs;
     newGame.isLost = this.isLost;
     newGame.isWon = this.isWon;
+    newGame.numRemainingFlags = this.numRemainingFlags;
     return newGame;
   }
 }

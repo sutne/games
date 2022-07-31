@@ -48,6 +48,7 @@ export function Tile({
 
   function onLeftClick() {
     if (game.isLost || game.isWon) return;
+    if (isFlagged) return;
     let gameCopy = game.copy();
     gameCopy.checkIfWon();
     if (!isHidden) return;
@@ -63,9 +64,7 @@ export function Tile({
   function onRightClick() {
     if (game.isLost || game.isWon) return;
     let gameCopy = game.copy();
-    let tileCopy = gameCopy.getTile(x, y)!;
-    if (!tileCopy.isHidden) return;
-    tileCopy.isFlagged = !isFlagged;
+    gameCopy.toggleFlag(x, y);
     setGame(gameCopy);
   }
 
@@ -78,11 +77,11 @@ export function Tile({
   }
 
   function getBackground() {
-    if (isHidden && isFlagged && (game.isWon || game.isLost))
-      return theme.game.colors.green;
+    let correctFlag = (game.isWon || game.isLost) && isFlagged && isBomb;
+    if (correctFlag) return theme.game.colors.green;
     if (isHidden) return theme.game.features.obstacle;
     if (isBomb) return theme.game.colors.red;
-    return "";
+    return theme.game.features.background;
   }
 
   function getNumberColor() {

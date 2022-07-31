@@ -1,4 +1,4 @@
-import { useTheme } from "@mui/material";
+import { Typography, useTheme } from "@mui/material";
 import { Tile } from "./tile";
 
 import "./board.css";
@@ -13,18 +13,24 @@ export function Board() {
 
   const game = useGame()[0];
   return (
-    <table className="sweeper-table" style={colors}>
-      <tbody>
-        {game.board.map((row, r) => (
-          <tr key={r} className="sweeper-row">
-            {row.map((tile) => (
-              <td key={tile.y * game.width + tile.x} className="sweeper-cell">
-                <Tile {...tile} />
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <>
+      <table className="sweeper-table" style={colors}>
+        <tbody>
+          {game.board.map((row, r) => (
+            <tr key={r} className="sweeper-row">
+              {row.map((tile) => (
+                <td key={tile.y * game.width + tile.x} className="sweeper-cell">
+                  <Tile {...tile} />
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <Typography
+        variant="h5"
+        style={{ paddingTop: "30px" }}
+      >{`${game.numRemainingFlags} 🚩 Remaining`}</Typography>
+    </>
   );
 }
