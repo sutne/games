@@ -1,6 +1,5 @@
 // This is where all the game specific logic goes
 export enum Difficulty {
-  TUTORIAL,
   BEGINNER,
   INTERMEDIATE,
   EXPERT,
@@ -10,7 +9,7 @@ export class GameTile {
   isHidden: boolean = true;
   isFlagged: boolean = false;
   isBomb: boolean = false;
-  connectedBombs: number = 0;
+  numConnectedBombs: number = 0;
 
   readonly x: number;
   readonly y: number;
@@ -24,20 +23,18 @@ export class GameTile {
 export class Game {
   difficulty: Difficulty;
   board: GameTile[][];
-
   width: number;
   height: number;
   numBombs: number;
-
+  numFlags: number = 0;
   hasInitializedBombs: boolean = false;
-  hasLost: boolean = false;
-  hasWon: boolean = false;
+  isLost: boolean = false;
+  isWon: boolean = false;
 
   constructor(difficulty: Difficulty) {
     this.difficulty = difficulty;
 
     switch (this.difficulty) {
-      case Difficulty.TUTORIAL:
       case Difficulty.BEGINNER:
         this.height = 8;
         this.width = 8;
@@ -52,11 +49,10 @@ export class Game {
         this.height = 30;
         this.width = 16;
         this.numBombs = 99;
-        break;
     }
     this.board = [];
     for (var y = 0; y < this.height; y++) {
-      let row = [];
+      let row: GameTile[] = [];
       for (var x = 0; x < this.width; x++) {
         row.push(new GameTile(x, y));
       }
@@ -83,7 +79,8 @@ export class Game {
     return y * this.width + x;
   }
 
-  initBombs(clicked: GameTile): void {
+  initBombs(x: number, y: number): void {
+    let clicked = this.getTile(x, y)!;
     let numTiles = this.width * this.height;
     // create list of all possible bombIds
     let validBombIds: number[] = Array.from(Array(numTiles).keys());
@@ -106,7 +103,7 @@ export class Game {
       newBomb.isBomb = true;
       // increase bomb count for all neighbors
       for (let tile of this.getNeighbors(newBomb)) {
-        tile.connectedBombs += 1;
+        tile.numConnectedBombs += 1;
       }
     }
     this.hasInitializedBombs = true;
@@ -130,18 +127,19 @@ export class Game {
   }
 
   /** Unhide this tile, and recursively unhide all neighbors if tile is blank */
-  reveal(tile: GameTile): void {
+  reveal(x: number, y: number): void {
+    let tile = this.getTile(x, y)!;
     tile.isHidden = false;
-    if (tile.connectedBombs !== 0) return;
+    if (tile.numConnectedBombs !== 0) return;
     for (let neighbor of this.getNeighbors(tile)) {
       if (!neighbor.isHidden) continue;
-      this.reveal(neighbor);
+      this.reveal(neighbor.x, neighbor.y);
     }
   }
 
   /** Game is won if all non-bomb tiles are no longer hidden */
   checkIfWon() {
-    if (this.hasWon) return;
+    if (this.isWon) return;
     for (let x = 0; x < this.width; x++) {
       for (let y = 0; y < this.height; y++) {
         let tile = this.getTile(x, y)!;
@@ -149,15 +147,16 @@ export class Game {
         if (tile.isHidden) return;
       }
     }
-    this.hasWon = true;
+    this.isWon = true;
   }
 
-  /** Set all bomb tiles `is_hidden` to `false`*/
+  /** Set all bomb tiles `isHidden` to `false`*/
   revealBombs(): void {
     for (let x = 0; x < this.width; x++) {
       for (let y = 0; y < this.height; y++) {
         let tile = this.getTile(x, y)!;
         if (!tile.isBomb) continue;
+        if (tile.isFlagged) continue;
         tile.isHidden = false;
       }
     }
@@ -167,8 +166,8 @@ export class Game {
     let newGame = new Game(this.difficulty);
     newGame.board = [...this.board];
     newGame.hasInitializedBombs = this.hasInitializedBombs;
-    newGame.hasLost = this.hasLost;
-    newGame.hasWon = this.hasWon;
+    newGame.isLost = this.isLost;
+    newGame.isWon = this.isWon;
     return newGame;
   }
 }

@@ -1,4 +1,4 @@
-.board-container {
+.minesweeper-container {
   height: 100vh;
   /* Center board vertically in parent */
   display: flex;
