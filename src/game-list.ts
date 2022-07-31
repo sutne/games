@@ -58,4 +58,25 @@ export const games: Game[] = [
     element: Minesweeper,
     disabled: true,
   },
+  {
+    name: "TicTacToe",
+    description: "VS AI",
+    image: minesweeperImage,
+    element: Minesweeper,
+    disabled: true,
+  },
+  {
+    name: "ConnectBorderStuff",
+    description: "Vs AI",
+    image: minesweeperImage,
+    element: Minesweeper,
+    disabled: true,
+  },
+  {
+    name: "Chess",
+    description: "Vs AI",
+    image: minesweeperImage,
+    element: Minesweeper,
+    disabled: true,
+  },
 ];
