@@ -42,7 +42,7 @@ export const lightTheme = createTheme({
   game: {
     features: {
       background: "#e0e0e0",
-      obstacle: "#e0e0e0",
+      obstacle: "rgb(200,200,200)",
     },
     colors: {
       black: "rgb(20,30,40)",
