@@ -1,8 +1,8 @@
-import { makeStyles, Typography, useTheme } from "@mui/material";
+import { Typography, useTheme } from "@mui/material";
 
-import "./game-card.css";
-import { Game } from "../../../game-list";
-import { Link } from "../../../utils/components/link";
+import "./GameCard.css";
+import { Game } from "../../../games";
+import { Link } from "../../../components/Link";
 
 export function GameCard(game: Game) {
   if (game.disabled) return <GameCardDisabled {...game} />;

@@ -1,4 +1,4 @@
-import { Minesweeper } from "./pages/minesweeper/minesweeper";
+import { Minesweeper } from "./pages/minesweeper/Minesweeper";
 import minesweeperImage from "./assets/minesweeper.png";
 
 import tetrisImage from "./assets/tetris.jpeg";

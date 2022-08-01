@@ -1,18 +1,14 @@
-import {
-  Button,
-  CssBaseline,
-  ThemeProvider,
-  useMediaQuery,
-} from "@mui/material";
+import { CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import { HashRouter, Route, Routes } from "react-router-dom";
 
 import "./index.css";
 import { darkTheme, lightTheme } from "./themes";
-import { games } from "./game-list";
-import { Main } from "./pages/main/main";
+import { games } from "./games";
+import { Main } from "./pages/main/Main";
 import { Scoreboard } from "./pages/scoreboard/scoreboard";
+import { NavBar } from "./components/NavBar";
 
 function App() {
   const enabledGames = games.filter((game) => !game.disabled);
@@ -37,10 +33,8 @@ function App() {
         >
           <div className="wrapper">
             <CssBaseline />
-            <Button style={{ position: "absolute" }} onClick={swapTheme}>
-              Swap Theme
-            </Button>
             <HashRouter>
+              <NavBar swapTheme={swapTheme} />
               <Routes>
                 <Route path="/" element={<Main />} />
                 <Route path="/scoreboard" element={<Scoreboard />} />

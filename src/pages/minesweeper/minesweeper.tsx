@@ -1,41 +1,70 @@
 import { Box, Button, Typography } from "@mui/material";
 
-import "./minesweeper.css";
+import "./Minesweeper.css";
 import { Difficulty } from "./logic";
-import { Board } from "./components/board";
-import { useState } from "react";
-import { GameProvider } from "./components/game-provider";
+import { Board } from "./components/Board";
+import React, { useState } from "react";
+import { GameProvider, useGame } from "./hooks/GameProvider";
+import { Game } from "./logic";
+import { Replay } from "@mui/icons-material";
 
 export function Minesweeper() {
   const [difficulty, setDifficulty] = useState<Difficulty>();
-
+  const props = { difficulty: difficulty, setDifficulty: setDifficulty };
   return (
     <Box className="minesweeper-container">
       <Typography variant="h3">Minesweeper</Typography>
-      <Content />
+      {difficulty === undefined ? (
+        <SelectDifficulty {...props} />
+      ) : (
+        <GameProvider difficulty={difficulty}>
+          <GameArea {...props} />
+        </GameProvider>
+      )}
     </Box>
   );
+}
 
-  function Content() {
-    if (difficulty === undefined) {
-      return (
-        <Box textAlign="center">
-          <Button onClick={() => setDifficulty(Difficulty.BEGINNER)}>
-            Beginner
+type DifficultyProps = {
+  difficulty: Difficulty | undefined;
+  setDifficulty: React.Dispatch<React.SetStateAction<Difficulty | undefined>>;
+};
+
+export function SelectDifficulty({ setDifficulty }: DifficultyProps) {
+  return (
+    <Box textAlign="center">
+      <Button onClick={() => setDifficulty(Difficulty.BEGINNER)}>
+        Beginner
+      </Button>
+      <Button onClick={() => setDifficulty(Difficulty.INTERMEDIATE)}>
+        Intermediate
+      </Button>
+      <Button onClick={() => setDifficulty(Difficulty.EXPERT)}>Expert</Button>
+    </Box>
+  );
+}
+
+function GameArea({ difficulty, setDifficulty }: DifficultyProps) {
+  const [game, setGame] = useGame();
+  return (
+    <>
+      <Board />
+      {game.isWon || game.isLost ? (
+        <>
+          {game.isWon ? "You Won!" : "You Lost :("}
+          <Button onClick={() => setGame(new Game(difficulty!))}>
+            <Replay />
           </Button>
-          <Button onClick={() => setDifficulty(Difficulty.INTERMEDIATE)}>
-            Intermediate
-          </Button>
-          <Button onClick={() => setDifficulty(Difficulty.EXPERT)}>
-            Expert
-          </Button>
-        </Box>
-      );
-    }
-    return (
-      <GameProvider difficulty={difficulty}>
-        <Board />
-      </GameProvider>
-    );
-  }
+          <Button onClick={() => setDifficulty(undefined)}>
+            Change Difficulty
+          </Button>{" "}
+        </>
+      ) : (
+        <Typography
+          variant="h5"
+          style={{ paddingTop: "30px" }}
+        >{`${game.numRemainingFlags} 🚩 Remaining`}</Typography>
+      )}
+    </>
+  );
 }

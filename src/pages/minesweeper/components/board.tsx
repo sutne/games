@@ -1,8 +1,8 @@
-import { Typography, useTheme } from "@mui/material";
-import { Tile } from "./tile";
+import { Button, Typography, useTheme } from "@mui/material";
+import { Tile } from "./Tile";
 
-import "./board.css";
-import { useGame } from "./game-provider";
+import "./Board.css";
+import { useGame } from "../hooks/GameProvider";
 
 export function Board() {
   const theme = useTheme();
@@ -11,7 +11,7 @@ export function Board() {
     background: theme.game.features.background,
   };
 
-  const game = useGame()[0];
+  const [game, setGame] = useGame();
   return (
     <>
       <table className="sweeper-table" style={colors}>
@@ -27,10 +27,6 @@ export function Board() {
           ))}
         </tbody>
       </table>
-      <Typography
-        variant="h5"
-        style={{ paddingTop: "30px" }}
-      >{`${game.numRemainingFlags} 🚩 Remaining`}</Typography>
     </>
   );
 }

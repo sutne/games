@@ -1,8 +1,8 @@
 import { useTheme } from "@mui/material";
 import { GameTile } from "../logic";
-import { useGame } from "./game-provider";
+import { useGame } from "../hooks/GameProvider";
 
-import "./tile.css";
+import "./Tile.css";
 
 export function Tile({
   x,

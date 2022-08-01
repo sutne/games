@@ -1,8 +1,8 @@
 import { Box, Grid, Typography } from "@mui/material";
 
-import "./main.css";
-import { games } from "../../game-list";
-import { GameCard } from "./components/game-card";
+import "./Main.css";
+import { games } from "../../games";
+import { GameCard } from "./components/GameCard";
 
 export function Main() {
   const disabledGames = games.filter((game) => game.disabled);
