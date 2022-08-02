@@ -185,4 +185,23 @@ export class Game {
     newGame.numRemainingFlags = this.numRemainingFlags;
     return newGame;
   }
+
+  getScore(time: number): number {
+    let score = 0;
+    for (let row of this.board) {
+      for (let tile of row) {
+        // Number of Revealed Tiles
+        if (!tile.isHidden && !tile.isBomb) score += 10;
+        // Adjust based on Correct/False flag placement
+        if (tile.isFlagged) {
+          if (tile.isBomb) score += 50;
+          else score -= 25;
+        }
+      }
+    }
+    // Adjust based on time
+    let timeMultiplier = time;
+    score *= timeMultiplier;
+    return score;
+  }
 }

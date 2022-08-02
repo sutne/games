@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import { GameProvider, useGame } from "./hooks/GameProvider";
 import { Game } from "./logic";
 import { Replay } from "@mui/icons-material";
+import { useEffect } from "react";
 
 export function Minesweeper() {
   const [difficulty, setDifficulty] = useState<Difficulty>();
@@ -46,12 +47,16 @@ export function SelectDifficulty({ setDifficulty }: DifficultyProps) {
 
 function GameArea({ difficulty, setDifficulty }: DifficultyProps) {
   const [game, setGame] = useGame();
+
   return (
     <>
       <Board />
       {game.isWon || game.isLost ? (
         <>
-          {game.isWon ? "You Won!" : "You Lost :("}
+          <Typography variant="body1">
+            {game.isWon ? "You Won!" : "You Lost :("}
+          </Typography>
+          <Typography variant="body1">Score: {game.getScore(1)}</Typography>
           <Button onClick={() => setGame(new Game(difficulty!))}>
             <Replay />
           </Button>

@@ -50,7 +50,6 @@ export function Tile({
     if (game.isLost || game.isWon) return;
     if (isFlagged) return;
     let gameCopy = game.copy();
-    gameCopy.checkIfWon();
     if (!isHidden) return;
     if (!gameCopy.hasInitializedBombs) gameCopy.initBombs(x, y);
     gameCopy.reveal(x, y);
@@ -58,6 +57,7 @@ export function Tile({
       gameCopy.isLost = true;
       gameCopy.revealBombs();
     }
+    gameCopy.checkIfWon();
     setGame(gameCopy);
   }
 
