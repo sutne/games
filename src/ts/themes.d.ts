@@ -21,6 +21,13 @@ declare module "@mui/material/styles" {
         blue: React.CSSProperties["color"];
       };
     };
+    myShadows: {
+      box: React.CSSProperties["color"];
+      neumorphic: {
+        light: React.CSSProperties["color"];
+        dark: React.CSSProperties["color"];
+      };
+    };
   }
   // theme.background.<>
   interface BackgroundExtension {
