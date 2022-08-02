@@ -1,11 +1,12 @@
+import { Typography } from "@mui/material";
+import { Difficulty } from "pages/minesweeper/logic";
 import { useEffect, useState } from "react";
 
 import { getCollection } from "../../services/firestore";
 import { MinesweeperDocument } from "../../services/models/minesweeperDocument";
 
 export function Scoreboard() {
-  let list: MinesweeperDocument[] = [];
-  const [docs, setDocs] = useState(list);
+  const [docs, setDocs] = useState<MinesweeperDocument[]>();
 
   useEffect(() => {
     const getDocs = async () => {
@@ -15,7 +16,6 @@ export function Scoreboard() {
       );
       setDocs(data as MinesweeperDocument[]);
     };
-
     getDocs();
   }, []);
 
@@ -27,18 +27,16 @@ export function Scoreboard() {
   );
 }
 
-function listDocs(docs: MinesweeperDocument[]) {
-  if (docs.length > 0) {
-    return docs.map((doc) => (
-      <div key={doc.ref.id}>
-        <hr />
-        <h3>user: {doc.user}</h3>
-        <h3>time: {doc.time}</h3>
-        <h3>difficulty: {doc.difficulty}</h3>
-        <h3>cleared: {doc.cleared}</h3>
-      </div>
-    ));
-  } else {
-    return <h3>...</h3>;
-  }
+function listDocs(docs?: MinesweeperDocument[]) {
+  if (!docs) return <h3>...</h3>;
+  if (docs.length === 0) return <Typography>no scores :(</Typography>;
+  return docs.map((doc) => (
+    <div key={doc.reference!.id}>
+      <hr />
+      <h3>user: {doc.fields.user}</h3>
+      <h3>time: {doc.fields.time}</h3>
+      <h3>difficulty: {doc.fields.difficulty}</h3>
+      <h3>score: {doc.fields.score}</h3>
+    </div>
+  ));
 }
