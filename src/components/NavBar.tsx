@@ -1,13 +1,17 @@
-import { Home, Lightbulb } from "@mui/icons-material";
+import { Home, Lightbulb, LightbulbOutlined } from "@mui/icons-material";
 import { Button, useTheme } from "@mui/material";
+import { Theme } from "@mui/material";
+import { SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
+import { setPrefs } from "services/cookies";
+import { darkTheme, lightTheme } from "themes";
 
 import "./NavBar.css";
 type NavBarProps = {
-  swapTheme: () => void;
+  setTheme: React.Dispatch<SetStateAction<Theme>>;
 };
 
-export function NavBar({ swapTheme }: NavBarProps) {
+export function NavBar({ setTheme }: NavBarProps) {
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -20,8 +24,18 @@ export function NavBar({ swapTheme }: NavBarProps) {
         <Home />
       </Button>
       <Button onClick={swapTheme}>
-        <Lightbulb />
+        {theme === lightTheme ? <Lightbulb /> : <LightbulbOutlined />}
       </Button>
     </div>
   );
+
+  function swapTheme() {
+    if (theme === lightTheme) {
+      setTheme(darkTheme);
+      setPrefs({ useDarkTheme: true });
+    } else {
+      setTheme(lightTheme);
+      setPrefs({ useDarkTheme: false });
+    }
+  }
 }
