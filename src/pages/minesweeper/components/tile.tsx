@@ -25,13 +25,8 @@ export function Tile({
       <div
         className="tile-hidden"
         style={style}
-        onClick={(e) => {
-          onLeftClick();
-        }}
-        onContextMenu={(e) => {
-          e.preventDefault();
-          onRightClick();
-        }}
+        onClick={onLeftClick}
+        onContextMenu={onRightClick}
       >
         {getContent()}
       </div>
@@ -46,26 +41,28 @@ export function Tile({
     );
   }
 
-  function onLeftClick() {
+  function onLeftClick(e: any) {
     if (game.isLost || game.isWon) return;
     if (isFlagged) return;
-    let gameCopy = game.copy();
-    if (!isHidden) return;
-    if (!gameCopy.hasInitializedBombs) gameCopy.initBombs(x, y);
-    gameCopy.reveal(x, y);
+
+    let copy = game.copy();
+    if (!copy.hasInitializedBombs) copy.initBombs(x, y);
+    copy.reveal(x, y);
     if (isBomb) {
-      gameCopy.isLost = true;
-      gameCopy.revealBombs();
+      copy.revealBombs();
+      copy.isLost = true;
     }
-    gameCopy.checkIfWon();
-    setGame(gameCopy);
+    copy.checkIfWon();
+
+    setGame(copy);
   }
 
-  function onRightClick() {
+  function onRightClick(e: any) {
+    e.preventDefault();
     if (game.isLost || game.isWon) return;
-    let gameCopy = game.copy();
-    gameCopy.toggleFlag(x, y);
-    setGame(gameCopy);
+    let copy = game.copy();
+    copy.toggleFlag(x, y);
+    setGame(copy);
   }
 
   function getContent() {
@@ -85,8 +82,8 @@ export function Tile({
   }
 
   function getNumberColor() {
-    if (numConnectedBombs === 8) return theme.game.colors.brown;
-    if (numConnectedBombs === 7) return theme.game.colors.brown;
+    if (numConnectedBombs === 8) return theme.game.colors.black;
+    if (numConnectedBombs === 7) return theme.game.colors.gray;
     if (numConnectedBombs === 6) return theme.game.colors.brown;
     if (numConnectedBombs === 5) return theme.game.colors.red;
     if (numConnectedBombs === 4) return theme.game.colors.orange;
