@@ -1,10 +1,10 @@
-import { Minesweeper } from "./pages/minesweeper/Minesweeper";
-import minesweeperImage from "./assets/minesweeper.png";
+import { Minesweeper } from "pages/minesweeper/Minesweeper";
+import minesweeperImage from "assets/minesweeper.png";
 
-import tetrisImage from "./assets/tetris.jpeg";
-import pacmanImage from "./assets/pacman.png";
-import snakeImage from "./assets/snake.jpeg";
-import sudokuImage from "./assets/sudoku.png";
+import tetrisImage from "assets/tetris.jpeg";
+import pacmanImage from "assets/pacman.png";
+import snakeImage from "assets/snake.jpeg";
+import sudokuImage from "assets/sudoku.png";
 
 export type Game = {
   name: string;
