@@ -1,4 +1,4 @@
-import { CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";
+import { Box, CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import { HashRouter, Route, Routes } from "react-router-dom";
@@ -19,17 +19,13 @@ function App() {
   const [theme, setTheme] = useState(useDark ? darkTheme : lightTheme);
   const enabledGames = games.filter((game) => !game.isAvailable);
 
+  const classes = getStyle();
+
   return (
     <React.StrictMode>
       <ThemeProvider theme={theme}>
-        <div
-          className="content"
-          style={{
-            background: theme.palette.background.default,
-            color: theme.palette.text.primary,
-          }}
-        >
-          <div className="wrapper">
+        <Box sx={classes.content}>
+          <Box sx={classes.wrapper}>
             <CssBaseline />
             <HashRouter>
               <NavBar setTheme={setTheme} />
@@ -47,8 +43,8 @@ function App() {
                 })}
               </Routes>
             </HashRouter>
-          </div>
-        </div>
+          </Box>
+        </Box>
       </ThemeProvider>
     </React.StrictMode>
   );
@@ -59,3 +55,22 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(<App />);
+
+//------------------------------------------------------------------------------
+
+function getStyle() {
+  return {
+    content: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      transition: "all ease 0.3s",
+      backgroundColor: "background.default",
+      color: "text.primary",
+    },
+    wrapper: {
+      width: "min(1024px, 100%)",
+      minHeight: "100vh",
+    },
+  };
+}
