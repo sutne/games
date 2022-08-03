@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import { Difficulty } from "pages/minesweeper/logic";
 import { useEffect, useState } from "react";
+import { formatTime } from "utils/time";
 
 import { getCollection } from "../../services/firestore";
 import { MinesweeperDocument } from "../../services/models/minesweeperDocument";
@@ -30,13 +31,18 @@ export function Scoreboard() {
 function listDocs(docs?: MinesweeperDocument[]) {
   if (!docs) return <h3>...</h3>;
   if (docs.length === 0) return <Typography>no scores :(</Typography>;
-  return docs.map((doc) => (
-    <div key={doc.reference!.id}>
-      <hr />
-      <h3>user: {doc.fields.user}</h3>
-      <h3>time: {doc.fields.time}</h3>
-      <h3>difficulty: {doc.fields.difficulty}</h3>
-      <h3>score: {doc.fields.score}</h3>
-    </div>
-  ));
+  return docs.map((doc) => {
+    let [minutes, seconds, milliseconds] = formatTime(doc.fields.time);
+    return (
+      <div key={doc.reference!.id}>
+        <hr />
+        <h3>user: {doc.fields.user}</h3>
+        <h3>
+          time: {minutes}:{seconds}:{milliseconds}
+        </h3>
+        <h3>difficulty: {doc.fields.difficulty}</h3>
+        <h3>score: {doc.fields.score}</h3>
+      </div>
+    );
+  });
 }

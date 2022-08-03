@@ -1,4 +1,3 @@
-// This is where all the game specific logic goes
 export enum Difficulty {
   BEGINNER,
   INTERMEDIATE,
@@ -6,13 +5,13 @@ export enum Difficulty {
 }
 
 export class GameTile {
+  x: number;
+  y: number;
+
   isHidden: boolean = true;
   isFlagged: boolean = false;
   isBomb: boolean = false;
   numConnectedBombs: number = 0;
-
-  readonly x: number;
-  readonly y: number;
 
   constructor(x: number, y: number) {
     this.x = x;
@@ -30,10 +29,11 @@ export class Game {
   hasInitializedBombs: boolean = false;
   isLost: boolean = false;
   isWon: boolean = false;
+  isSaved: boolean = false;
+  time: number = 0;
 
   constructor(difficulty: Difficulty) {
     this.difficulty = difficulty;
-
     switch (this.difficulty) {
       case Difficulty.BEGINNER:
         this.height = 8;
@@ -50,6 +50,7 @@ export class Game {
         this.width = 16;
         this.numBombs = 99;
     }
+    this.numRemainingFlags = this.numBombs;
     this.board = [];
     for (var y = 0; y < this.height; y++) {
       let row: GameTile[] = [];
@@ -58,14 +59,20 @@ export class Game {
       }
       this.board.push(row);
     }
-    this.numRemainingFlags = this.numBombs;
   }
 
-  /** Return tile at `(x,y)`, or undefined if coord is invalid */
-  getTile(x: number, y: number): GameTile | undefined {
-    if (x < 0 || this.width <= x) return undefined;
-    if (y < 0 || this.height <= y) return undefined;
+  /** Return tile at `(x,y)` */
+  getTile(x: number, y: number): GameTile {
+    if (!this.isTile(x, y))
+      throw new Error(`Invalid Minesweeper coords: (${x},${y})`);
     return this.board[y][x];
+  }
+
+  /** Check if `(x,y)` falls withing the board */
+  isTile(x: number, y: number): boolean {
+    if (x < 0 || this.width <= x) return false;
+    if (y < 0 || this.height <= y) return false;
+    return true;
   }
 
   /** Convert index from 0 to numTiles to its coordinates */
@@ -80,38 +87,44 @@ export class Game {
     return y * this.width + x;
   }
 
+  /** Initialize all bombs while avoiding the first clicked tile */
   initBombs(x: number, y: number): void {
-    let clicked = this.getTile(x, y)!;
-    let numTiles = this.width * this.height;
+    let clicked = this.getTile(x, y);
     // create list of all possible bombIds
+    let numTiles = this.width * this.height;
     let validBombIds: number[] = Array.from(Array(numTiles).keys());
     // remove clicked tile and all its neighbors
-    let toRemove: GameTile[] = [clicked, ...this.getNeighbors(clicked)];
-    for (let tile of toRemove) {
+    let toRemove: GameTile[] = [
+      clicked,
+      ...this.getNeighbors(clicked.x, clicked.y),
+    ];
+    for (let remove of toRemove) {
       validBombIds = validBombIds.filter(
-        (id) => id !== this.getIndex(tile.x, tile.y)
+        (id) => id !== this.getIndex(remove.x, remove.y)
       );
     }
     // add bombs
-    for (var bomb = 0; bomb < this.numBombs; bomb++) {
+    for (var bombNum = 0; bombNum < this.numBombs; bombNum++) {
       // extract random coordinates from valid bombIds
       let randomIndex = Math.floor(Math.random() * validBombIds.length);
-      let newRandomId = validBombIds[randomIndex];
-      validBombIds = validBombIds.filter((id) => id !== newRandomId);
-      let [x, y] = this.getCoordinates(newRandomId);
-      let newBomb = this.getTile(x, y)!;
+      let randomId = validBombIds[randomIndex];
+      let [x, y] = this.getCoordinates(randomId);
       // Set this tile as a bomb
-      newBomb.isBomb = true;
+      let bomb = this.getTile(x, y);
+      bomb.isBomb = true;
       // increase bomb count for all neighbors
-      for (let tile of this.getNeighbors(newBomb)) {
+      for (let tile of this.getNeighbors(bomb.x, bomb.y)) {
         tile.numConnectedBombs += 1;
       }
+      // Remove bomb id from the list
+      validBombIds = validBombIds.filter((id) => id !== randomId);
     }
     this.hasInitializedBombs = true;
   }
 
   /** Return list of all neighboring tiles */
-  getNeighbors(tile: GameTile): GameTile[] {
+  getNeighbors(x: number, y: number): GameTile[] {
+    let tile = this.getTile(x, y);
     let neighbors = [];
     // prettier-ignore
     let offsets = [
@@ -120,20 +133,22 @@ export class Game {
       [-1, 1], [0, 1],  [1, 1],
     ];
     for (let offset of offsets) {
-      let neighbor = this.getTile(tile.x + offset[0], tile.y + offset[1]);
-      if (neighbor === undefined) continue;
+      let [x, y] = [tile.x + offset[0], tile.y + offset[1]];
+      if (!this.isTile(x, y)) continue;
+      let neighbor = this.getTile(x, y);
       neighbors.push(neighbor);
     }
     return neighbors;
   }
 
-  /** Unhide this tile, and recursively unhide all neighbors if tile is blank */
+  /** Unhide this tile, and recursively unhide all neighbors of blank tiles */
   reveal(x: number, y: number): void {
-    let tile = this.getTile(x, y)!;
+    let tile = this.getTile(x, y);
+    if (tile.isBomb) return;
     tile.isHidden = false;
     if (tile.numConnectedBombs > 0) return;
-    for (let neighbor of this.getNeighbors(tile)) {
-      if (tile.isFlagged) continue;
+    for (let neighbor of this.getNeighbors(tile.x, tile.y)) {
+      if (neighbor.isFlagged) continue;
       if (!neighbor.isHidden) continue;
       this.reveal(neighbor.x, neighbor.y);
     }
@@ -142,9 +157,8 @@ export class Game {
   /** Game is won if all non-bomb tiles are no longer hidden */
   checkIfWon() {
     if (this.isWon) return;
-    for (let x = 0; x < this.width; x++) {
-      for (let y = 0; y < this.height; y++) {
-        let tile = this.getTile(x, y)!;
+    for (let row of this.board) {
+      for (let tile of row) {
         if (tile.isBomb) continue;
         if (tile.isHidden) return;
       }
@@ -154,9 +168,8 @@ export class Game {
 
   /** Set all bomb tiles `isHidden` to `false`*/
   revealBombs(): void {
-    for (let x = 0; x < this.width; x++) {
-      for (let y = 0; y < this.height; y++) {
-        let tile = this.getTile(x, y)!;
+    for (let row of this.board) {
+      for (let tile of row) {
         if (!tile.isBomb) continue;
         if (tile.isFlagged) continue;
         tile.isHidden = false;
@@ -166,7 +179,7 @@ export class Game {
 
   toggleFlag(x: number, y: number) {
     if (this.numRemainingFlags === 0) return;
-    let tile = this.getTile(x, y)!;
+    let tile = this.getTile(x, y);
     if (tile.isFlagged) {
       tile.isFlagged = false;
       this.numRemainingFlags += 1;
@@ -176,17 +189,7 @@ export class Game {
     }
   }
 
-  copy(): Game {
-    let newGame = new Game(this.difficulty);
-    newGame.board = [...this.board];
-    newGame.hasInitializedBombs = this.hasInitializedBombs;
-    newGame.isLost = this.isLost;
-    newGame.isWon = this.isWon;
-    newGame.numRemainingFlags = this.numRemainingFlags;
-    return newGame;
-  }
-
-  getScore(time: number): number {
+  getScore() {
     let score = 0;
     for (let row of this.board) {
       for (let tile of row) {
@@ -199,9 +202,18 @@ export class Game {
         }
       }
     }
-    // Adjust based on time
-    let timeMultiplier = time;
-    score *= timeMultiplier;
     return score;
+  }
+
+  copy(): Game {
+    let copy = new Game(this.difficulty);
+    copy.board = this.board;
+    copy.numRemainingFlags = this.numRemainingFlags;
+    copy.hasInitializedBombs = this.hasInitializedBombs;
+    copy.isLost = this.isLost;
+    copy.isWon = this.isWon;
+    copy.isSaved = this.isSaved;
+    copy.time = this.time;
+    return copy;
   }
 }

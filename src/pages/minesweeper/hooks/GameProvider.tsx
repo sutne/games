@@ -14,12 +14,18 @@ export function GameProvider({ difficulty, children }: GameProviderProps) {
   // Save score and time to firestore once game is over
   useEffect(() => {
     if (!game.isWon && !game.isLost) return;
+    if (game.isSaved) return;
     new MinesweeperDocument({
-      user: "Sutne",
-      time: 1,
-      score: game.getScore(1),
-      difficulty: difficulty,
+      user: "undefined",
+      time: game.time,
+      score: game.getScore(),
+      victory: game.isWon,
+      difficulty: game.difficulty,
     }).create();
+    setGame((game) => {
+      game.isSaved = true;
+      return game;
+    });
   }, [game, difficulty]);
 
   return (

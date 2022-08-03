@@ -3,11 +3,11 @@ import { Box, Button, Typography } from "@mui/material";
 import "./Minesweeper.css";
 import { Difficulty } from "./logic";
 import { Board } from "./components/Board";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { GameProvider, useGame } from "./hooks/GameProvider";
 import { Game } from "./logic";
 import { Replay } from "@mui/icons-material";
-import { useEffect } from "react";
+import { formatTime } from "utils/time";
 
 export function Minesweeper() {
   const [difficulty, setDifficulty] = useState<Difficulty>();
@@ -50,13 +50,14 @@ function GameArea({ difficulty, setDifficulty }: DifficultyProps) {
 
   return (
     <>
+      {/* <Timer /> */}
       <Board />
       {game.isWon || game.isLost ? (
         <>
           <Typography variant="body1">
             {game.isWon ? "You Won!" : "You Lost :("}
           </Typography>
-          <Typography variant="body1">Score: {game.getScore(1)}</Typography>
+          <Typography variant="body1">Score: {game.getScore()}</Typography>
           <Button onClick={() => setGame(new Game(difficulty!))}>
             <Replay />
           </Button>
@@ -73,3 +74,57 @@ function GameArea({ difficulty, setDifficulty }: DifficultyProps) {
     </>
   );
 }
+
+// function Timer() {
+//   const game = useGame()[0];
+//   const [startTime, setStartTime] = useState(0);
+//   const [time, setTime] = useState(0);
+//   const [isRunning, setRunning] = useState(false);
+
+//   useEffect(() => {
+//     let timer: any;
+//     let gameInProgress =
+//       game.hasInitializedBombs && !game.isLost && !game.isWon;
+//     if (!isRunning && gameInProgress) {
+//       setStartTime(new Date().getTime());
+//       timer = setInterval(() => {
+//         setTime(new Date().getTime() - startTime);
+//       }, 1000);
+//       setRunning(true);
+//     }
+//     if (isRunning && !gameInProgress) {
+//       clearInterval(timer);
+//     }
+//   }, [game, isRunning, startTime]);
+
+//   useEffect(() => {
+//     let timer: any;
+//     let gameInProgress =
+//       game.hasInitializedBombs && !(game.isLost || game.isWon);
+//     if (!isRunning && gameInProgress) {
+//       // Start Timer
+//       timer = setInterval(() => {
+//         setTime((prevTime) => prevTime + 1);
+//       }, 100);
+//       setRunning(true);
+//     }
+//     if (isRunning && !gameInProgress) {
+//       // Stop Timer
+//       clearInterval(timer);
+//       setRunning(false);
+//     }
+//     // if (isRunning && !game.hasInitializedBombs) {
+//     //   // Reset Timer
+//     //   setTime(0);
+//     // }
+//   }, [game, isRunning]);
+
+//   let [minutes, seconds, milliseconds] = formatTime(time);
+//   return (
+//     <div className="timer">
+//       <span>{minutes}:</span>
+//       <span>{seconds}.</span>
+//       <span>{milliseconds}</span>
+//     </div>
+//   );
+// }

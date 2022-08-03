@@ -10,8 +10,8 @@ type Fields = {
   time: number;
   score: number;
   difficulty: Difficulty;
+  victory: boolean;
   user?: string;
-  ref?: DocumentReference;
 };
 
 export class MinesweeperDocument {
@@ -40,6 +40,7 @@ export class MinesweeperDocument {
     if (!data) return undefined;
     return new MinesweeperDocument(
       {
+        victory: data.victory,
         time: data.time,
         score: data.score,
         difficulty: data.difficulty,
