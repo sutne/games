@@ -79,7 +79,7 @@ function GameArea({ difficulty, setDifficulty }: DifficultyProps) {
 function getStyle() {
   return {
     minesweeperContainer: {
-      height: "100vh",
+      // minHeight: "100vh",
       /* Center board vertically in parent */
       display: "flex",
       textAlign: "center",

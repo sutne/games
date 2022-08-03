@@ -53,12 +53,10 @@ function getStyle({ available }: StyleProps) {
   return {
     gameCard: [
       {
-        width: "min(355px, 85vw)",
-        height: "100%",
         borderRadius: "16px",
         overflow: "hidden",
         transform: "scale(1)",
-        transition: "all ease 0.3s",
+        transition: "transform ease 0.3s",
         img: {
           height: "170%",
           width: "110%",

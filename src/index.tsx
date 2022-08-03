@@ -61,16 +61,14 @@ root.render(<App />);
 function getStyle() {
   return {
     content: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      transition: "all ease 0.3s",
+      width: "calc(100vw - (100vw - 100%))",
       backgroundColor: "background.default",
       color: "text.primary",
     },
     wrapper: {
       width: "min(1024px, 100%)",
-      minHeight: "100vh",
+      margin: "0 auto",
+      paddingBottom: "32px",
     },
   };
 }

@@ -8,7 +8,7 @@ export function Main() {
   const enabledGames = games.filter((game) => !game.isAvailable);
   const classes = getStyle();
   return (
-    <>
+    <Box sx={classes.main}>
       <Box sx={classes.header}>
         <Typography variant="h2">Games</Typography>
         <Typography variant="body1">
@@ -16,27 +16,34 @@ export function Main() {
           then you have come to the right place!
         </Typography>
       </Box>
-      <Typography variant="h4" sx={classes.titleRow}>
-        Available Games
-      </Typography>
-      <Grid container spacing={3} justifyContent="center" alignItems="stretch">
-        {enabledGames.map((game) => (
-          <Grid item key={game.name}>
-            <GameCard {...game} />
+
+      <Box sx={classes.grid}>
+        <Grid
+          container
+          spacing={3}
+          alignItems="stretch"
+          columns={{ xs: 6, sm: 12, md: 12 }}
+        >
+          <Grid item xs={12}>
+            <Typography variant="h4">Available Games</Typography>
           </Grid>
-        ))}
-      </Grid>
-      <Typography variant="h4" sx={classes.titleRow}>
-        Under Construction
-      </Typography>
-      <Grid container spacing={3} justifyContent="center" alignItems="stretch">
-        {disabledGames.map((game) => (
-          <Grid item key={game.name}>
-            <GameCard {...game} />
+          {enabledGames.map((game) => (
+            <Grid item xs={6} key={game.name}>
+              <GameCard {...game} />
+            </Grid>
+          ))}
+          <Grid item xs={12}>
+            {" "}
+            <Typography variant="h4">Under Construction</Typography>
           </Grid>
-        ))}
-      </Grid>
-    </>
+          {disabledGames.map((game) => (
+            <Grid item xs={6} key={game.name}>
+              <GameCard {...game} />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    </Box>
   );
 }
 
@@ -44,14 +51,13 @@ export function Main() {
 
 function getStyle() {
   return {
-    header: {
-      margin: "64px",
-      textAlign: "center",
+    main: {},
+    grid: {
+      width: "min(85vw, 700px)",
+      margin: "0 auto",
     },
-    titleRow: {
+    header: {
       textAlign: "center",
-      padding: "30px 0px 10px 0px",
-      spacing: 3,
     },
   };
 }
