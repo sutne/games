@@ -1,10 +1,17 @@
-import "@mui/material/styles";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  Palette,
+  PaletteOptions,
+  TypeBackground,
+  TypeBackgroundOptions,
+} from "@mui/material/styles";
+/* eslint-enable @typescript-eslint/no-unused-vars */
 
 // Force custom themes to declare these colors,
 // and give them as type hint when using the theme
 declare module "@mui/material/styles" {
-  // theme.<>
-  interface ThemeExtension {
+  // theme.palette.<>
+  interface PaletteExtension {
     game: {
       features: {
         background: React.CSSProperties["color"];
@@ -21,22 +28,15 @@ declare module "@mui/material/styles" {
         blue: React.CSSProperties["color"];
       };
     };
-    myShadows: {
-      box: React.CSSProperties["color"];
-      neumorphic: {
-        light: React.CSSProperties["color"];
-        dark: React.CSSProperties["color"];
-      };
-    };
   }
-  // theme.background.<>
+  // theme.palette.background.<>
   interface BackgroundExtension {
     disabled: React.CSSProperties["color"];
   }
 
   // Apply to both give typehints and declaration warnings
-  interface Theme extends ThemeExtension {}
-  interface ThemeOptions extends ThemeExtension {}
+  interface Palette extends PaletteExtension {}
+  interface PaletteOptions extends PaletteExtension {}
   interface TypeBackground extends BackgroundExtension {}
   interface TypeBackgroundOptions extends BackgroundExtensions {}
 }

@@ -7,8 +7,8 @@ import { useGame } from "../hooks/GameProvider";
 export function Board() {
   const theme = useTheme();
   const colors = {
-    borderColor: theme.game.features.obstacle,
-    background: theme.game.features.background,
+    borderColor: theme.palette.game.features.obstacle,
+    background: theme.palette.game.features.background,
   };
 
   const [game, setGame] = useGame();

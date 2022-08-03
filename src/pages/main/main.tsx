@@ -5,8 +5,8 @@ import { games } from "../../games";
 import { GameCard } from "./components/GameCard";
 
 export function Main() {
-  const disabledGames = games.filter((game) => game.disabled);
-  const enabledGames = games.filter((game) => !game.disabled);
+  const disabledGames = games.filter((game) => game.isAvailable);
+  const enabledGames = games.filter((game) => !game.isAvailable);
 
   return (
     <>

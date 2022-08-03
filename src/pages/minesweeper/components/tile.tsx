@@ -75,27 +75,23 @@ export function Tile({
 
   function getBackground() {
     let correctFlag = (game.isWon || game.isLost) && isFlagged && isBomb;
-    if (correctFlag) return theme.game.colors.green;
-    if (isHidden) return theme.game.features.obstacle;
-    if (isBomb) return theme.game.colors.red;
-    return theme.game.features.background;
+    if (correctFlag) return theme.palette.game.colors.green;
+    if (isHidden) return theme.palette.game.features.obstacle;
+    if (isBomb) return theme.palette.game.colors.red;
+    return theme.palette.game.features.background;
   }
 
   function getNumberColor() {
-    if (numConnectedBombs === 8) return theme.game.colors.black;
-    if (numConnectedBombs === 7) return theme.game.colors.gray;
-    if (numConnectedBombs === 6) return theme.game.colors.brown;
-    if (numConnectedBombs === 5) return theme.game.colors.red;
-    if (numConnectedBombs === 4) return theme.game.colors.orange;
-    if (numConnectedBombs === 3) return theme.game.colors.yellow;
-    if (numConnectedBombs === 2) return theme.game.colors.green;
-    if (numConnectedBombs === 1) return theme.game.colors.blue;
+    if (numConnectedBombs === 8) return theme.palette.game.colors.black;
+    if (numConnectedBombs === 7) return theme.palette.game.colors.gray;
+    if (numConnectedBombs === 6) return theme.palette.game.colors.brown;
+    if (numConnectedBombs === 5) return theme.palette.game.colors.red;
+    if (numConnectedBombs === 4) return theme.palette.game.colors.orange;
+    if (numConnectedBombs === 3) return theme.palette.game.colors.yellow;
+    if (numConnectedBombs === 2) return theme.palette.game.colors.green;
+    if (numConnectedBombs === 1) return theme.palette.game.colors.blue;
     return theme.palette.text.primary;
   }
 
-  if (isHidden) {
-    return <Hidden />;
-  } else {
-    return <Revealed />;
-  }
+  return isHidden ? <Hidden /> : <Revealed />;
 }

@@ -11,7 +11,7 @@ export type Game = {
   description: string;
   image: any;
   element: () => JSX.Element;
-  disabled: boolean;
+  isAvailable: boolean;
 };
 
 export const games: Game[] = [
@@ -21,62 +21,62 @@ export const games: Game[] = [
       "Dodge the bombs in this classic game. Comes in three difficulties.",
     image: minesweeperImage,
     element: Minesweeper,
-    disabled: false,
+    isAvailable: false,
   },
   {
     name: "Snake",
     description: "Classic Minesweeper game with difficulties",
     image: snakeImage,
     element: Minesweeper,
-    disabled: true,
+    isAvailable: true,
   },
   {
     name: "Pac-Man",
     description: "Classic Minesweeper game with difficulties",
     image: pacmanImage,
     element: Minesweeper,
-    disabled: true,
+    isAvailable: true,
   },
   {
     name: "Tetris",
     description: "Classic Minesweeper game with difficulties",
     image: tetrisImage,
     element: Minesweeper,
-    disabled: true,
+    isAvailable: true,
   },
   {
     name: "Sudoku",
     description: "Classic Minesweeper game with difficulties",
     image: sudokuImage,
     element: Minesweeper,
-    disabled: true,
+    isAvailable: true,
   },
   {
     name: "Human Benchmark",
     description: "Classic Minesweeper game with difficulties",
     image: minesweeperImage,
     element: Minesweeper,
-    disabled: true,
+    isAvailable: true,
   },
   {
     name: "TicTacToe",
     description: "VS AI",
     image: minesweeperImage,
     element: Minesweeper,
-    disabled: true,
+    isAvailable: true,
   },
   {
     name: "ConnectBorderStuff",
     description: "Vs AI",
     image: minesweeperImage,
     element: Minesweeper,
-    disabled: true,
+    isAvailable: true,
   },
   {
     name: "Chess",
     description: "Vs AI",
     image: minesweeperImage,
     element: Minesweeper,
-    disabled: true,
+    isAvailable: true,
   },
 ];

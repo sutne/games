@@ -17,7 +17,7 @@ function App() {
   const prefs = getPrefs({ useDarkTheme: prefersDarkTheme });
   let useDark = prefs.useDarkTheme === true;
   const [theme, setTheme] = useState(useDark ? darkTheme : lightTheme);
-  const enabledGames = games.filter((game) => !game.disabled);
+  const enabledGames = games.filter((game) => !game.isAvailable);
 
   return (
     <React.StrictMode>

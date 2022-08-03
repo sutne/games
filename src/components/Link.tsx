@@ -8,12 +8,14 @@ type LinkProps = {
 
 export function Link(props: LinkProps) {
   const theme = useTheme();
-  const style = {
-    textDecoration: "none",
-    color: theme.palette.text.primary,
-  };
   return (
-    <RouterLink to={props.to} style={style}>
+    <RouterLink
+      to={props.to}
+      style={{
+        textDecoration: "none",
+        color: theme.palette.text.primary,
+      }}
+    >
       {props.children}
     </RouterLink>
   );
