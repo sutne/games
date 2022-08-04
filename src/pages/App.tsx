@@ -18,7 +18,6 @@ export function App() {
   );
   const enabledGames = games.filter((game) => !game.isAvailable);
 
-  console.log("Hello?");
   const classes = getClasses();
   return (
     <ThemeProvider theme={theme}>
