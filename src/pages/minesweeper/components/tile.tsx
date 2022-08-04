@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import { useGame } from "../hooks/GameProvider";
 import { GameTile } from "../logic";
@@ -44,7 +44,7 @@ export function Tile(tile: GameTile) {
   const classes = getClasses();
   return (
     <Box sx={classes.tile} onClick={onLeftClick} onContextMenu={onRightClick}>
-      {content()}
+      <Typography sx={classes.text}>{content()}</Typography>
     </Box>
   );
 
@@ -67,17 +67,15 @@ export function Tile(tile: GameTile) {
       if (numConnectedBombs === 1) return "game.colors.blue";
       return "text.primary";
     };
-    const tileSize = "28pt";
+    const maxSize = "52px";
+    const minSize = `calc(70vw / ${game.width})`;
     return {
       tile: [
         {
+          height: `min(${maxSize}, ${minSize})`,
+          width: `min(${maxSize}, ${minSize})`,
           position: "relative",
-          fontSize: "20pt",
-          fontWeight: "bold",
-          height: tileSize,
-          width: tileSize,
           backgroundColor: background(),
-          color: numberColor(),
           /* Center content*/
           flex: "1px",
           display: "flex",
@@ -114,6 +112,17 @@ export function Tile(tile: GameTile) {
           cursor: "default",
         },
       ],
+      text: {
+        fontWeight: "bold",
+        fontSize: {
+          xs: "10pt",
+          sm: "16pt",
+          md: "24pt",
+          lg: "30pt",
+          xl: "36pt",
+        },
+        color: numberColor(),
+      },
     } as const;
   }
 }
