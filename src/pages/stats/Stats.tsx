@@ -1,12 +1,12 @@
+import React, { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
-import { Difficulty } from "pages/minesweeper/logic";
-import { useEffect, useState } from "react";
+
 import { formatTime } from "utils/time";
 
 import { getCollection } from "../../services/firestore";
 import { MinesweeperDocument } from "../../services/models/minesweeperDocument";
 
-export function Scoreboard() {
+export function Stats() {
   const [docs, setDocs] = useState<MinesweeperDocument[]>();
 
   useEffect(() => {
@@ -32,9 +32,9 @@ function listDocs(docs?: MinesweeperDocument[]) {
   if (!docs) return <h3>...</h3>;
   if (docs.length === 0) return <Typography>no scores :(</Typography>;
   return docs.map((doc) => {
-    let [minutes, seconds, milliseconds] = formatTime(doc.fields.time);
+    const [minutes, seconds, milliseconds] = formatTime(doc.fields.time);
     return (
-      <div key={doc.reference!.id}>
+      <div key={doc.reference?.id ?? doc.fields.score}>
         <hr />
         <h3>user: {doc.fields.user}</h3>
         <h3>

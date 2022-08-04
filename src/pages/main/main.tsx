@@ -1,6 +1,8 @@
+import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
 
-import { games } from "../../games";
+import { games } from "games";
+
 import { GameCard } from "./components/GameCard";
 
 export function Main() {
@@ -8,14 +10,14 @@ export function Main() {
   const enabledGames = games.filter((game) => !game.isAvailable);
   const classes = getStyle();
   return (
-    <Box sx={classes.main}>
-      <Box sx={classes.header}>
+    <>
+      {/* <Box sx={classes.header}>
         <Typography variant="h2">Games</Typography>
         <Typography variant="body1">
           Want to enjoy some minimalistic games without any ads or distractions,
           then you have come to the right place!
         </Typography>
-      </Box>
+      </Box> */}
 
       <Box sx={classes.grid}>
         <Grid
@@ -43,7 +45,7 @@ export function Main() {
           ))}
         </Grid>
       </Box>
-    </Box>
+    </>
   );
 }
 
@@ -51,9 +53,8 @@ export function Main() {
 
 function getStyle() {
   return {
-    main: {},
     grid: {
-      width: "min(85vw, 700px)",
+      maxWidth: "700px",
       margin: "0 auto",
     },
     header: {

@@ -1,5 +1,6 @@
-import { useTheme } from "@mui/material";
+import React from "react";
 import { Link as RouterLink } from "react-router-dom";
+import { useTheme } from "@mui/material";
 
 type LinkProps = {
   to: string;

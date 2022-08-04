@@ -1,13 +1,14 @@
-import { firestore } from "./firebase";
 import {
-  collection,
-  getDocs,
   addDoc,
-  updateDoc,
+  collection,
   deleteDoc,
-  DocumentSnapshot,
   DocumentReference,
+  DocumentSnapshot,
+  getDocs,
+  updateDoc,
 } from "firebase/firestore";
+
+import { firestore } from "./firebase";
 
 export async function createDocument(
   collectionName: string,
@@ -33,10 +34,10 @@ export async function deleteDocument(ref?: DocumentReference) {
 
 export async function getCollection(
   name: string,
-  converter: Function
+  converter: (doc: DocumentSnapshot) => any
 ): Promise<{ [key: string]: any }[]> {
   const querySnapshot = await getDocs(collection(firestore, name));
-  let documents: { [key: string]: any }[] = [];
+  const documents: { [key: string]: any }[] = [];
   querySnapshot.forEach((doc: DocumentSnapshot) => {
     console.log(doc.id, " => ", doc.data());
     documents.push(converter(doc));

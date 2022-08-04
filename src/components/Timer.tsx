@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+
 import { formatTime } from "utils/time";
 
 function Timer() {
@@ -45,7 +46,7 @@ function Timer() {
   //   // }
   // }, [game, isRunning]);
 
-  let [minutes, seconds, milliseconds] = formatTime(time);
+  const [minutes, seconds, milliseconds] = formatTime(time);
   return (
     <div className="timer">
       <span>{minutes}:</span>

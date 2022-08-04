@@ -1,7 +1,8 @@
+import React from "react";
 import { Box } from "@mui/material";
-import { Tile } from "./Tile";
 
 import { useGame } from "../hooks/GameProvider";
+import { Tile } from "./Tile";
 
 export function Board() {
   const game = useGame()[0];
@@ -27,54 +28,52 @@ export function Board() {
       </Box>
     </>
   );
-}
 
-//------------------------------------------------------------------------------
-
-function getStyle() {
-  const border = {
-    width: "8px",
-    radius: "24px",
-    style: "solid",
-  };
-  return {
-    sweeperTable: {
-      position: "relative",
-      zIndex: 0,
-      marginLeft: "auto",
-      marginRight: "auto",
-      padding: "0px",
-      boxShadow: 10,
-      backgroundColor: "game.features.background",
-      borderSpacing: "0px",
-      borderRadius: border.radius,
-      borderWidth: border.width,
-      borderStyle: border.style,
-      borderColor: "game.features.obstacle",
-      "&::after": {
-        position: "absolute",
-        top: `calc(-1 * ${border.width})`,
-        left: `calc(-1 * ${border.width})`,
-        content: "''",
-        zIndex: -1,
-        boxShadow: "inset 0px 0px 5px black",
-        height: `calc(100% + 2 * ${border.width})`,
-        width: `calc(100% + 2 * ${border.width})`,
+  function getStyle() {
+    const border = {
+      width: "8px",
+      radius: "24px",
+      style: "solid",
+    };
+    return {
+      sweeperTable: {
+        position: "relative",
+        zIndex: 0,
+        marginLeft: "auto",
+        marginRight: "auto",
+        padding: "0px",
+        boxShadow: 10,
+        backgroundColor: "game.features.background",
+        borderSpacing: "0px",
         borderRadius: border.radius,
         borderWidth: border.width,
         borderStyle: border.style,
         borderColor: "game.features.obstacle",
+        "&::after": {
+          position: "absolute",
+          top: `calc(-1 * ${border.width})`,
+          left: `calc(-1 * ${border.width})`,
+          content: "''",
+          zIndex: -1,
+          boxShadow: "inset 0px 0px 5px black",
+          height: `calc(100% + 2 * ${border.width})`,
+          width: `calc(100% + 2 * ${border.width})`,
+          borderRadius: border.radius,
+          borderWidth: border.width,
+          borderStyle: border.style,
+          borderColor: "game.features.obstacle",
+        },
       },
-    },
-    sweeperRow: {
-      borderSpacing: "0px",
-      border: "0px",
-      padding: "0px",
-    },
-    sweeperCell: {
-      borderSpacing: "0px",
-      border: "0px",
-      padding: "0px",
-    },
-  };
+      sweeperRow: {
+        borderSpacing: "0px",
+        border: "0px",
+        padding: "0px",
+      },
+      sweeperCell: {
+        borderSpacing: "0px",
+        border: "0px",
+        padding: "0px",
+      },
+    };
+  }
 }

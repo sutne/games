@@ -1,21 +1,16 @@
-import {
-  Home,
-  Lightbulb,
-  LightbulbOutlined,
-  Login,
-  Person,
-} from "@mui/icons-material";
+import React, { SetStateAction, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import * as Icons from "@mui/icons-material";
 import {
   AppBar,
   IconButton,
+  Theme,
   Toolbar,
   Typography,
   useTheme,
 } from "@mui/material";
-import { Theme } from "@mui/material";
-import { SetStateAction, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { setPrefs } from "services/cookies";
+
+import { setCookiePreferences } from "services/preferences";
 import { darkTheme, lightTheme } from "themes";
 
 type NavBarProps = {
@@ -34,16 +29,23 @@ export function NavBar({ setTheme, title }: NavBarProps) {
     <AppBar position="static" sx={classes.navbar}>
       <Toolbar>
         <IconButton size="large" onClick={() => navigate("/")}>
-          <Home />
+          <Icons.Home />
+        </IconButton>
+        <IconButton size="large" onClick={() => navigate("/stats")}>
+          <Icons.EmojiEvents />
         </IconButton>
         <Typography variant="h5" flex={1}>
           {title}
         </Typography>
         <IconButton size="large" onClick={() => setAuth((auth) => !auth)}>
-          {auth ? <Person /> : <Login />}
+          {auth ? <Icons.Person /> : <Icons.Login />}
         </IconButton>
         <IconButton size="large" onClick={swapTheme}>
-          {theme === lightTheme ? <Lightbulb /> : <LightbulbOutlined />}
+          {theme === lightTheme ? (
+            <Icons.Lightbulb />
+          ) : (
+            <Icons.LightbulbOutlined />
+          )}
         </IconButton>
       </Toolbar>
     </AppBar>
@@ -52,10 +54,10 @@ export function NavBar({ setTheme, title }: NavBarProps) {
   function swapTheme() {
     if (theme === lightTheme) {
       setTheme(darkTheme);
-      setPrefs({ useDarkTheme: true });
+      setCookiePreferences({ useDarkTheme: true });
     } else {
       setTheme(lightTheme);
-      setPrefs({ useDarkTheme: false });
+      setCookiePreferences({ useDarkTheme: false });
     }
   }
 }
@@ -65,8 +67,7 @@ export function NavBar({ setTheme, title }: NavBarProps) {
 function getStyle() {
   return {
     navbar: {
-      margin: "12px auto",
-      width: "90%",
+      marginBottom: "32px",
       backgroundColor: "background.paper",
       color: "text.primary",
       borderRadius: "12px",

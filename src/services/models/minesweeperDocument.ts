@@ -1,4 +1,5 @@
 import { DocumentReference, DocumentSnapshot } from "firebase/firestore";
+
 import { Difficulty } from "pages/minesweeper/logic";
 import {
   createDocument,

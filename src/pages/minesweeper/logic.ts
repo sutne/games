@@ -8,10 +8,10 @@ export class GameTile {
   x: number;
   y: number;
 
-  isHidden: boolean = true;
-  isFlagged: boolean = false;
-  isBomb: boolean = false;
-  numConnectedBombs: number = 0;
+  isHidden = true;
+  isFlagged = false;
+  isBomb = false;
+  numConnectedBombs = 0;
 
   constructor(x: number, y: number) {
     this.x = x;
@@ -26,11 +26,11 @@ export class Game {
   height: number;
   numBombs: number;
   numRemainingFlags: number;
-  hasInitializedBombs: boolean = false;
-  isLost: boolean = false;
-  isWon: boolean = false;
-  isSaved: boolean = false;
-  time: number = 0;
+  hasInitializedBombs = false;
+  isLost = false;
+  isWon = false;
+  isSaved = false;
+  time = 0;
 
   constructor(difficulty: Difficulty) {
     this.difficulty = difficulty;
@@ -52,9 +52,9 @@ export class Game {
     }
     this.numRemainingFlags = this.numBombs;
     this.board = [];
-    for (var y = 0; y < this.height; y++) {
-      let row: GameTile[] = [];
-      for (var x = 0; x < this.width; x++) {
+    for (let y = 0; y < this.height; y++) {
+      const row: GameTile[] = [];
+      for (let x = 0; x < this.width; x++) {
         row.push(new GameTile(x, y));
       }
       this.board.push(row);
@@ -77,8 +77,8 @@ export class Game {
 
   /** Convert index from 0 to numTiles to its coordinates */
   getCoordinates(index: number): [number, number] {
-    let x = Math.floor(index % this.width);
-    let y = Math.floor(index / this.width);
+    const x = Math.floor(index % this.width);
+    const y = Math.floor(index / this.width);
     return [x, y];
   }
 
@@ -89,31 +89,31 @@ export class Game {
 
   /** Initialize all bombs while avoiding the first clicked tile */
   initBombs(x: number, y: number): void {
-    let clicked = this.getTile(x, y);
+    const clicked = this.getTile(x, y);
     // create list of all possible bombIds
-    let numTiles = this.width * this.height;
+    const numTiles = this.width * this.height;
     let validBombIds: number[] = Array.from(Array(numTiles).keys());
     // remove clicked tile and all its neighbors
-    let toRemove: GameTile[] = [
+    const toRemove: GameTile[] = [
       clicked,
       ...this.getNeighbors(clicked.x, clicked.y),
     ];
-    for (let remove of toRemove) {
+    for (const remove of toRemove) {
       validBombIds = validBombIds.filter(
         (id) => id !== this.getIndex(remove.x, remove.y)
       );
     }
     // add bombs
-    for (var bombNum = 0; bombNum < this.numBombs; bombNum++) {
+    for (let bombNum = 0; bombNum < this.numBombs; bombNum++) {
       // extract random coordinates from valid bombIds
-      let randomIndex = Math.floor(Math.random() * validBombIds.length);
-      let randomId = validBombIds[randomIndex];
-      let [x, y] = this.getCoordinates(randomId);
+      const randomIndex = Math.floor(Math.random() * validBombIds.length);
+      const randomId = validBombIds[randomIndex];
+      const [x, y] = this.getCoordinates(randomId);
       // Set this tile as a bomb
-      let bomb = this.getTile(x, y);
+      const bomb = this.getTile(x, y);
       bomb.isBomb = true;
       // increase bomb count for all neighbors
-      for (let tile of this.getNeighbors(bomb.x, bomb.y)) {
+      for (const tile of this.getNeighbors(bomb.x, bomb.y)) {
         tile.numConnectedBombs += 1;
       }
       // Remove bomb id from the list
@@ -124,18 +124,18 @@ export class Game {
 
   /** Return list of all neighboring tiles */
   getNeighbors(x: number, y: number): GameTile[] {
-    let tile = this.getTile(x, y);
-    let neighbors = [];
+    const tile = this.getTile(x, y);
+    const neighbors = [];
     // prettier-ignore
-    let offsets = [
+    const offsets = [
       [-1,-1], [0,-1],  [1,-1],
       [-1, 0]/*[x, y]*/,[1, 0],
       [-1, 1], [0, 1],  [1, 1],
     ];
-    for (let offset of offsets) {
-      let [x, y] = [tile.x + offset[0], tile.y + offset[1]];
+    for (const offset of offsets) {
+      const [x, y] = [tile.x + offset[0], tile.y + offset[1]];
       if (!this.isTile(x, y)) continue;
-      let neighbor = this.getTile(x, y);
+      const neighbor = this.getTile(x, y);
       neighbors.push(neighbor);
     }
     return neighbors;
@@ -143,11 +143,11 @@ export class Game {
 
   /** Unhide this tile, and recursively unhide all neighbors of blank tiles */
   reveal(x: number, y: number): void {
-    let tile = this.getTile(x, y);
+    const tile = this.getTile(x, y);
     if (tile.isBomb) return;
     tile.isHidden = false;
     if (tile.numConnectedBombs > 0) return;
-    for (let neighbor of this.getNeighbors(tile.x, tile.y)) {
+    for (const neighbor of this.getNeighbors(tile.x, tile.y)) {
       if (neighbor.isFlagged) continue;
       if (!neighbor.isHidden) continue;
       this.reveal(neighbor.x, neighbor.y);
@@ -157,8 +157,8 @@ export class Game {
   /** Game is won if all non-bomb tiles are no longer hidden */
   checkIfWon() {
     if (this.isWon) return;
-    for (let row of this.board) {
-      for (let tile of row) {
+    for (const row of this.board) {
+      for (const tile of row) {
         if (tile.isBomb) continue;
         if (tile.isHidden) return;
       }
@@ -168,8 +168,8 @@ export class Game {
 
   /** Set all bomb tiles `isHidden` to `false`*/
   revealBombs(): void {
-    for (let row of this.board) {
-      for (let tile of row) {
+    for (const row of this.board) {
+      for (const tile of row) {
         if (!tile.isBomb) continue;
         if (tile.isFlagged) continue;
         tile.isHidden = false;
@@ -178,12 +178,12 @@ export class Game {
   }
 
   toggleFlag(x: number, y: number) {
-    if (this.numRemainingFlags === 0) return;
-    let tile = this.getTile(x, y);
+    const tile = this.getTile(x, y);
     if (tile.isFlagged) {
       tile.isFlagged = false;
       this.numRemainingFlags += 1;
     } else {
+      if (this.numRemainingFlags === 0) return;
       tile.isFlagged = true;
       this.numRemainingFlags -= 1;
     }
@@ -191,8 +191,8 @@ export class Game {
 
   getScore() {
     let score = 0;
-    for (let row of this.board) {
-      for (let tile of row) {
+    for (const row of this.board) {
+      for (const tile of row) {
         // Number of Revealed Tiles
         if (!tile.isHidden && !tile.isBomb) score += 10;
         // Adjust based on Correct/False flag placement
@@ -206,7 +206,7 @@ export class Game {
   }
 
   copy(): Game {
-    let copy = new Game(this.difficulty);
+    const copy = new Game(this.difficulty);
     copy.board = this.board;
     copy.numRemainingFlags = this.numRemainingFlags;
     copy.hasInitializedBombs = this.hasInitializedBombs;
@@ -215,5 +215,9 @@ export class Game {
     copy.isSaved = this.isSaved;
     copy.time = this.time;
     return copy;
+  }
+
+  isOver(): boolean {
+    return this.isLost || this.isWon;
   }
 }

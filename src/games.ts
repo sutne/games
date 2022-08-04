@@ -1,10 +1,9 @@
-import { Minesweeper } from "pages/minesweeper/Minesweeper";
 import minesweeperImage from "assets/minesweeper.png";
-
-import tetrisImage from "assets/tetris.jpeg";
 import pacmanImage from "assets/pacman.png";
 import snakeImage from "assets/snake.jpeg";
 import sudokuImage from "assets/sudoku.png";
+import tetrisImage from "assets/tetris.jpeg";
+import { Minesweeper } from "pages/minesweeper/Minesweeper";
 
 export type Game = {
   name: string;
@@ -17,8 +16,7 @@ export type Game = {
 export const games: Game[] = [
   {
     name: "Minesweeper",
-    description:
-      "Dodge the bombs in this classic game. Comes in three difficulties.",
+    description: "Clear the board of all tiles without stepping on a mine.",
     image: minesweeperImage,
     element: Minesweeper,
     isAvailable: false,
@@ -52,7 +50,7 @@ export const games: Game[] = [
     isAvailable: true,
   },
   {
-    name: "Human Benchmark",
+    name: "Memory",
     description: "Classic Minesweeper game with difficulties",
     image: minesweeperImage,
     element: Minesweeper,

@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
-import { Difficulty, Game } from "../logic";
+
 import { MinesweeperDocument } from "services/models/minesweeperDocument";
+
+import { Difficulty, Game } from "../logic";
 
 const GameContext = React.createContext<
   | { game: Game; setGame: React.Dispatch<React.SetStateAction<Game>> }
@@ -13,8 +15,8 @@ export function GameProvider({ difficulty, children }: GameProviderProps) {
 
   // Save score and time to firestore once game is over
   useEffect(() => {
+    if (!game.isOver()) return;
     if (game.isSaved) return;
-    if (!game.isWon && !game.isLost) return;
     new MinesweeperDocument({
       user: "undefined",
       time: game.time,
@@ -22,7 +24,7 @@ export function GameProvider({ difficulty, children }: GameProviderProps) {
       victory: game.isWon,
       difficulty: game.difficulty,
     }).create();
-    let copy = game.copy();
+    const copy = game.copy();
     copy.isSaved = true;
     setGame(copy);
   }, [game]);
