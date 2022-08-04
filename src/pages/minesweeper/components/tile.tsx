@@ -76,6 +76,7 @@ export function Tile(tile: GameTile) {
           width: `min(${maxSize}, ${minSize})`,
           position: "relative",
           backgroundColor: background(),
+          cursor: "default",
           /* Center content*/
           flex: "1px",
           display: "flex",
@@ -91,11 +92,10 @@ export function Tile(tile: GameTile) {
           MsUserSelect: "none",
           userSelect: "none",
         },
+        !isHidden && {
+          zIndex: "-2",
+        },
         isHidden && {
-          cursor: "pointer",
-          "&:hover": {
-            boxShadow: "inset 0 0 5px black",
-          },
           "&:before": {
             position: "absolute",
             height: "100%",
@@ -107,19 +107,22 @@ export function Tile(tile: GameTile) {
             boxShadow: "0px 0px 5px 0px black",
           },
         },
-        !isHidden && {
-          zIndex: "-2",
-          cursor: "default",
-        },
+        isHidden &&
+          !game.isOver() && {
+            cursor: "pointer",
+            "&:hover": {
+              boxShadow: "inset 0 0 5px black",
+            },
+          },
       ],
       text: {
         fontWeight: "bold",
         fontSize: {
           xs: "10pt",
           sm: "16pt",
-          md: "24pt",
-          lg: "30pt",
-          xl: "36pt",
+          md: "22pt",
+          lg: "26pt",
+          xl: "30pt",
         },
         color: numberColor(),
       },
