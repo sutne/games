@@ -17,10 +17,12 @@ export function GameProvider({ difficulty, children }: GameProviderProps) {
   useEffect(() => {
     if (!game.isOver()) return;
     if (game.isSaved) return;
+    if (!game.stats) return;
     new MinesweeperDocument({
       user: "undefined",
-      time: game.time,
-      score: game.getScore(),
+      time: game.stats.time,
+      clearPercentage: game.stats.clearPercentage,
+      correctFlags: game.stats.numCorrectFlags,
       victory: game.isWon,
       difficulty: game.difficulty,
     }).create();

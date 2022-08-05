@@ -29,6 +29,7 @@ export function Minesweeper() {
     return {
       title: {
         textAlign: "center",
+        paddingBottom: "12px",
       },
     };
   }

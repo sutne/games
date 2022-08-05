@@ -5,37 +5,32 @@ import { useGame } from "../hooks/GameProvider";
 import { GameTile } from "../logic";
 
 export function Tile(tile: GameTile) {
-  const { x, y, isHidden, isBomb, isFlagged, numConnectedBombs } = tile;
+  const { x, y, isHidden, isMine, isFlagged, numConnectedMines } = tile;
   const [game, setGame] = useGame();
 
   const content = () => {
     if (isFlagged) return "🚩";
-    if (game.isOver() && isBomb) return "💣";
+    if (game.isOver() && isMine) return "💣";
     if (isHidden) return "";
-    if (isBomb) return "💣";
-    if (numConnectedBombs !== 0) return numConnectedBombs;
+    if (isMine) return "💣";
+    if (numConnectedMines !== 0) return numConnectedMines;
     return "";
   };
 
   function onLeftClick() {
+    if (game.isOver()) return;
     if (!isHidden) return;
-    if (game.isLost || game.isWon) return;
     if (isFlagged) return;
     const copy = game.copy();
-    if (!copy.hasInitializedBombs) copy.initBombs(x, y);
+    if (!copy.isStarted) copy.start(x, y);
     copy.reveal(x, y);
-    if (isBomb) {
-      copy.revealBombs();
-      copy.isLost = true;
-    }
-    copy.checkIfWon();
     setGame(copy);
   }
 
   function onRightClick(e: any) {
     e.preventDefault(); // don't show context menu
+    if (game.isOver()) return;
     if (!isHidden) return;
-    if (game.isLost || game.isWon) return;
     const copy = game.copy();
     copy.toggleFlag(x, y);
     setGame(copy);
@@ -50,21 +45,21 @@ export function Tile(tile: GameTile) {
 
   function getClasses() {
     const background = () => {
-      const correctFlag = game.isOver() && isFlagged && isBomb;
+      const correctFlag = game.isOver() && isFlagged && isMine;
       if (correctFlag) return "game.colors.green";
       if (isHidden) return "game.features.obstacle";
-      if (isBomb) return "game.colors.red";
+      if (isMine) return "game.colors.red";
       return "game.features.background";
     };
     const numberColor = () => {
-      if (numConnectedBombs === 8) return "game.colors.black";
-      if (numConnectedBombs === 7) return "game.colors.gray";
-      if (numConnectedBombs === 6) return "game.colors.brown";
-      if (numConnectedBombs === 5) return "game.colors.red";
-      if (numConnectedBombs === 4) return "game.colors.orange";
-      if (numConnectedBombs === 3) return "game.colors.yellow";
-      if (numConnectedBombs === 2) return "game.colors.green";
-      if (numConnectedBombs === 1) return "game.colors.blue";
+      if (numConnectedMines === 8) return "game.colors.black";
+      if (numConnectedMines === 7) return "game.colors.gray";
+      if (numConnectedMines === 6) return "game.colors.brown";
+      if (numConnectedMines === 5) return "game.colors.red";
+      if (numConnectedMines === 4) return "game.colors.orange";
+      if (numConnectedMines === 3) return "game.colors.yellow";
+      if (numConnectedMines === 2) return "game.colors.green";
+      if (numConnectedMines === 1) return "game.colors.blue";
       return "text.primary";
     };
     const maxSize = "52px";

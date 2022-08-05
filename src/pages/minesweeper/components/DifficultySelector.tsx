@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 import { Difficulty } from "../logic";
 
@@ -8,8 +8,12 @@ export type DifficultyProps = {
 };
 
 export function DifficultySelector({ setDifficulty }: DifficultyProps) {
+  const classes = getClasses();
   return (
-    <Box textAlign="center">
+    <Box sx={classes.container}>
+      <Typography variant="h5" sx={classes.description}>
+        Select Difficulty
+      </Typography>
       <Button onClick={() => setDifficulty(Difficulty.BEGINNER)}>
         Beginner
       </Button>
@@ -19,4 +23,15 @@ export function DifficultySelector({ setDifficulty }: DifficultyProps) {
       <Button onClick={() => setDifficulty(Difficulty.EXPERT)}>Expert</Button>
     </Box>
   );
+
+  function getClasses() {
+    return {
+      container: {
+        textAlign: "center",
+      },
+      description: {
+        width: "100%",
+      },
+    };
+  }
 }

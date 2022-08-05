@@ -8,10 +8,11 @@ import {
 } from "services/firestore";
 
 type Fields = {
-  time: number;
-  score: number;
   difficulty: Difficulty;
   victory: boolean;
+  time: number;
+  clearPercentage: number;
+  correctFlags: number;
   user?: string;
 };
 
@@ -41,10 +42,11 @@ export class MinesweeperDocument {
     if (!data) return undefined;
     return new MinesweeperDocument(
       {
+        difficulty: data.difficulty,
         victory: data.victory,
         time: data.time,
-        score: data.score,
-        difficulty: data.difficulty,
+        clearPercentage: data.clearPercentage,
+        correctFlags: data.correctFlags,
         user: data.user,
       },
       snapshot.ref
