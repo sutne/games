@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import { Box, CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";
 
-import { NavBar } from "components/NavBar";
 import { games } from "games";
+import { NavBar } from "pages/components/NavBar";
 import { Main } from "pages/main/Main";
 import { Stats } from "pages/stats/Stats";
 import { getCookiePreferences } from "services/preferences";

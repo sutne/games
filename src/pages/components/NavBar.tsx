@@ -20,11 +20,21 @@ type NavBarProps = {
 
 export function NavBar({ setTheme, title }: NavBarProps) {
   const navigate = useNavigate();
-  const theme = useTheme();
-  const classes = getStyle();
 
+  const theme = useTheme();
   const [auth, setAuth] = useState(false);
 
+  function swapTheme() {
+    if (theme === lightTheme) {
+      setTheme(darkTheme);
+      setCookiePreferences({ useDarkTheme: true });
+    } else {
+      setTheme(lightTheme);
+      setCookiePreferences({ useDarkTheme: false });
+    }
+  }
+
+  const classes = getClasses();
   return (
     <AppBar position="static" sx={classes.navbar}>
       <Toolbar>
@@ -51,28 +61,16 @@ export function NavBar({ setTheme, title }: NavBarProps) {
     </AppBar>
   );
 
-  function swapTheme() {
-    if (theme === lightTheme) {
-      setTheme(darkTheme);
-      setCookiePreferences({ useDarkTheme: true });
-    } else {
-      setTheme(lightTheme);
-      setCookiePreferences({ useDarkTheme: false });
-    }
+  function getClasses() {
+    return {
+      navbar: {
+        marginBottom: "32px",
+        backgroundColor: "background.paper",
+        color: "text.primary",
+        borderRadius: "12px",
+        boxShadow: 5,
+        textAlign: "center",
+      },
+    };
   }
-}
-
-//------------------------------------------------------------------------------
-
-function getStyle() {
-  return {
-    navbar: {
-      marginBottom: "32px",
-      backgroundColor: "background.paper",
-      color: "text.primary",
-      borderRadius: "12px",
-      boxShadow: 5,
-      textAlign: "center",
-    },
-  };
 }

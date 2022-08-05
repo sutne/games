@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { formatTime } from "utils/time";
+import { convertTime } from "utils/time";
 
 function Timer() {
   // const game = useGame()[0];
@@ -46,7 +46,7 @@ function Timer() {
   //   // }
   // }, [game, isRunning]);
 
-  const [minutes, seconds, milliseconds] = formatTime(time);
+  const [minutes, seconds, milliseconds] = convertTime(time);
   return (
     <div className="timer">
       <span>{minutes}:</span>
