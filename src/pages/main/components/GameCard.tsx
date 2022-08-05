@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Theme, Typography } from "@mui/material";
 
-import { Link } from "components/Link";
 import { Game } from "games";
+import { Link } from "pages/components/Link";
 
 export function GameCard(game: Game) {
   return game.isAvailable ? (
