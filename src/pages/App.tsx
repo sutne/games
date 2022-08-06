@@ -16,7 +16,7 @@ export function App() {
   const [theme, setTheme] = useState(
     preferences.useDarkTheme ? darkTheme : lightTheme
   );
-  const enabledGames = games.filter((game) => !game.isAvailable);
+  const enabledGames = games.filter((game) => game.isAvailable);
 
   const classes = getClasses();
   return (

@@ -6,9 +6,9 @@ import { Link } from "pages/components/Link";
 
 export function GameCard(game: Game) {
   return game.isAvailable ? (
-    <GameCardUnavailable {...game} />
-  ) : (
     <GameCardAvailable {...game} />
+  ) : (
+    <GameCardUnavailable {...game} />
   );
 }
 
