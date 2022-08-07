@@ -7,7 +7,7 @@ import { toPercentageString } from "utils/numbers";
 import { convertTime } from "utils/time";
 
 import { useMinesweeper } from "../hooks/MinesweeperProvider";
-import { Board } from "./t-Board";
+import { Board } from "./Board";
 
 export function GameArea() {
   const { game, replay, clear } = useMinesweeper();
