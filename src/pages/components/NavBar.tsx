@@ -1,38 +1,16 @@
-import React, { SetStateAction, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import * as Icons from "@mui/icons-material";
-import {
-  AppBar,
-  IconButton,
-  Theme,
-  Toolbar,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { AppBar, Button, IconButton, Toolbar } from "@mui/material";
+import { Box } from "@mui/system";
 
-import { setCookiePreferences } from "services/preferences";
-import { darkTheme, lightTheme } from "themes";
+import { useAuth } from "pages/hooks/AuthProvider";
+import { useTheme } from "pages/hooks/ThemeProvider";
 
-type NavBarProps = {
-  setTheme: React.Dispatch<SetStateAction<Theme>>;
-  title?: string;
-};
-
-export function NavBar({ setTheme, title }: NavBarProps) {
+export function NavBar() {
   const navigate = useNavigate();
-
-  const theme = useTheme();
-  const [auth, setAuth] = useState(false);
-
-  function swapTheme() {
-    if (theme === lightTheme) {
-      setTheme(darkTheme);
-      setCookiePreferences({ useDarkTheme: true });
-    } else {
-      setTheme(lightTheme);
-      setCookiePreferences({ useDarkTheme: false });
-    }
-  }
+  const { swapTheme, themeIsDark } = useTheme();
+  const { user } = useAuth();
 
   const classes = getClasses();
   return (
@@ -41,21 +19,30 @@ export function NavBar({ setTheme, title }: NavBarProps) {
         <IconButton size="large" onClick={() => navigate("/")}>
           <Icons.Home />
         </IconButton>
-        <IconButton size="large" onClick={() => navigate("/stats")}>
-          <Icons.EmojiEvents />
-        </IconButton>
-        <Typography variant="h5" flex={1}>
-          {title}
-        </Typography>
-        <IconButton size="large" onClick={() => setAuth((auth) => !auth)}>
-          {auth ? <Icons.Person /> : <Icons.Login />}
-        </IconButton>
+        {user.isSignedIn ? (
+          <IconButton size="large" onClick={() => navigate("/stats")}>
+            <Icons.EmojiEvents />
+          </IconButton>
+        ) : (
+          <></>
+        )}
+        <Box sx={{ flex: "1" }} />
+        {user.isSignedIn ? (
+          <Button
+            sx={{ color: "text.secondary", textTransform: "none" }}
+            size="large"
+            endIcon={<Icons.AccountCircle />}
+            onClick={() => navigate("/profile")}
+          >
+            {user.username}
+          </Button>
+        ) : (
+          <IconButton size="large" onClick={() => navigate("/profile")}>
+            <Icons.AccountCircleOutlined />
+          </IconButton>
+        )}
         <IconButton size="large" onClick={swapTheme}>
-          {theme === lightTheme ? (
-            <Icons.Lightbulb />
-          ) : (
-            <Icons.LightbulbOutlined />
-          )}
+          {themeIsDark ? <Icons.LightbulbOutlined /> : <Icons.Lightbulb />}
         </IconButton>
       </Toolbar>
     </AppBar>
@@ -66,7 +53,6 @@ export function NavBar({ setTheme, title }: NavBarProps) {
       navbar: {
         marginBottom: "32px",
         backgroundColor: "background.paper",
-        color: "text.primary",
         borderRadius: "12px",
         boxShadow: 5,
         textAlign: "center",
