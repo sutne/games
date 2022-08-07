@@ -50,7 +50,6 @@ export async function signOut(): Promise<void | string> {
 
 export function onAuthChanged(callback: (user: User) => void) {
   onAuthStateChanged(firebaseAuth, (firebaseUser) => {
-    console.log("Auth changed", firebaseUser);
     callback({
       isSignedIn: firebaseUser !== null,
       uid: firebaseUser?.uid,

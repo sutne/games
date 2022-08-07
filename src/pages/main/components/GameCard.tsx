@@ -1,8 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Box, Theme, Typography } from "@mui/material";
 
 import { Game } from "games";
-import { Link } from "pages/components/Link";
 
 export function GameCard(game: Game) {
   return game.isAvailable ? (
@@ -13,21 +13,20 @@ export function GameCard(game: Game) {
 }
 
 function GameCardAvailable({ name, image, description }: Game) {
+  const navigate = useNavigate();
   const classes = getStyle({ available: true });
   return (
-    <Link to={`/${name}`}>
-      <Box sx={classes.gameCard}>
-        <Box sx={classes.imageBox}>
-          <Box component="img" src={image} alt={name} />
-        </Box>
-        <Box sx={classes.textBox}>
-          <Typography variant="h5">{name}</Typography>
-          <Typography variant="body1" sx={classes.description}>
-            {description}
-          </Typography>
-        </Box>
+    <Box sx={classes.gameCard} onClick={() => navigate(name)}>
+      <Box sx={classes.imageBox}>
+        <Box component="img" src={image} alt={name} />
       </Box>
-    </Link>
+      <Box sx={classes.textBox}>
+        <Typography variant="h5">{name}</Typography>
+        <Typography variant="body1" sx={classes.description}>
+          {description}
+        </Typography>
+      </Box>
+    </Box>
   );
 }
 
