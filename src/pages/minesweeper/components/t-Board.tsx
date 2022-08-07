@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@mui/material";
 
 import { useMinesweeper } from "../hooks/MinesweeperProvider";
-import { Tile } from "./Tile";
+import { Tile } from "./t-Tile";
 
 export function Board() {
   const { game } = useMinesweeper();

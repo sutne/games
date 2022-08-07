@@ -6,7 +6,7 @@ import { games } from "games";
 import { NavBar } from "pages/components/NavBar";
 import { AuthProvider } from "pages/hooks/AuthProvider";
 import { ThemeProvider } from "pages/hooks/ThemeProvider";
-import { Main } from "pages/main/Main";
+import { Main } from "pages/main/t-main";
 import { Profile } from "pages/profile";
 import { Stats } from "pages/stats/Stats";
 
