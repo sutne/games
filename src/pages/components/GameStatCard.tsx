@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 
 type StatItem = {
@@ -18,9 +18,19 @@ type GameStatCardProps = {
 };
 
 export function GameStatCard({ header, items, actions }: GameStatCardProps) {
+  const scrollRef = useRef<null | HTMLDivElement>(null);
+
+  useEffect(() => {
+    scrollRef?.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+      inline: "nearest",
+    });
+  }, []);
+
   const classes = getClasses();
   return (
-    <Box sx={classes.card}>
+    <Box sx={classes.card} ref={scrollRef}>
       <Typography variant="h4" sx={classes.header}>
         {header}
       </Typography>
