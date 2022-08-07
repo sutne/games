@@ -6,8 +6,7 @@ export const darkTheme = responsiveFontSizes(
       mode: "dark",
       background: {
         default: "rgb(29,39,51)",
-        paper: "rgb(43,49,63)",
-        disabled: "rgb(29,35,49)",
+        paper: "rgb(47,49,63)",
       },
       game: {
         features: {
@@ -36,7 +35,6 @@ export const lightTheme = responsiveFontSizes(
       background: {
         default: "#e0e0e0",
         paper: "#e0e0e0",
-        disabled: "#e0e0e0",
       },
       text: {
         primary: "rgb(13,17,23)",

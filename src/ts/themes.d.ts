@@ -1,10 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {
-  Palette,
-  PaletteOptions,
-  TypeBackground,
-  TypeBackgroundOptions,
-} from "@mui/material/styles";
+import { Palette, PaletteOptions } from "@mui/material/styles";
 /* eslint-enable @typescript-eslint/no-unused-vars */
 
 // Force custom themes to declare these colors,
@@ -29,14 +24,8 @@ declare module "@mui/material/styles" {
       };
     };
   }
-  // theme.palette.background.<>
-  interface BackgroundExtension {
-    disabled: React.CSSProperties["color"];
-  }
 
   // Apply to both give typehints and declaration warnings
   interface Palette extends PaletteExtension {}
   interface PaletteOptions extends PaletteExtension {}
-  interface TypeBackground extends BackgroundExtension {}
-  interface TypeBackgroundOptions extends BackgroundExtensions {}
 }

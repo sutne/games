@@ -44,12 +44,8 @@ function GameCardUnavailable({ name, image }: Game) {
   );
 }
 
-//------------------------------------------------------------------------------
-
-type StyleProps = {
-  available: boolean;
-};
-function getStyle({ available }: StyleProps) {
+type props = { available: boolean };
+function getStyle({ available }: props) {
   return {
     gameCard: [
       {
@@ -74,7 +70,7 @@ function getStyle({ available }: StyleProps) {
         },
       },
       !available && {
-        backgroundColor: "background.disabled",
+        backgroundColor: "background.paper",
         boxShadow: 1,
         cursor: "default",
         img: {
@@ -95,11 +91,7 @@ function getStyle({ available }: StyleProps) {
         width: "100%",
         background: (theme: Theme) =>
           `linear-gradient(to bottom, rgba(0, 0, 0, 0) 90%, 
-          ${
-            available
-              ? theme.palette.background.paper
-              : theme.palette.background.disabled
-          } 100%)`,
+          ${theme.palette.background.paper} 100%)`,
       },
     },
     textBox: {
