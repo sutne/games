@@ -49,7 +49,8 @@ export function Tile(tile: MinesweeperTile) {
       const correctFlag = game?.isOver() && isFlagged && isMine;
       if (correctFlag) return "game.colors.green";
       if (isHidden) return "game.features.obstacle";
-      if (isMine) return "game.colors.red";
+      if (isMine)
+        return game?.isWon ? "game.features.obstacle" : "game.colors.red";
       return "game.features.background";
     };
     const numberColor = () => {

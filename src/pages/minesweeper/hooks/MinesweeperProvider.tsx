@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { getUserID, isSignedIn } from "services/firebase/auth";
+import { getUser } from "services/firebase/auth";
 import { MinesweeperDocument } from "services/firebase/models/minesweeperDocument";
 
 import { Minesweeper, MinesweeperDifficulty } from "../minesweeper";
@@ -44,12 +44,14 @@ export function MinesweeperProvider({ children }: props) {
 
   // Save score and time to firestore once game is over
   useEffect(() => {
+    const user = getUser();
     if (!game) return;
-    if (!isSignedIn()) return;
+    if (!user.isSignedIn || !user.uid || !user.username) return;
     if (!game.isOver()) return;
     if (game.isSaved) return;
     new MinesweeperDocument({
-      user: getUserID(),
+      username: user.username,
+      uid: user.uid,
       time: game.stats.time,
       clearPercentage: game.stats.clearPercentage,
       correctFlags: game.stats.numCorrectFlags,
