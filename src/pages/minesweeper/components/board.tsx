@@ -1,11 +1,12 @@
 import React from "react";
 import { Box } from "@mui/material";
 
-import { useGame } from "../hooks/GameProvider";
+import { useMinesweeper } from "../hooks/MinesweeperProvider";
 import { Tile } from "./Tile";
 
 export function Board() {
-  const game = useGame()[0];
+  const { game } = useMinesweeper();
+  if (!game) throw new Error("Cannot render game before it is initialized");
   const classes = getStyle();
   return (
     <>

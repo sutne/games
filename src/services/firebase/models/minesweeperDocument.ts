@@ -1,19 +1,20 @@
 import { DocumentReference, DocumentSnapshot } from "firebase/firestore";
 
-import { Difficulty } from "pages/minesweeper/logic";
+import { MinesweeperDifficulty } from "pages/minesweeper/minesweeper";
 import {
   createDocument,
   deleteDocument,
   updateDocument,
-} from "services/firestore";
+} from "services/firebase/firestore";
 
 type Fields = {
-  difficulty: Difficulty;
+  difficulty: MinesweeperDifficulty;
   victory: boolean;
   time: number;
   clearPercentage: number;
   correctFlags: number;
-  user?: string;
+  uid: string;
+  username: string;
 };
 
 export class MinesweeperDocument {
@@ -47,7 +48,8 @@ export class MinesweeperDocument {
         time: data.time,
         clearPercentage: data.clearPercentage,
         correctFlags: data.correctFlags,
-        user: data.user,
+        uid: data.uid,
+        username: data.username,
       },
       snapshot.ref
     );

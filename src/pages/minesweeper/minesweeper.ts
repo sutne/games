@@ -1,10 +1,10 @@
-export enum Difficulty {
+export enum MinesweeperDifficulty {
   BEGINNER,
   INTERMEDIATE,
   EXPERT,
 }
 
-export class GameTile {
+export class MinesweeperTile {
   x: number;
   y: number;
 
@@ -19,16 +19,16 @@ export class GameTile {
   }
 }
 
-type Stats = {
+type MinesweeperStats = {
   numCorrectFlags: number;
   clearPercentage: number;
   time: number;
 };
 
-export class Game {
+export class Minesweeper {
   // Settings
-  difficulty: Difficulty;
-  board: GameTile[][];
+  difficulty: MinesweeperDifficulty;
+  board: MinesweeperTile[][];
   width: number;
   height: number;
   numMines: number;
@@ -39,10 +39,10 @@ export class Game {
   isWon = false;
   isSaved = false;
   startTime = 0;
-  stats: Stats = { time: 0, clearPercentage: 0, numCorrectFlags: 0 };
+  stats: MinesweeperStats = { time: 0, clearPercentage: 0, numCorrectFlags: 0 };
 
-  copy(): Game {
-    const copy: Game = new Game(this.difficulty);
+  copy(): Minesweeper {
+    const copy: Minesweeper = new Minesweeper(this.difficulty);
     copy.board = this.board;
     copy.numRemainingFlags = this.numRemainingFlags;
     copy.isStarted = this.isStarted;
@@ -54,20 +54,20 @@ export class Game {
     return copy;
   }
 
-  constructor(difficulty: Difficulty) {
+  constructor(difficulty: MinesweeperDifficulty) {
     this.difficulty = difficulty;
     switch (this.difficulty) {
-      case Difficulty.BEGINNER:
+      case MinesweeperDifficulty.BEGINNER:
         this.height = 8;
         this.width = 8;
         this.numMines = 10;
         break;
-      case Difficulty.INTERMEDIATE:
+      case MinesweeperDifficulty.INTERMEDIATE:
         this.height = 16;
         this.width = 16;
         this.numMines = 40;
         break;
-      case Difficulty.EXPERT:
+      case MinesweeperDifficulty.EXPERT:
         this.height = 30;
         this.width = 16;
         this.numMines = 99;
@@ -75,9 +75,9 @@ export class Game {
     this.numRemainingFlags = this.numMines;
     this.board = [];
     for (let y = 0; y < this.height; y++) {
-      const row: GameTile[] = [];
+      const row: MinesweeperTile[] = [];
       for (let x = 0; x < this.width; x++) {
-        row.push(new GameTile(x, y));
+        row.push(new MinesweeperTile(x, y));
       }
       this.board.push(row);
     }
@@ -94,7 +94,7 @@ export class Game {
     if (numTiles - 9 < this.numMines) throw new Error("Too many mines!");
     let validMineIds: number[] = Array.from(Array(numTiles).keys());
     // remove clicked tile and all its neighbors from list
-    const toRemove: GameTile[] = [
+    const toRemove: MinesweeperTile[] = [
       clicked,
       ...this._getNeighbors(clicked.x, clicked.y),
     ];
@@ -136,6 +136,7 @@ export class Game {
     this._checkIfWon();
   }
 
+  /** Place/remove flag depending of it there is remaining flags left */
   toggleFlag(x: number, y: number) {
     const tile = this._getTile(x, y);
     if (tile.isFlagged) {
@@ -148,10 +149,12 @@ export class Game {
     }
   }
 
+  /** Game is either won or lost */
   isOver(): boolean {
     return this.isLost || this.isWon;
   }
 
+  /** Calculate stats */
   _stop() {
     this.stats.time = new Date().getTime() - this.startTime;
     let cleared = 0;
@@ -165,7 +168,7 @@ export class Game {
     this.stats.clearPercentage = 100 * (cleared / numNonMineTiles);
   }
 
-  _revealRecursive(tile: GameTile): void {
+  _revealRecursive(tile: MinesweeperTile): void {
     tile.isHidden = false;
     if (tile.numConnectedMines > 0) return;
     for (const neighbor of this._getNeighbors(tile.x, tile.y)) {
@@ -185,6 +188,7 @@ export class Game {
       }
     }
     this._stop();
+    this._revealMines();
     this.isWon = true;
   }
 
@@ -199,7 +203,7 @@ export class Game {
   }
 
   /** Return tile at `(x,y)` */
-  _getTile(x: number, y: number): GameTile {
+  _getTile(x: number, y: number): MinesweeperTile {
     if (!this._isTile(x, y))
       throw new Error(`Invalid Minesweeper coords: (${x},${y})`);
     return this.board[y][x];
@@ -225,7 +229,7 @@ export class Game {
   }
 
   /** Return list of all neighboring tiles */
-  _getNeighbors(x: number, y: number): GameTile[] {
+  _getNeighbors(x: number, y: number): MinesweeperTile[] {
     const tile = this._getTile(x, y);
     const neighbors = [];
     // prettier-ignore

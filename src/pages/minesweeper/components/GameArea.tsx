@@ -6,26 +6,14 @@ import { GameStatCard } from "pages/components/GameStatCard";
 import { toPercentageString } from "utils/numbers";
 import { convertTime } from "utils/time";
 
-import { useGame } from "../hooks/GameProvider";
-import { Game } from "../logic";
+import { useMinesweeper } from "../hooks/MinesweeperProvider";
 import { Board } from "./Board";
-import { DifficultyProps } from "./DifficultySelector";
 
-export function GameArea({ setDifficulty }: DifficultyProps) {
-  const [game, setGame] = useGame();
+export function GameArea() {
+  const { game, replay, clear } = useMinesweeper();
+  if (!game) throw new Error("Cannot render game before initialization");
 
-  const classes = getClasses();
-  return (
-    <>
-      <Typography variant="h5" sx={classes.header}>
-        {`${game.numRemainingFlags} 🚩 Remaining`}
-      </Typography>
-      <Board />
-      {showStats()}
-    </>
-  );
-
-  function showStats() {
+  const showStats = () => {
     if (!game.isOver()) return;
     const cleared = toPercentageString(game.stats.clearPercentage);
     const [m, s, h] = convertTime(game.stats.time);
@@ -43,18 +31,29 @@ export function GameArea({ setDifficulty }: DifficultyProps) {
             {
               icon: Icons.Replay,
               description: "Replay",
-              action: () => setGame(new Game(game.difficulty)),
+              action: () => replay(),
             },
             {
               icon: Icons.SwapHoriz,
               description: "Change Difficulty",
-              action: () => setDifficulty(undefined),
+              action: () => clear(),
             },
           ]}
         />
       </Box>
     );
-  }
+  };
+
+  const classes = getClasses();
+  return (
+    <>
+      <Typography variant="h5" sx={classes.header}>
+        {`${game.numRemainingFlags} 🚩 Remaining`}
+      </Typography>
+      <Board />
+      {showStats()}
+    </>
+  );
 
   function getClasses() {
     return {
@@ -62,7 +61,7 @@ export function GameArea({ setDifficulty }: DifficultyProps) {
         textAlign: "center",
         padding: "12px",
         fontWeight: "bold",
-        visibility: game.isOver() ? "hidden" : "",
+        visibility: game?.isOver() ? "hidden" : "",
       },
       statContainer: {
         marginTop: "3rem",

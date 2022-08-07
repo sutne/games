@@ -1,47 +1,46 @@
-import React, { useState } from "react";
+import React from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
-import { Box, CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";
+import { Box, CssBaseline } from "@mui/material";
 
 import { games } from "games";
 import { NavBar } from "pages/components/NavBar";
+import { AuthProvider } from "pages/hooks/AuthProvider";
+import { ThemeProvider } from "pages/hooks/ThemeProvider";
 import { Main } from "pages/main/Main";
+import { Profile } from "pages/profile";
 import { Stats } from "pages/stats/Stats";
-import { getCookiePreferences } from "services/preferences";
-import { darkTheme, lightTheme } from "themes";
 
 export function App() {
   // Load preferences from cookies and set theme accordingly
-  const prefersDarkTheme = useMediaQuery("(prefers-color-scheme: dark)");
-  const preferences = getCookiePreferences({ useDarkTheme: prefersDarkTheme });
-  const [theme, setTheme] = useState(
-    preferences.useDarkTheme ? darkTheme : lightTheme
-  );
-  const enabledGames = games.filter((game) => !game.isAvailable);
+  const enabledGames = games.filter((game) => game.isAvailable);
 
   const classes = getClasses();
   return (
-    <ThemeProvider theme={theme}>
-      <Box sx={classes.content}>
-        <Box sx={classes.wrapper}>
-          <CssBaseline />
-          <HashRouter>
-            <NavBar setTheme={setTheme} />
-            <Routes>
-              <Route path="/" element={<Main />} />
-              <Route path="/stats" element={<Stats />} />
-              {enabledGames.map((game) => {
-                return (
-                  <Route
-                    key={game.name}
-                    path={`/${game.name}`}
-                    element={<game.element />}
-                  />
-                );
-              })}
-            </Routes>
-          </HashRouter>
+    <ThemeProvider>
+      <AuthProvider>
+        <Box sx={classes.content}>
+          <Box sx={classes.wrapper}>
+            <CssBaseline />
+            <HashRouter>
+              <NavBar />
+              <Routes>
+                <Route path="/" element={<Main />} />
+                <Route path="/stats" element={<Stats />} />
+                <Route path="/profile" element={<Profile />} />
+                {enabledGames.map((game) => {
+                  return (
+                    <Route
+                      key={game.name}
+                      path={`/${game.name}`}
+                      element={<game.element />}
+                    />
+                  );
+                })}
+              </Routes>
+            </HashRouter>
+          </Box>
         </Box>
-      </Box>
+      </AuthProvider>
     </ThemeProvider>
   );
 

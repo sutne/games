@@ -1,12 +1,13 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 
-import { useGame } from "../hooks/GameProvider";
-import { GameTile } from "../logic";
+import { useMinesweeper } from "../hooks/MinesweeperProvider";
+import { MinesweeperTile } from "../minesweeper";
 
-export function Tile(tile: GameTile) {
+export function Tile(tile: MinesweeperTile) {
   const { x, y, isHidden, isMine, isFlagged, numConnectedMines } = tile;
-  const [game, setGame] = useGame();
+  const { game, updateGame } = useMinesweeper();
+  if (!game) throw new Error("Cannot render Tile before game is initialized");
 
   const content = () => {
     if (isFlagged) return "🚩";
@@ -17,24 +18,24 @@ export function Tile(tile: GameTile) {
     return "";
   };
 
-  function onLeftClick() {
+  const onLeftClick = () => {
     if (game.isOver()) return;
     if (!isHidden) return;
     if (isFlagged) return;
-    const copy = game.copy();
-    if (!copy.isStarted) copy.start(x, y);
-    copy.reveal(x, y);
-    setGame(copy);
-  }
+    updateGame((old) => {
+      if (!old.isStarted) old.start(x, y);
+      old.reveal(x, y);
+    });
+  };
 
-  function onRightClick(e: any) {
+  const onRightClick = (e: any) => {
     e.preventDefault(); // don't show context menu
     if (game.isOver()) return;
     if (!isHidden) return;
-    const copy = game.copy();
-    copy.toggleFlag(x, y);
-    setGame(copy);
-  }
+    updateGame((old) => {
+      old.toggleFlag(x, y);
+    });
+  };
 
   const classes = getClasses();
   return (
@@ -45,10 +46,11 @@ export function Tile(tile: GameTile) {
 
   function getClasses() {
     const background = () => {
-      const correctFlag = game.isOver() && isFlagged && isMine;
+      const correctFlag = game?.isOver() && isFlagged && isMine;
       if (correctFlag) return "game.colors.green";
       if (isHidden) return "game.features.obstacle";
-      if (isMine) return "game.colors.red";
+      if (isMine)
+        return game?.isWon ? "game.features.obstacle" : "game.colors.red";
       return "game.features.background";
     };
     const numberColor = () => {
@@ -63,7 +65,7 @@ export function Tile(tile: GameTile) {
       return "text.primary";
     };
     const maxSize = "52px";
-    const minSize = `calc(70vw / ${game.width})`;
+    const minSize = `calc(70vw / ${game?.width})`;
     return {
       tile: [
         {
@@ -103,7 +105,7 @@ export function Tile(tile: GameTile) {
           },
         },
         isHidden &&
-          !game.isOver() && {
+          !game?.isOver() && {
             cursor: "pointer",
             "&:hover": {
               boxShadow: "inset 0 0 5px black",

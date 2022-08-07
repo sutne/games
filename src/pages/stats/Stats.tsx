@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
 
+import { getCollection } from "services/firebase/firestore";
+import { MinesweeperDocument } from "services/firebase/models/minesweeperDocument";
 import { convertTime } from "utils/time";
-
-import { getCollection } from "../../services/firestore";
-import { MinesweeperDocument } from "../../services/models/minesweeperDocument";
 
 export function Stats() {
   const [docs, setDocs] = useState<MinesweeperDocument[]>();
@@ -36,7 +35,7 @@ function listDocs(docs?: MinesweeperDocument[]) {
     return (
       <div key={doc.reference?.id}>
         <hr />
-        <h3>user: {doc.fields.user}</h3>
+        <h3>user: {doc.fields.username}</h3>
         <h3>
           time: {minutes}:{seconds}:{milliseconds}
         </h3>
