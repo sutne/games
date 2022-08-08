@@ -1,5 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
+
+import { AutoScroll } from "./AutoScroll";
 
 type StatItem = {
   title: string;
@@ -18,57 +20,49 @@ type GameStatCardProps = {
 };
 
 export function GameStatCard({ header, items, actions }: GameStatCardProps) {
-  const scrollRef = useRef<null | HTMLDivElement>(null);
-
-  useEffect(() => {
-    scrollRef?.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "end",
-      inline: "nearest",
-    });
-  }, []);
-
   const classes = getClasses();
   return (
-    <Box sx={classes.card} ref={scrollRef}>
-      <Typography variant="h4" sx={classes.header}>
-        {header}
-      </Typography>
-      <Stack
-        direction="row"
-        sx={classes.statRow}
-        divider={<Divider orientation="vertical" flexItem />}
-        spacing={1}
-      >
-        {items.map((item) => (
-          <Stack key={item.title} sx={classes.statItem}>
-            <Typography variant="h6" textAlign="center">
-              {item.title}
-            </Typography>
-            <Typography variant="h4" textAlign="center">
-              {item.value}
-            </Typography>
-          </Stack>
-        ))}
-      </Stack>
-      {actions ? (
-        <Stack direction="row" sx={classes.buttonRow} spacing={1}>
-          {actions.map((item) => (
-            <Button
-              variant="outlined"
-              key={item.description}
-              sx={classes.buttonItem}
-              onClick={item.action}
-              startIcon={<item.icon />}
-            >
-              {item.description}
-            </Button>
+    <AutoScroll>
+      <Box sx={classes.card}>
+        <Typography variant="h4" sx={classes.header}>
+          {header}
+        </Typography>
+        <Stack
+          direction="row"
+          sx={classes.statRow}
+          divider={<Divider orientation="vertical" flexItem />}
+          spacing={1}
+        >
+          {items.map((item) => (
+            <Stack key={item.title} sx={classes.statItem}>
+              <Typography variant="h6" textAlign="center">
+                {item.title}
+              </Typography>
+              <Typography variant="h4" textAlign="center">
+                {item.value}
+              </Typography>
+            </Stack>
           ))}
         </Stack>
-      ) : (
-        <></>
-      )}
-    </Box>
+        {actions ? (
+          <Stack direction="row" sx={classes.buttonRow} spacing={1}>
+            {actions.map((item) => (
+              <Button
+                variant="outlined"
+                key={item.description}
+                sx={classes.buttonItem}
+                onClick={item.action}
+                startIcon={<item.icon />}
+              >
+                {item.description}
+              </Button>
+            ))}
+          </Stack>
+        ) : (
+          <></>
+        )}
+      </Box>
+    </AutoScroll>
   );
 
   function getClasses() {
