@@ -1,26 +1,23 @@
-import React from "react";
+import React, { SetStateAction } from "react";
 import { Box, Button, Typography } from "@mui/material";
 
-import { useMinesweeper } from "../hooks/MinesweeperProvider";
-import { MinesweeperDifficulty } from "../minesweeper";
+import { Difficulty } from "../logic";
 
-export function DifficultySelector() {
-  const { setDifficulty } = useMinesweeper();
+type props = {
+  setDifficulty: React.Dispatch<SetStateAction<Difficulty | undefined>>;
+};
+export function DifficultySelector({ setDifficulty }: props) {
   const classes = getClasses();
   return (
     <Box sx={classes.container}>
       <Typography variant="h5" sx={classes.description}>
         Select Difficulty
       </Typography>
-      <Button onClick={() => setDifficulty(MinesweeperDifficulty.BEGINNER)}>
-        Beginner
-      </Button>
-      <Button onClick={() => setDifficulty(MinesweeperDifficulty.INTERMEDIATE)}>
+      <Button onClick={() => setDifficulty("beginner")}>Beginner</Button>
+      <Button onClick={() => setDifficulty("intermediate")}>
         Intermediate
       </Button>
-      <Button onClick={() => setDifficulty(MinesweeperDifficulty.EXPERT)}>
-        Expert
-      </Button>
+      <Button onClick={() => setDifficulty("expert")}>Expert</Button>
     </Box>
   );
 
@@ -30,7 +27,7 @@ export function DifficultySelector() {
         textAlign: "center",
       },
       description: {
-        width: "100%",
+        // width: "100%",
       },
     };
   }

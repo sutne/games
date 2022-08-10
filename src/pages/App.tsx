@@ -2,12 +2,11 @@ import React from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import { Box, CssBaseline } from "@mui/material";
 
+import { NavBar } from "components/NavBar";
+import { AuthProvider, ThemeProvider } from "components/providers";
 import { games } from "games";
-import { NavBar } from "pages/components/NavBar";
-import { AuthProvider } from "pages/hooks/AuthProvider";
-import { ThemeProvider } from "pages/hooks/ThemeProvider";
 import { Main } from "pages/main/Main";
-import { Profile } from "pages/profile";
+import { Profile } from "pages/profile/Profile";
 import { Stats } from "pages/stats/Stats";
 
 export function App() {

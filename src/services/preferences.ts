@@ -17,7 +17,7 @@ export function getCookiePreferences(defaultValues: Preferences): Preferences {
   for (const [key] of Object.entries(defaultValues)) {
     let cookieValue = cookies.get(`preferences.${key}`);
     if (cookieValue === undefined) continue; // use default
-    // JSON.parse to correctly convert datatypes ("false" => false, "0"=> 0)
+    // JSON.parse to correctly convert datatypes ("false" => false, "0" => 0)
     cookieValue = JSON.parse(cookieValue);
     preferences[key as keyof Preferences] = cookieValue;
   }

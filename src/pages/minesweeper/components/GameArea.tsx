@@ -1,42 +1,55 @@
-import React from "react";
+import React, { SetStateAction } from "react";
 import * as Icons from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 
-import { GameStatCard } from "pages/components/GameStatCard";
+import { StatCard } from "components/cards/StatCard";
 import { toPercentageString } from "utils/numbers";
-import { convertTime } from "utils/time";
+import { timeString } from "utils/time";
 
-import { useMinesweeper } from "../hooks/MinesweeperProvider";
-import { Board } from "./Board";
+import { Difficulty, getStats } from "../logic";
+import { Board, useGame } from ".";
 
-export function GameArea() {
-  const { game, replay, clear } = useMinesweeper();
-  if (!game) throw new Error("Cannot render game before initialization");
+type props = {
+  setDifficulty: React.Dispatch<SetStateAction<Difficulty | undefined>>;
+};
+export function GameArea({ setDifficulty }: props) {
+  const { game } = useGame();
 
   const showStats = () => {
     if (!game.isOver()) return;
-    const cleared = toPercentageString(game.stats.clearPercentage);
-    const [m, s, h] = convertTime(game.stats.time);
-    const time = `${m}:${s}.${h}`;
+    const stats = getStats(game);
+    console.log("game stats", stats);
+    const cleared = toPercentageString(
+      stats.tiles.cleared / (stats.tiles.notCleared + stats.tiles.cleared)
+    );
+
     return (
       <Box sx={classes.statContainer}>
-        <GameStatCard
+        <StatCard
           header={game.isWon ? "You won" : "You lost"}
           items={[
-            { title: "Time", value: time },
+            { title: "Time", value: timeString(stats.time) },
             { title: "Cleared", value: cleared },
-            { title: "Correct Flags", value: game.stats.numCorrectFlags },
+            {
+              title: "Correct Flags",
+              value: `${stats.flags.correct}/${stats.flags.placed}`,
+            },
           ]}
           actions={[
             {
               icon: Icons.Replay,
               description: "Replay",
-              action: () => replay(),
+              action: () => {
+                setDifficulty(undefined);
+                setDifficulty(game.difficulty);
+              },
             },
             {
               icon: Icons.SwapHoriz,
               description: "Change Difficulty",
-              action: () => clear(),
+              action: () => {
+                setDifficulty(undefined);
+              },
             },
           ]}
         />

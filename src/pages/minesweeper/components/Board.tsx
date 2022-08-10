@@ -1,33 +1,45 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
 
-import { useMinesweeper } from "../hooks/MinesweeperProvider";
-import { Tile } from "./Tile";
+import { Cell, useGame } from ".";
 
 export function Board() {
-  const { game } = useMinesweeper();
-  if (!game) throw new Error("Cannot render game before it is initialized");
+  const { game } = useGame();
+  const [tileSize, setTileSize] = useState("64px");
+  const container = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver((event) => {
+      const containerWidth = event[0].contentBoxSize[0].inlineSize;
+      const maxSize = 64;
+      const minSize = Math.floor((containerWidth ?? 80) / (game?.width ?? 1));
+      setTileSize(`${Math.min(minSize, maxSize)}px`);
+    });
+    if (!container.current) return;
+    resizeObserver.observe(container.current);
+  }, [container]);
+
   const classes = getStyle();
   return (
-    <>
-      <Box component="table" sx={classes.sweeperTable}>
+    <Box sx={{ width: "100%" }} ref={container}>
+      <Box component="table" sx={classes.table}>
         <Box component="tbody">
           {game.board.map((row, r) => (
-            <Box component="tr" key={r} sx={classes.sweeperRow}>
+            <Box component="tr" key={r} sx={classes.row}>
               {row.map((tile) => (
                 <Box
                   component="td"
-                  key={tile.y * game.width + tile.x}
-                  sx={classes.sweeperCell}
+                  key={game._getIndex(tile.x, tile.y)}
+                  sx={classes.cell}
                 >
-                  <Tile {...tile} />
+                  <Cell {...tile} />
                 </Box>
               ))}
             </Box>
           ))}
         </Box>
       </Box>
-    </>
+    </Box>
   );
 
   function getStyle() {
@@ -36,8 +48,12 @@ export function Board() {
       radius: "24px",
       style: "solid",
     };
+
     return {
-      sweeperTable: {
+      table: {
+        width: `calc(${tileSize} * ${game?.width})`,
+        height: `calc(${tileSize} * ${game?.height})`,
+        tableLayout: "fixed",
         position: "relative",
         zIndex: 0,
         marginLeft: "auto",
@@ -65,12 +81,15 @@ export function Board() {
           borderColor: "game.features.obstacle",
         },
       },
-      sweeperRow: {
+      row: {
         borderSpacing: "0px",
+        height: tileSize,
         border: "0px",
         padding: "0px",
       },
-      sweeperCell: {
+      cell: {
+        maxWidth: 0,
+        display: "table-cell",
         borderSpacing: "0px",
         border: "0px",
         padding: "0px",

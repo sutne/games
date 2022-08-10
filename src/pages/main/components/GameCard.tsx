@@ -49,28 +49,27 @@ function getStyle({ available }: props) {
   return {
     gameCard: [
       {
+        backgroundColor: "game.features.background",
         borderRadius: "16px",
         overflow: "hidden",
         transform: "scale(1)",
-        transition: "transform ease 0.3s",
+        transition: "box-shadow 0.3s ease-out, transform 0.3s ease-out",
         img: {
           height: "170%",
-          width: "110%",
+          width: "120%",
           transform: "rotate(-17deg) translate(-8px, -55px)",
           objectFit: "cover",
         },
       },
       available && {
-        backgroundColor: "background.paper",
         boxShadow: 5,
         cursor: "pointer",
         "&:hover": {
           boxShadow: 15,
-          transform: "translate(0px, -5px) scale(1.01)",
+          transform: "translate(0px, -2px) scale(1.01)",
         },
       },
       !available && {
-        backgroundColor: "background.paper",
         boxShadow: 1,
         cursor: "default",
         img: {
@@ -91,7 +90,7 @@ function getStyle({ available }: props) {
         width: "100%",
         background: (theme: Theme) =>
           `linear-gradient(to bottom, rgba(0, 0, 0, 0) 90%, 
-          ${theme.palette.background.paper} 100%)`,
+          ${theme.palette.game.features.background} 100%)`,
       },
     },
     textBox: {

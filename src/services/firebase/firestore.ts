@@ -1,46 +1,28 @@
 import {
-  addDoc,
-  collection,
-  deleteDoc,
-  DocumentReference,
-  DocumentSnapshot,
-  getDocs,
+  doc,
+  getDoc,
+  getFirestore,
+  setDoc,
   updateDoc,
 } from "firebase/firestore";
 
-import { firestore } from "./firebase";
+import { firebaseApp } from "./firebase";
 
-export async function createDocument(
-  collectionName: string,
-  data: { [key: string]: any }
-) {
-  return await addDoc(collection(firestore, collectionName), data);
+const firestore = getFirestore(firebaseApp);
+
+/** Create/overwrite an existing document
+ * @path "collection/uid"
+ */
+export async function createDocument<T>(path: string, data: T) {
+  return setDoc(doc(firestore, path), data);
 }
 
-export async function updateDocument(
-  data: { [key: string]: any },
-  ref?: DocumentReference
-) {
-  if (ref === undefined)
-    throw new Error("Cannot update document without a reference");
-  return await updateDoc(ref, data);
+export async function readDocument<T>(path: string): Promise<T | void> {
+  const snapshot = await getDoc(doc(firestore, path));
+  if (!snapshot.exists() || !snapshot.data()) return;
+  return snapshot.data() as T;
 }
 
-export async function deleteDocument(ref?: DocumentReference) {
-  if (ref === undefined)
-    throw new Error("Cannot delete document without a reference");
-  return await deleteDoc(ref);
-}
-
-export async function getCollection(
-  name: string,
-  converter: (doc: DocumentSnapshot) => any
-): Promise<{ [key: string]: any }[]> {
-  const querySnapshot = await getDocs(collection(firestore, name));
-  const documents: { [key: string]: any }[] = [];
-  querySnapshot.forEach((doc: DocumentSnapshot) => {
-    console.log(doc.id, " => ", doc.data());
-    documents.push(converter(doc));
-  });
-  return documents;
+export async function updateDocument<T>(path: string, data: T) {
+  return updateDoc(doc(firestore, path), data);
 }
