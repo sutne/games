@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 
 import { useAuth } from "components/providers/AuthProvider";
-import { UserDocument } from "pages/minesweeper/service/models";
+import { UserDocument } from "pages/minesweeper/service/models/userDocument";
 import { readDocument } from "services/firebase/firestore";
 import { timeString } from "utils/time";
 

@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
 
-import { Cell, useGame } from ".";
+import { Cell } from "./Cell";
+import { useGame } from "./GameProvider";
 
 export function Board() {
   const { game } = useGame();
-  const [tileSize, setTileSize] = useState("64px");
+  const [tileSize, setTileSize] = useState(
+    `min(64px, calc(90vw / ${game.width}))`
+  );
   const container = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -93,6 +96,7 @@ export function Board() {
         borderSpacing: "0px",
         border: "0px",
         padding: "0px",
+        fontSize: `calc(0.65 * ${tileSize})`,
       },
     };
   }

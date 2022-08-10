@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Button, CircularProgress } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 
 import { useTheme } from "components/providers/ThemeProvider";
+
+import { Button } from ".";
 
 type props = {
   label: string;
@@ -29,10 +31,10 @@ export function LoadingButton({ color, onClick, label, loadingLabel }: props) {
 
   return (
     <Button
-      variant="outlined"
+      label={loading ? loadingLabel ?? label : label}
       color={color}
       onClick={handleClick}
-      startIcon={
+      icon={
         loading ? (
           <CircularProgress
             size={theme.typography.htmlFontSize}
@@ -42,8 +44,6 @@ export function LoadingButton({ color, onClick, label, loadingLabel }: props) {
           <></>
         )
       }
-    >
-      {loading ? loadingLabel ?? label : label}
-    </Button>
+    />
   );
 }

@@ -1,4 +1,4 @@
-import { getTopList } from "utils/lists";
+import { getPersonalBest } from "utils/lists";
 
 import { comparator, Stats } from "../../logic/stats";
 
@@ -35,7 +35,7 @@ export function updateUserDocument(
   doc.tiles.notCleared += stats.tiles.notCleared;
   doc[stats.difficulty].games.played += 1;
   doc[stats.difficulty].games.won += stats.victory ? 1 : 0;
-  doc[stats.difficulty].best = getTopList(
+  doc[stats.difficulty].best = getPersonalBest(
     doc[stats.difficulty].best,
     stats,
     comparator

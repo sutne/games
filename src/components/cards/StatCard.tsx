@@ -1,5 +1,7 @@
 import React from "react";
-import { Box, Button, Divider, Stack, Typography } from "@mui/material";
+import { Box, Divider, Stack, Typography } from "@mui/material";
+
+import { Button } from "components/interactive";
 
 import { AutoScroll } from "../functional/AutoScroll";
 
@@ -8,7 +10,7 @@ type StatItem = {
   value: any;
 };
 type GameCardAction = {
-  icon: any;
+  icon: JSX.Element;
   description: string;
   action: () => any;
 };
@@ -21,46 +23,56 @@ type GameStatCardProps = {
 
 export function StatCard({ header, items, actions }: GameStatCardProps) {
   const classes = getClasses();
+
+  const Header = () => {
+    return <Typography variant="h4">{header}</Typography>;
+  };
+
+  const Stats = () => {
+    return (
+      <Stack
+        direction="row"
+        divider={<Divider orientation="vertical" flexItem />}
+        justifyContent="space-evenly"
+        spacing={1}
+        sx={classes.statRow}
+      >
+        {items.map((item) => (
+          <Stack key={item.title} sx={classes.statItem}>
+            <Typography variant="h6" textAlign="center" noWrap>
+              {item.title}
+            </Typography>
+            <Typography variant="h4" textAlign="center">
+              {item.value}
+            </Typography>
+          </Stack>
+        ))}
+      </Stack>
+    );
+  };
+
+  const Actions = () => {
+    if (!actions) return <></>;
+    return (
+      <Stack direction="row" spacing={1}>
+        {actions.map((item) => (
+          <Button
+            key={item.description}
+            label={item.description}
+            onClick={item.action}
+            icon={item.icon}
+          />
+        ))}
+      </Stack>
+    );
+  };
+
   return (
     <AutoScroll>
       <Box sx={classes.card}>
-        <Typography variant="h4" sx={classes.header}>
-          {header}
-        </Typography>
-        <Stack
-          direction="row"
-          sx={classes.statRow}
-          divider={<Divider orientation="vertical" flexItem />}
-          spacing={1}
-        >
-          {items.map((item) => (
-            <Stack key={item.title} sx={classes.statItem}>
-              <Typography variant="h6" textAlign="center">
-                {item.title}
-              </Typography>
-              <Typography variant="h4" textAlign="center">
-                {item.value}
-              </Typography>
-            </Stack>
-          ))}
-        </Stack>
-        {actions ? (
-          <Stack direction="row" sx={classes.buttonRow} spacing={1}>
-            {actions.map((item) => (
-              <Button
-                variant="outlined"
-                key={item.description}
-                sx={classes.buttonItem}
-                onClick={item.action}
-                startIcon={<item.icon />}
-              >
-                {item.description}
-              </Button>
-            ))}
-          </Stack>
-        ) : (
-          <></>
-        )}
+        <Header />
+        <Stats />
+        <Actions />
       </Box>
     </AutoScroll>
   );
@@ -73,22 +85,12 @@ export function StatCard({ header, items, actions }: GameStatCardProps) {
         backgroundColor: "background.paper",
         borderRadius: "16px",
       },
-      header: {
-        marginTop: "6px",
-        marginBottom: "12px",
+      statRow: {
+        margin: "16px 0",
       },
-      statRow: {},
       statItem: {
-        width: "100%",
+        flex: 1,
         textAlign: "center",
-      },
-      buttonRow: {
-        marginTop: "12px",
-      },
-      buttonItem: {
-        width: "100%",
-        textAlign: "center",
-        fontWeight: "bold",
       },
     };
   }

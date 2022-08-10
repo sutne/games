@@ -17,5 +17,9 @@ export function AutoScroll({ children }: props) {
     });
   }, [scrollRef]);
 
-  return <Box ref={scrollRef}>{children}</Box>;
+  return (
+    <Box sx={{ width: "100%" }} ref={scrollRef}>
+      {children}
+    </Box>
+  );
 }

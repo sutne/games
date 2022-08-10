@@ -1,16 +1,35 @@
 import React from "react";
-import { SvgIconComponent } from "@mui/icons-material";
 import { Button as MuiButton } from "@mui/material";
 
 type props = {
   onClick: () => void;
   label: string;
-  icon: SvgIconComponent;
+  color?:
+    | "error"
+    | "primary"
+    | "inherit"
+    | "secondary"
+    | "success"
+    | "info"
+    | "warning"
+    | undefined;
+  icon?: JSX.Element;
 };
-export function Button({ onClick, label }: props) {
+export function Button(props: props) {
   return (
-    <MuiButton variant="outlined" onClick={onClick}>
-      {label}
+    <MuiButton
+      variant="outlined"
+      color={props.color}
+      startIcon={props.icon}
+      onClick={props.onClick}
+      sx={{
+        width: "100%",
+        fontWeight: "bold",
+        whiteSpace: "nowrap",
+        minWidth: "max-content",
+      }}
+    >
+      {props.label}
     </MuiButton>
   );
 }

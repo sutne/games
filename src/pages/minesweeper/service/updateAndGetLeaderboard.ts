@@ -4,8 +4,10 @@ import {
   updateDocument,
 } from "services/firebase/firestore";
 
+import { Difficulty } from "../logic/difficulty";
 import { Stats } from "../logic/stats";
-import { Leaderboard, updateLeaderboard } from "./models";
+import { LeaderboardEntry } from "../service/models/leaderboards";
+import { Leaderboards, updateLeaderboards } from "./models/leaderboards";
 
 /**
  * Reads the leaderboard from the database, updates it with the new stats,
@@ -14,20 +16,29 @@ import { Leaderboard, updateLeaderboard } from "./models";
  * If the document doesn't exist it will be created.
  */
 export async function updateAndGetLeaderboard(
-  difficulty: string,
+  difficulty: Difficulty,
   username: string,
   stats: Stats
-): Promise<Leaderboard> {
-  const path = `minesweeper/leaderboard/${difficulty}`;
-  let data = await readDocument<Leaderboard>(path);
-  if (!data) {
-    data = {
-      leaderboard: [{ user: username, game: stats }],
-    } as Leaderboard;
-    await createDocument(path, data);
+): Promise<LeaderboardEntry[]> {
+  const path = `leaderboards/minesweeper`;
+  const entry: LeaderboardEntry = { user: username, game: stats };
+  let leaderboards = await readDocument<Leaderboards>(path);
+  if (!leaderboards) {
+    leaderboards = {
+      beginner: [],
+      intermediate: [],
+      expert: [],
+    };
+    leaderboards[difficulty].push(entry);
+    await createDocument(path, leaderboards);
   } else {
-    data = updateLeaderboard(data, username, stats);
-    await updateDocument(path, data);
+    leaderboards = updateLeaderboards(
+      leaderboards,
+      difficulty,
+      username,
+      stats
+    );
+    await updateDocument(path, leaderboards);
   }
-  return data;
+  return leaderboards[difficulty];
 }

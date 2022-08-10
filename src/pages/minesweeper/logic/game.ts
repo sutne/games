@@ -1,4 +1,5 @@
-import { Cell, Difficulty, DifficultySettings } from ".";
+import { Cell } from "./cell";
+import { Difficulty, DifficultySettings } from "./difficulty";
 
 export class Game {
   // Settings

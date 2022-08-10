@@ -3,7 +3,7 @@ import pacmanImage from "assets/pacman.png";
 import snakeImage from "assets/snake.jpeg";
 // import sudokuImage from "assets/sudoku.png";
 import tetrisImage from "assets/tetris.jpeg";
-import { Minesweeper } from "pages/minesweeper";
+import { Minesweeper } from "pages/minesweeper/Minesweeper";
 
 export type Game = {
   name: string;

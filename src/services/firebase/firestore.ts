@@ -10,11 +10,8 @@ import { firebaseApp } from "./firebase";
 
 const firestore = getFirestore(firebaseApp);
 
-/** Create/overwrite an existing document
- * @path "collection/uid"
- */
 export async function createDocument<T>(path: string, data: T) {
-  return setDoc(doc(firestore, path), data);
+  return setDoc(doc(firestore, path), data, { merge: true });
 }
 
 export async function readDocument<T>(path: string): Promise<T | void> {

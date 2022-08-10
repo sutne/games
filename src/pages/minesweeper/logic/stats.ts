@@ -1,4 +1,5 @@
-import { Difficulty, Game } from ".";
+import { Difficulty } from "./difficulty";
+import { Game } from "./game";
 
 // All relevant stats from a Single Game
 export type Stats = {
@@ -17,8 +18,8 @@ export type Stats = {
 
 /** Return best of the two, used to sort the leaderboards */
 export function comparator(A: Stats, B: Stats): 1 | -1 {
-  const AisFirst = 1;
-  const BisFirst = -1;
+  const AisFirst = -1;
+  const BisFirst = 1;
   // Winning is better than losing
   if (A.victory && !B.victory) return AisFirst;
   if (B.victory && !A.victory) return BisFirst;

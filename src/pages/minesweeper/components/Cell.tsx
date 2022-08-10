@@ -1,8 +1,8 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 
-import { Cell as GameCell } from "../logic";
-import { useGame } from ".";
+import { Cell as GameCell } from "../logic/cell";
+import { useGame } from "./GameProvider";
 
 export function Cell(cell: GameCell) {
   const { x, y, numConnectedMines, isMine, isHidden, isFlagged } = cell;
@@ -37,7 +37,7 @@ export function Cell(cell: GameCell) {
   const classes = getClasses();
   return (
     <Box sx={classes.cell} onClick={onLeftClick} onContextMenu={onRightClick}>
-      <Typography sx={classes.text}>{content()}</Typography>
+      <Box sx={classes.text}>{content()}</Box>
     </Box>
   );
 
@@ -109,13 +109,6 @@ export function Cell(cell: GameCell) {
       ],
       text: {
         fontWeight: "bold",
-        fontSize: {
-          xs: "10pt",
-          sm: "16pt",
-          md: "22pt",
-          lg: "26pt",
-          xl: "30pt",
-        },
         color: numberColor(),
       },
     } as const;

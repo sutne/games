@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 
-import { Difficulty, Game } from "../logic";
+import { Difficulty } from "../logic/difficulty";
+import { Game } from "../logic/game";
 
 const GameContext = React.createContext<
-  | { game: Game; updateGame: (callback: (game: Game) => void) => void }
+  | {
+      game: Game;
+      updateGame: (callback: (game: Game) => void) => void;
+      replay: () => void;
+    }
   | undefined
 >(undefined);
 
@@ -20,9 +25,14 @@ export function GameProvider({ difficulty, children }: props) {
     setGame(copy);
   };
 
+  const replay = () => {
+    setGame(new Game(game.difficulty));
+  };
+
   const values = {
     game,
     updateGame,
+    replay,
   };
   return <GameContext.Provider value={values}>{children}</GameContext.Provider>;
 }

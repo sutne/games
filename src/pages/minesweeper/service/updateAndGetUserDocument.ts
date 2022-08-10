@@ -5,7 +5,11 @@ import {
 } from "services/firebase/firestore";
 
 import { Stats } from "../logic/stats";
-import { emptyUserDocument, updateUserDocument, UserDocument } from "./models";
+import {
+  emptyUserDocument,
+  updateUserDocument,
+  UserDocument,
+} from "./models/userDocument";
 
 /**
  * Reads the user document from the database, updates it with the new stats,
