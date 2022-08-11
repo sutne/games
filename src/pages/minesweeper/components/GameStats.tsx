@@ -2,7 +2,7 @@ import React, { SetStateAction, useEffect, useState } from "react";
 import * as Icons from "@mui/icons-material";
 import { Grid } from "@mui/material";
 
-import { LeaderboardCard, PersonalBestCard } from "components/cards";
+import { TopListCard } from "components/cards";
 import { StatCard } from "components/cards/StatCard";
 import { useAuth } from "components/providers";
 import { toPercentageString } from "utils/numbers";
@@ -27,28 +27,36 @@ export function GameStats({ setDifficulty }: props) {
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
 
   useEffect(() => {
+    // When the game is over get its stats
     if (!user.isSignedIn) return;
     if (!game.isOver()) return;
     if (stats !== undefined) return;
     setStats(getStats(game));
-  }, [game]);
+  }, [game.isOver()]);
 
   useEffect(() => {
+    // Load leaderboard and user stats when the stats are set
     if (stats === undefined) return;
     if (game.isSaved) return;
     updateGame((prev) => (prev.isSaved = true));
+    let cancelled = false;
     const fetch = async () => {
       if (!user.uid || !user.username) return;
       const userDoc = await updateAndGetUserDocument(user.uid, stats);
+      if (cancelled) return;
       setPersonalBest(userDoc[game.difficulty].best);
       const leaderboard = await updateAndGetLeaderboard(
         game.difficulty,
         user.username,
         stats
       );
+      if (cancelled) return;
       setLeaderboard(leaderboard);
     };
     fetch();
+    return () => {
+      cancelled = true;
+    };
   }, [stats]);
 
   const Stats = () => {
@@ -101,7 +109,9 @@ export function GameStats({ setDifficulty }: props) {
       )}`,
       `${game.flags.correct}/${game.flags.placed}`,
     ]);
-    return <PersonalBestCard headers={headers} items={items} />;
+    return (
+      <TopListCard title="Personal Best" headers={headers} items={items} />
+    );
   };
 
   const Leaderboard = () => {
@@ -116,7 +126,7 @@ export function GameStats({ setDifficulty }: props) {
       `${entry.game.flags.correct}/${entry.game.flags.placed}`,
       `${entry.user}`,
     ]);
-    return <LeaderboardCard headers={headers} items={items} />;
+    return <TopListCard title="Leaderboard" headers={headers} items={items} />;
   };
 
   const classes = getClasses();

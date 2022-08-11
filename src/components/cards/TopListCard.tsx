@@ -1,15 +1,18 @@
 import React from "react";
 import { Box, Stack, Typography } from "@mui/material";
 
+import { Card } from "./Card";
+
 type props = {
   title: string;
   headers: string[];
   items: string[][];
+  type?: "bordered" | "elevated";
 };
-export function TopCard(props: props) {
+export function TopListCard({ type = "elevated", ...props }: props) {
   const classes = getClasses();
   return (
-    <Box sx={classes.card}>
+    <Card padding="12px" type={type}>
       <Typography variant="h4" textAlign="center" sx={classes.title}>
         {props.title}
       </Typography>
@@ -37,7 +40,7 @@ export function TopCard(props: props) {
           </Stack>
         ))}
       </Stack>
-    </Box>
+    </Card>
   );
 
   function getClasses() {
