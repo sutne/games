@@ -5,50 +5,55 @@ import { Card } from "./Card";
 
 type props = {
   title: string;
-  headers: string[];
-  items: string[][];
+  headers?: string[];
+  items?: string[][];
   highlightIndex?: number;
+  highlightColor?: string;
   type?: "bordered" | "elevated";
+  children?: JSX.Element;
 };
-export function TopListCard({ type = "elevated", ...props }: props) {
+export function TopListCard(props: props) {
   const classes = getClasses();
+  if (props.items && !props.headers)
+    throw new Error("The items need their headers");
   return (
-    <Card padding="12px" type={type}>
+    <Card padding="12px" type={props.type ?? "elevated"}>
       <Typography variant="h4" textAlign="center" sx={classes.title}>
         {props.title}
       </Typography>
       <Stack direction="column" spacing={classes.spacing.column}>
-        <Stack
-          direction="row"
-          spacing={classes.spacing.row}
-          sx={classes.header}
-        >
-          <Box sx={classes.rank}> </Box>
-          {props.headers.map((header) => (
-            <Typography key={header} sx={classes.headerItem}>
-              {header}
-            </Typography>
-          ))}
-        </Stack>
-        {props.items.map((item, i) => (
-          <Stack key={i} direction="row" spacing={classes.spacing.row}>
-            <Typography
-              sx={classes.rank}
-              fontWeight={props.highlightIndex === i ? "bold" : ""}
-            >
-              {i + 1}
-            </Typography>
+        {props.headers ? (
+          <Stack
+            direction="row"
+            spacing={classes.spacing.row}
+            sx={classes.header}
+          >
+            <Box sx={classes.rank}> </Box>
+            {props.headers.map((header) => (
+              <Typography key={header} sx={classes.headerItem}>
+                {header}
+              </Typography>
+            ))}
+          </Stack>
+        ) : (
+          <></>
+        )}
+        {props.items?.map((item, i) => (
+          <Stack
+            key={i}
+            direction="row"
+            spacing={classes.spacing.row}
+            sx={props.highlightIndex === i ? classes.highlight : undefined}
+          >
+            <Typography sx={classes.rank}>{i + 1}</Typography>
             {item.map((field) => (
-              <Typography
-                key={field}
-                sx={classes.rowItem}
-                fontWeight={props.highlightIndex === i ? "bold" : ""}
-              >
+              <Typography key={field} sx={classes.rowItem}>
                 {field}
               </Typography>
             ))}
           </Stack>
         ))}
+        {props.children}
       </Stack>
     </Card>
   );
@@ -69,7 +74,7 @@ export function TopListCard({ type = "elevated", ...props }: props) {
         marginBottom: "8px",
       },
       header: {
-        margin: "6px 0",
+        marginTop: "6px",
       },
       rank: {
         flex: 1,
@@ -80,6 +85,13 @@ export function TopListCard({ type = "elevated", ...props }: props) {
       },
       rowItem: {
         flex: 3,
+      },
+      highlight: {
+        "& > *": {
+          fontWeight: 900,
+          fontSize: "14pt",
+          color: "game.colors.green",
+        },
       },
     };
   }

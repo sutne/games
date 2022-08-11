@@ -23,7 +23,7 @@ export function Card({ type = "elevated", ...props }: props) {
           boxShadow: 5,
         },
         type === "bordered" && {
-          boxShadow: "0px 0px 0px 1pt rgba(0,0,0,0.3)",
+          boxShadow: "0px 0px 0px 1pt rgba(0,0,0,0.2)",
         },
       ],
     };

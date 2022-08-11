@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Box, CircularProgress, Grid, Stack, Typography } from "@mui/material";
+import {
+  CircularProgress,
+  Divider,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 import { Card, TopListCard } from "components/cards";
 import { useAuth } from "components/providers/AuthProvider";
@@ -10,6 +16,7 @@ import { toPercentageString } from "utils/numbers";
 import { timeString } from "utils/time";
 
 export function MinesweeperStats() {
+  const [hasStats, setHasStats] = useState<boolean>();
   const [doc, setDoc] = useState<UserDocument>();
   const { user } = useAuth();
 
@@ -17,7 +24,13 @@ export function MinesweeperStats() {
     let cancelled = false;
     const getDoc = async () => {
       const data = await readDocument<UserDocument>(`minesweeper/${user.uid}`);
-      if (!data || cancelled) return;
+      if (cancelled) return;
+      if (!data) {
+        // user has not minesweeper stats
+        setHasStats(false);
+        return;
+      }
+      setHasStats(true);
       setDoc(data);
     };
     getDoc();
@@ -25,6 +38,28 @@ export function MinesweeperStats() {
       cancelled = true;
     };
   }, []);
+
+  if (hasStats === false) {
+    return (
+      <Card>
+        <Grid
+          container
+          columns={{ xs: 4, sm: 8, md: 12 }}
+          spacing={2}
+          textAlign="center"
+        >
+          <Grid item xs={12}>
+            <Typography variant="h3">{"Minesweeper"}</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography>
+              {"You don't have any stats for this gametype yet :("}
+            </Typography>
+          </Grid>
+        </Grid>
+      </Card>
+    );
+  }
 
   if (!doc)
     return (
@@ -71,7 +106,19 @@ export function MinesweeperStats() {
     );
   };
 
-  const PersonalBest = (difficulty: Difficulty) => {
+  const DifficultyCard = (difficulty: Difficulty) => {
+    if (doc[difficulty].games.played === 0) {
+      return (
+        <Grid item xs={4}>
+          <TopListCard
+            type="bordered"
+            title={difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
+          >
+            <Typography>No games played</Typography>
+          </TopListCard>
+        </Grid>
+      );
+    }
     const headers = ["Time", "Cleared", "Flags"];
     const items = doc[difficulty].best.map((game) => [
       `${timeString(game.time)}`,
@@ -80,6 +127,9 @@ export function MinesweeperStats() {
       )}`,
       `${game.flags.correct}/${game.flags.placed}`,
     ]);
+    const winPercentage = toPercentageString(
+      doc[difficulty].games.won / doc[difficulty].games.played
+    );
     return (
       <Grid item xs={4}>
         <TopListCard
@@ -87,7 +137,35 @@ export function MinesweeperStats() {
           title={difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
           headers={headers}
           items={items}
-        />
+        >
+          <>
+            <Divider
+              orientation="horizontal"
+              flexItem
+              sx={{ margin: "12px 0" }}
+            />
+            <Grid container columns={3}>
+              <Grid item xs={1}>
+                <Stack>
+                  <Typography>Played</Typography>
+                  <Typography>{doc[difficulty].games.played}</Typography>
+                </Stack>
+              </Grid>
+              <Grid item xs={1}>
+                <Stack>
+                  <Typography>Victories</Typography>
+                  <Typography>{doc[difficulty].games.won}</Typography>
+                </Stack>
+              </Grid>
+              <Grid item xs={1}>
+                <Stack>
+                  <Typography>Win Rate</Typography>
+                  <Typography>{winPercentage}</Typography>
+                </Stack>
+              </Grid>
+            </Grid>
+          </>
+        </TopListCard>
       </Grid>
     );
   };
@@ -117,9 +195,9 @@ export function MinesweeperStats() {
             </Grid>
           </Card>
         </Grid>
-        {PersonalBest("beginner")}
-        {PersonalBest("intermediate")}
-        {PersonalBest("expert")}
+        {DifficultyCard("beginner")}
+        {DifficultyCard("intermediate")}
+        {DifficultyCard("expert")}
       </Grid>
     </Card>
   );
