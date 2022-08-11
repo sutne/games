@@ -17,12 +17,16 @@ import { Leaderboards, updateLeaderboards } from "./models/leaderboards";
  */
 export async function updateAndGetLeaderboard(
   difficulty: Difficulty,
-  username: string,
-  stats: Stats
+  stats: Stats,
+  username?: string
 ): Promise<LeaderboardEntry[]> {
   const path = `leaderboards/minesweeper`;
-  const entry: LeaderboardEntry = { user: username, game: stats };
   let leaderboards = await readDocument<Leaderboards>(path);
+  if (!username) {
+    if (!leaderboards) return [];
+    return leaderboards[difficulty];
+  }
+  const entry: LeaderboardEntry = { user: username, game: stats };
   if (!leaderboards) {
     leaderboards = {
       beginner: [],

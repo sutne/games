@@ -7,6 +7,7 @@ type props = {
   title: string;
   headers: string[];
   items: string[][];
+  highlightIndex?: number;
   type?: "bordered" | "elevated";
 };
 export function TopListCard({ type = "elevated", ...props }: props) {
@@ -31,9 +32,18 @@ export function TopListCard({ type = "elevated", ...props }: props) {
         </Stack>
         {props.items.map((item, i) => (
           <Stack key={i} direction="row" spacing={classes.spacing.row}>
-            <Typography sx={classes.rank}>{i + 1}</Typography>
+            <Typography
+              sx={classes.rank}
+              fontWeight={props.highlightIndex === i ? "bold" : ""}
+            >
+              {i + 1}
+            </Typography>
             {item.map((field) => (
-              <Typography key={field} sx={classes.rowItem}>
+              <Typography
+                key={field}
+                sx={classes.rowItem}
+                fontWeight={props.highlightIndex === i ? "bold" : ""}
+              >
                 {field}
               </Typography>
             ))}

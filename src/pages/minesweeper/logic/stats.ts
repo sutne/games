@@ -29,6 +29,18 @@ export function comparator(A: Stats, B: Stats): 1 | -1 {
   return A.tiles.cleared > B.tiles.cleared ? AisFirst : BisFirst;
 }
 
+export function equals(A: Stats, B: Stats): boolean {
+  return (
+    A.time === B.time &&
+    A.victory === B.victory &&
+    A.flags.correct === B.flags.correct &&
+    A.flags.placed === B.flags.placed &&
+    A.tiles.notCleared === B.tiles.notCleared &&
+    A.tiles.cleared === B.tiles.cleared &&
+    A.difficulty === B.difficulty
+  );
+}
+
 export function getStats(game: Game): Stats {
   const stats: Stats = {
     difficulty: game.difficulty,

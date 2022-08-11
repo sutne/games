@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Grid, Stack, Typography } from "@mui/material";
+import { Box, CircularProgress, Grid, Stack, Typography } from "@mui/material";
 
 import { Card, TopListCard } from "components/cards";
 import { useAuth } from "components/providers/AuthProvider";
@@ -26,7 +26,24 @@ export function MinesweeperStats() {
     };
   }, []);
 
-  if (!doc) return <Box>Loading ...</Box>;
+  if (!doc)
+    return (
+      <Card>
+        <Grid
+          container
+          columns={{ xs: 4, sm: 8, md: 12 }}
+          spacing={2}
+          textAlign="center"
+        >
+          <Grid item xs={12}>
+            <Typography variant="h3">{"Minesweeper"}</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <CircularProgress />
+          </Grid>
+        </Grid>
+      </Card>
+    );
 
   const numGamesPlayed =
     doc.beginner.games.played +

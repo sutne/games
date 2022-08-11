@@ -1,15 +1,17 @@
 import React, { SetStateAction, useEffect, useState } from "react";
 import * as Icons from "@mui/icons-material";
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 
-import { TopListCard } from "components/cards";
+import { Card, TopListCard } from "components/cards";
 import { StatCard } from "components/cards/StatCard";
+import { AutoScroll } from "components/functional";
 import { useAuth } from "components/providers";
+import { SignInPrompt } from "components/typography";
 import { toPercentageString } from "utils/numbers";
 import { timeString } from "utils/time";
 
 import { Difficulty } from "../logic/difficulty";
-import { getStats, Stats } from "../logic/stats";
+import { equals, getStats, Stats } from "../logic/stats";
 import { LeaderboardEntry } from "../service/models/leaderboards";
 import { updateAndGetLeaderboard } from "../service/updateAndGetLeaderboard";
 import { updateAndGetUserDocument } from "../service/updateAndGetUserDocument";
@@ -28,7 +30,6 @@ export function GameStats({ setDifficulty }: props) {
 
   useEffect(() => {
     // When the game is over get its stats
-    if (!user.isSignedIn) return;
     if (!game.isOver()) return;
     if (stats !== undefined) return;
     setStats(getStats(game));
@@ -40,20 +41,28 @@ export function GameStats({ setDifficulty }: props) {
     if (game.isSaved) return;
     updateGame((prev) => (prev.isSaved = true));
     let cancelled = false;
-    const fetch = async () => {
+
+    const fetchPersonal = async () => {
+      // Only load if user is signed in
       if (!user.uid || !user.username) return;
       const userDoc = await updateAndGetUserDocument(user.uid, stats);
       if (cancelled) return;
       setPersonalBest(userDoc[game.difficulty].best);
+    };
+
+    const fetchLeaderboard = async () => {
+      // Load leaderboard
       const leaderboard = await updateAndGetLeaderboard(
         game.difficulty,
-        user.username,
-        stats
+        stats,
+        user.username ?? undefined
       );
       if (cancelled) return;
-      setLeaderboard(leaderboard);
+      setLeaderboard(leaderboard ?? []);
     };
-    fetch();
+
+    fetchPersonal();
+    fetchLeaderboard();
     return () => {
       cancelled = true;
     };
@@ -101,6 +110,18 @@ export function GameStats({ setDifficulty }: props) {
 
   const PersonalBest = () => {
     if (!game.isOver()) return <></>;
+    if (!stats) return <></>;
+    if (!user.isSignedIn) {
+      return (
+        <Card>
+          <Typography variant="h4">Personal Best</Typography>
+          <SignInPrompt
+            pre="To save/view your games you have to"
+            post="This also gives you the opportunity to end up on the leaderboard."
+          />
+        </Card>
+      );
+    }
     const headers = ["Time", "Cleared", "Flags"];
     const items = personalBest.map((game) => [
       `${timeString(game.time)}`,
@@ -109,8 +130,14 @@ export function GameStats({ setDifficulty }: props) {
       )}`,
       `${game.flags.correct}/${game.flags.placed}`,
     ]);
+    const currentIndex = personalBest.findIndex((item) => equals(item, stats));
     return (
-      <TopListCard title="Personal Best" headers={headers} items={items} />
+      <TopListCard
+        title="Personal Best"
+        headers={headers}
+        items={items}
+        highlightIndex={currentIndex}
+      />
     );
   };
 
@@ -126,7 +153,19 @@ export function GameStats({ setDifficulty }: props) {
       `${entry.game.flags.correct}/${entry.game.flags.placed}`,
       `${entry.user}`,
     ]);
-    return <TopListCard title="Leaderboard" headers={headers} items={items} />;
+    const userIndex = leaderboard.findIndex(
+      (item) => item.user === user.username
+    );
+    return (
+      <AutoScroll>
+        <TopListCard
+          title="Leaderboard"
+          headers={headers}
+          items={items}
+          highlightIndex={userIndex}
+        />
+      </AutoScroll>
+    );
   };
 
   const classes = getClasses();
