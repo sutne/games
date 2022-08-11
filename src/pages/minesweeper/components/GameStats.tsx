@@ -45,7 +45,11 @@ export function GameStats({ setDifficulty }: props) {
     const fetchPersonal = async () => {
       // Only load if user is signed in
       if (!user.uid || !user.username) return;
-      const userDoc = await updateAndGetUserDocument(user.uid, stats);
+      const userDoc = await updateAndGetUserDocument(
+        user.uid,
+        game.difficulty,
+        stats
+      );
       if (cancelled) return;
       setPersonalBest(userDoc[game.difficulty].best);
     };

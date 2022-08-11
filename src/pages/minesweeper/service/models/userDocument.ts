@@ -1,6 +1,7 @@
-import { getPersonalBest } from "utils/lists";
+import { Difficulty } from "pages/minesweeper/logic/difficulty";
+import { updatePersonalBestList } from "utils/lists";
 
-import { comparator, Stats } from "../../logic/stats";
+import { firstIsBest, Stats } from "../../logic/stats";
 
 type DifficultyStats = {
   games: {
@@ -24,8 +25,17 @@ export type UserDocument = {
   };
 };
 
+/**
+ * @param doc the old document
+ * @param difficulty the difficulty of the game
+ * @param stats the stats to update the document with
+ * @returns `[new document, insertion index]` where the insertion index is the
+ * index at which the game is on the personal best list (or -1 if it wasn't good
+ * enough);
+ */
 export function updateUserDocument(
   doc: UserDocument,
+  difficulty: Difficulty,
   stats: Stats
 ): UserDocument {
   doc.totalTime += stats.time;
@@ -33,12 +43,12 @@ export function updateUserDocument(
   doc.flags.placed += stats.flags.placed;
   doc.tiles.cleared += stats.tiles.cleared;
   doc.tiles.notCleared += stats.tiles.notCleared;
-  doc[stats.difficulty].games.played += 1;
-  doc[stats.difficulty].games.won += stats.victory ? 1 : 0;
-  doc[stats.difficulty].best = getPersonalBest(
-    doc[stats.difficulty].best,
+  doc[difficulty].games.played += 1;
+  doc[difficulty].games.won += stats.tiles.notCleared === 0 ? 1 : 0;
+  doc[difficulty].best = updatePersonalBestList(
+    doc[difficulty].best,
     stats,
-    comparator
+    firstIsBest
   );
   return doc;
 }
