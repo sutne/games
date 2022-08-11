@@ -1,4 +1,5 @@
-import React, { SetStateAction, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
 
 import {
@@ -8,39 +9,47 @@ import {
   PasswordField,
   UsernameField,
 } from "components/interactive";
-import { FormProvider, useForm } from "components/providers";
+import { FormProvider, useAuth, useForm } from "components/providers";
 import { PageHeader } from "components/typography";
 import { createUser } from "services/firebase/auth";
 
-import { ProfileCard } from "./ProfileCard";
+import { ProfileCard } from "./components/ProfileCard";
 
-type props = {
-  setCreatingUser: React.Dispatch<SetStateAction<boolean>>;
-};
-export function CreateUser({ setCreatingUser }: props) {
+export function CreateUser() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user.isSignedIn) navigate("/profile");
+  }, [user]);
+
+  if (user.isSignedIn) {
+    return <PageHeader header="Create User" />;
+  }
+
   return (
-    <ProfileCard
-      header={
-        <>
-          <PageHeader header="Create User" />
+    <>
+      <PageHeader header="Create User" />
+      <ProfileCard
+        header={
           <Typography textAlign="start" paddingTop="16px">
             Create a user for your played games to be saved, gain access to a
             detailed stats page for all game types, and appear on global
             leaderboards (if you manage to beat the other players).
           </Typography>
-        </>
-      }
-      footer={
-        <>
-          <Typography>Already have a user? </Typography>
-          <Link onClick={() => setCreatingUser(false)}>Sign In</Link>
-        </>
-      }
-    >
-      <FormProvider>
-        <CreateUserFormFields />
-      </FormProvider>
-    </ProfileCard>
+        }
+        footer={
+          <>
+            <Typography>Already have a user? </Typography>
+            <Link onClick={() => navigate("/profile/sign-in")}>Sign In</Link>
+          </>
+        }
+      >
+        <FormProvider>
+          <CreateUserFormFields />
+        </FormProvider>
+      </ProfileCard>
+    </>
   );
 }
 

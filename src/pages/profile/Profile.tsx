@@ -1,20 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Typography } from "@mui/material";
 
-import { useAuth } from "components/providers/AuthProvider";
+import { LoadingButton } from "components/interactive";
+import { useAuth } from "components/providers";
+import { PageHeader } from "components/typography";
+import { signOut } from "services/firebase/auth";
 
-import { CreateUser } from "./components/CreateUser";
-import { SignedIn } from "./components/SignedIn";
-import { SignIn } from "./components/SignIn";
+import { ProfileCard } from "./components/ProfileCard";
 
 export function Profile() {
   const { user } = useAuth();
-  if (user.isSignedIn)
-    return <SignedIn username={user.username ?? "<undefined>"} />;
+  const navigate = useNavigate();
 
-  const [creatingUser, setCreatingUser] = useState(true);
-  return creatingUser ? (
-    <CreateUser setCreatingUser={setCreatingUser} />
-  ) : (
-    <SignIn setCreatingUser={setCreatingUser} />
+  useEffect(() => {
+    if (!user.isSignedIn) navigate("/profile/sign-in");
+  }, [user]);
+
+  if (!user || !user.username) {
+    return <PageHeader header="Profile" />;
+  }
+
+  return (
+    <>
+      <PageHeader header={user.username} />
+      <ProfileCard
+        header={
+          <Typography paddingTop="16px">
+            All games you play will be linked to this user, if you no longer
+            want to save your games just sign out. You will still be able to
+            play the games and see the leaderboard, but you won&apos;t appear on
+            them, even if you beat the record.
+          </Typography>
+        }
+      >
+        <LoadingButton
+          color="error"
+          onClick={async () => {
+            await signOut();
+            navigate("/");
+          }}
+          label="Sign Out"
+          loadingLabel="Signing Out"
+        />
+      </ProfileCard>
+    </>
   );
 }

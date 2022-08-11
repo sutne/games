@@ -33,7 +33,7 @@ export function GameStats({ setDifficulty }: props) {
     if (!game.isOver()) return;
     if (stats !== undefined) return;
     setStats(getStats(game));
-  }, [game.isOver()]);
+  }, [game.isWon, game.isLost]);
 
   useEffect(() => {
     // Load leaderboard and user stats when the stats are set
