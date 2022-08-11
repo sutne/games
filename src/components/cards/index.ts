@@ -1,7 +1,5 @@
 import { Card } from "./Card";
-import { LeaderboardCard } from "./LeaderboardCard";
-import { PersonalBestCard } from "./PersonalBestCard";
 import { StatCard } from "./StatCard";
-import { TopCard } from "./TopCard";
+import { TopListCard } from "./TopListCard";
 
-export { Card, LeaderboardCard, PersonalBestCard, StatCard, TopCard };
+export { Card, StatCard, TopListCard };

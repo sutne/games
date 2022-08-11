@@ -70,7 +70,11 @@ function SignInFormFields() {
   return (
     <>
       <EmailField field={fields.email} onChange={onFieldChange} />
-      <PasswordField field={fields.password} onChange={onFieldChange} />
+      <PasswordField
+        field={fields.password}
+        onChange={onFieldChange}
+        onEnterPress={onSubmit}
+      />
       <LoadingButton
         onClick={onSubmit}
         label="Sign In"

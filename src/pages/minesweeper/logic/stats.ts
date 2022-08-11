@@ -1,10 +1,7 @@
-import { Difficulty } from "./difficulty";
 import { Game } from "./game";
 
 // All relevant stats from a Single Game
 export type Stats = {
-  difficulty: Difficulty;
-  victory: boolean;
   time: number;
   tiles: {
     cleared: number;
@@ -16,23 +13,26 @@ export type Stats = {
   };
 };
 
-/** Return best of the two, used to sort the leaderboards */
-export function comparator(A: Stats, B: Stats): 1 | -1 {
-  const AisFirst = -1;
-  const BisFirst = 1;
-  // Winning is better than losing
-  if (A.victory && !B.victory) return AisFirst;
-  if (B.victory && !A.victory) return BisFirst;
-  // If both games were won, the time decides
-  if (A.victory && B.victory) return A.time < B.time ? AisFirst : BisFirst;
-  // Both were lost, cleared tiles decide (assumes both are of same difficulty)
-  return A.tiles.cleared > B.tiles.cleared ? AisFirst : BisFirst;
+/** Compare the stats, if A is the "best game" return `true` */
+export function firstIsBest(A: Stats, B: Stats): boolean {
+  if (A.tiles.cleared > B.tiles.cleared) return true;
+  if (A.tiles.cleared < B.tiles.cleared) return false;
+  // cleared same amount of tiles
+  return A.time <= B.time;
+}
+
+export function equals(A: Stats, B: Stats): boolean {
+  return (
+    A.time === B.time &&
+    A.flags.correct === B.flags.correct &&
+    A.flags.placed === B.flags.placed &&
+    A.tiles.notCleared === B.tiles.notCleared &&
+    A.tiles.cleared === B.tiles.cleared
+  );
 }
 
 export function getStats(game: Game): Stats {
   const stats: Stats = {
-    difficulty: game.difficulty,
-    victory: game.isWon,
     time: game.elapsedTime,
     flags: {
       correct: 0,

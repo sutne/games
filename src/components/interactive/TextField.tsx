@@ -10,6 +10,7 @@ type props = {
   onChange: (value: string) => void;
   icon?: JSX.Element;
   end?: JSX.Element;
+  onKeyDown?: (event: any) => void;
 };
 export function TextField(props: props) {
   return (
@@ -22,6 +23,7 @@ export function TextField(props: props) {
       placeholder={props.label}
       autoComplete={props.label}
       value={props.value}
+      onKeyDown={props.onKeyDown}
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">

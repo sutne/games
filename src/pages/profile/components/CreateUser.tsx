@@ -91,7 +91,11 @@ function CreateUserFormFields() {
     <>
       <UsernameField field={fields.username} onChange={onFieldChange} />
       <EmailField field={fields.email} onChange={onFieldChange} />
-      <PasswordField field={fields.password} onChange={onFieldChange} />
+      <PasswordField
+        field={fields.password}
+        onChange={onFieldChange}
+        onEnterPress={onSubmit}
+      />
       <LoadingButton
         onClick={onSubmit}
         label="Create User"

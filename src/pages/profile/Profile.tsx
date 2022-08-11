@@ -2,7 +2,9 @@ import React, { useState } from "react";
 
 import { useAuth } from "components/providers/AuthProvider";
 
-import { CreateUser, SignedIn, SignIn } from "./components";
+import { CreateUser } from "./components/CreateUser";
+import { SignedIn } from "./components/SignedIn";
+import { SignIn } from "./components/SignIn";
 
 export function Profile() {
   const { user } = useAuth();

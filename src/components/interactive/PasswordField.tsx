@@ -8,15 +8,20 @@ import { useForm } from "components/providers/FormProvider";
 type props = {
   field: { value: string; valid: boolean };
   onChange: (field: string, update: { value: string; valid: boolean }) => void;
+  onEnterPress?: () => void;
 };
 
-export function PasswordField({ field, onChange }: props) {
+export function PasswordField({ field, onChange, onEnterPress }: props) {
   const { showValidation } = useForm();
   const [hidden, setHidden] = useState(false);
 
   const validate = (password: string) => {
     if (password.length < 6)
       return "Password must be at least 6 characters long";
+  };
+
+  const handleKeyDown = (event: any) => {
+    if (event.key === "Enter" && onEnterPress) onEnterPress();
   };
 
   return (
@@ -28,6 +33,7 @@ export function PasswordField({ field, onChange }: props) {
           valid: validate(value) === undefined,
         });
       }}
+      onKeyDown={handleKeyDown}
       error={showValidation && validate(field.value) ? true : false}
       helperText={showValidation && validate(field.value)}
       type={hidden ? "text" : "password"}
