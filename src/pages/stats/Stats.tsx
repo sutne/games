@@ -3,13 +3,13 @@ import React from "react";
 import { Card } from "components/cards/Card";
 import { PageHeader } from "components/typography";
 
-import { MinesweeperStats } from "./components";
+import { MinesweeperStats } from "./components/MinesweeperStats";
 
 export function Stats() {
   return (
-    <Card>
+    <>
       <PageHeader header="Stats" />
       <MinesweeperStats />
-    </Card>
+    </>
   );
 }
