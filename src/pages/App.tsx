@@ -1,13 +1,17 @@
 import React from "react";
-import { HashRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Box, CssBaseline } from "@mui/material";
 
+import { RouteNotFound } from "components/404";
 import { NavBar } from "components/NavBar";
 import { AuthProvider, ThemeProvider } from "components/providers";
 import { games } from "games";
 import { Main } from "pages/main/Main";
 import { Profile } from "pages/profile/Profile";
 import { Stats } from "pages/stats/Stats";
+
+import { CreateUser } from "./profile/CreateUser";
+import { SignIn } from "./profile/SignIn";
 
 export function App() {
   // Load preferences from cookies and set theme accordingly
@@ -26,6 +30,8 @@ export function App() {
                 <Route path="/" element={<Main />} />
                 <Route path="/stats" element={<Stats />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/profile/sign-in" element={<SignIn />} />
+                <Route path="/profile/create-user" element={<CreateUser />} />
                 {enabledGames.map((game) => {
                   return (
                     <Route
@@ -35,6 +41,8 @@ export function App() {
                     />
                   );
                 })}
+                <Route path="/404" element={<RouteNotFound />} />
+                <Route path="*" element={<Navigate replace to="/404" />} />
               </Routes>
             </HashRouter>
           </Box>

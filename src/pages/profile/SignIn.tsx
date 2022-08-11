@@ -1,34 +1,46 @@
-import React, { SetStateAction, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
 
 import { LoadingButton } from "components/interactive";
 import { EmailField, PasswordField } from "components/interactive";
 import { Link } from "components/interactive/Link";
-import { FormProvider, useForm } from "components/providers";
+import { FormProvider, useAuth, useForm } from "components/providers";
 import { PageHeader } from "components/typography";
 import { signIn } from "services/firebase/auth";
 
-import { ProfileCard } from "./ProfileCard";
+import { ProfileCard } from "./components/ProfileCard";
 
-type props = {
-  setCreatingUser: React.Dispatch<SetStateAction<boolean>>;
-};
+export function SignIn() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
-export function SignIn({ setCreatingUser }: props) {
+  useEffect(() => {
+    if (user.isSignedIn) navigate("/profile");
+  }, [user]);
+
+  if (user.isSignedIn) {
+    return <PageHeader header="Sign In" />;
+  }
+
   return (
-    <ProfileCard
-      header={<PageHeader header="Sign in" />}
-      footer={
-        <>
-          <Typography>Don&apos;t have a user yet?</Typography>
-          <Link onClick={() => setCreatingUser(true)}>Create User</Link>
-        </>
-      }
-    >
-      <FormProvider>
-        <SignInFormFields />
-      </FormProvider>
-    </ProfileCard>
+    <>
+      <PageHeader header="Sign In" />
+      <ProfileCard
+        footer={
+          <>
+            <Typography>Don&apos;t have a user yet?</Typography>
+            <Link onClick={() => navigate("/profile/create-user")}>
+              Create User
+            </Link>
+          </>
+        }
+      >
+        <FormProvider>
+          <SignInFormFields />
+        </FormProvider>
+      </ProfileCard>
+    </>
   );
 }
 

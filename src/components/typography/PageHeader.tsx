@@ -16,7 +16,7 @@ export function PageHeader({ header }: props) {
     return {
       title: {
         textAlign: "center",
-        paddingBottom: "24px",
+        marginBottom: "16px",
         fontWeight: 600,
       },
     };
