@@ -8,7 +8,7 @@ type props = {
   headers?: string[];
   items?: string[][];
   highlightIndex?: number;
-  highlightColor?: string;
+  highlightColor?: string | undefined;
   type?: "bordered" | "elevated";
   children?: JSX.Element;
 };
@@ -88,9 +88,9 @@ export function TopListCard(props: props) {
       },
       highlight: {
         "& > *": {
-          fontWeight: 900,
           fontSize: "14pt",
-          color: "game.colors.green",
+          color: props.highlightColor ?? "info.success",
+          fontWeight: 900,
         },
       },
     };

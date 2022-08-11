@@ -147,6 +147,7 @@ export function GameStats({ setDifficulty }: props) {
 
   const Leaderboard = () => {
     if (!game.isOver()) return <></>;
+    if (!stats) return <></>;
     const headers = ["Time", "Cleared", "Flags", "User"];
     const items = leaderboard.map((entry) => [
       `${timeString(entry.game.time)}`,
@@ -157,6 +158,9 @@ export function GameStats({ setDifficulty }: props) {
       `${entry.game.flags.correct}/${entry.game.flags.placed}`,
       `${entry.user}`,
     ]);
+    const currentIndex = leaderboard.findIndex((item) =>
+      equals(item.game, stats)
+    );
     const userIndex = leaderboard.findIndex(
       (item) => item.user === user.username
     );
@@ -167,6 +171,8 @@ export function GameStats({ setDifficulty }: props) {
           headers={headers}
           items={items}
           highlightIndex={userIndex}
+          // diffrent color on leaderboard if user item is new or old
+          highlightColor={currentIndex === -1 ? "game.colors.blue" : undefined}
         />
       </AutoScroll>
     );
@@ -183,10 +189,10 @@ export function GameStats({ setDifficulty }: props) {
       <Grid item xs={12}>
         <Stats />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={6} sm={5}>
         <PersonalBest />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={6} sm={7}>
         <Leaderboard />
       </Grid>
     </Grid>
