@@ -8,7 +8,13 @@ type props = {
 export function Link({ onClick, children }: props) {
   const classes = getClasses();
   return (
-    <Box sx={classes.link} onClick={onClick}>
+    <Box
+      sx={classes.link}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick();
+      }}
+    >
       {children}
     </Box>
   );
@@ -19,7 +25,6 @@ export function Link({ onClick, children }: props) {
         display: "inline-block",
         cursor: "pointer",
         color: "info.main",
-        textDecoration: "underline",
         "&:hover": {
           fontWeight: "500",
         },
