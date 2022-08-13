@@ -14,28 +14,28 @@ export function Main() {
   return (
     <>
       <PageHeader header="sutne's Minimalistic Games" />
-      <Card>
-        <Grid
-          container
-          spacing={3}
-          alignItems="stretch"
-          columns={{ xs: 4, sm: 8, md: 12 }}
-        >
-          {enabledGames.map((game) => (
-            <Grid item xs={4} key={game.name}>
-              <GameCard {...game} />
-            </Grid>
-          ))}
-          <Grid item xs={12}>
-            <Typography variant="h4">Coming soon(ish)</Typography>
+      <Grid
+        container
+        spacing={3}
+        alignItems="stretch"
+        columns={{ xs: 4, sm: 8, md: 12 }}
+      >
+        {enabledGames.map((game) => (
+          <Grid item xs={4} key={game.name}>
+            <GameCard {...game} />
           </Grid>
-          {disabledGames.map((game) => (
-            <Grid item xs={4} key={game.name}>
-              <GameCard {...game} />
-            </Grid>
-          ))}
+        ))}
+        <Grid item xs={12}>
+          <Typography variant="h4" textAlign="center">
+            Coming soon(ish)
+          </Typography>
         </Grid>
-      </Card>
+        {disabledGames.map((game) => (
+          <Grid item xs={4} key={game.name}>
+            <GameCard {...game} />
+          </Grid>
+        ))}
+      </Grid>
     </>
   );
 }

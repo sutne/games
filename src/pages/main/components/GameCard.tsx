@@ -2,102 +2,89 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Theme, Typography } from "@mui/material";
 
-import { Game } from "games";
+import { useTheme } from "components/providers";
+import { GameListEntry } from "games";
 
-export function GameCard(game: Game) {
-  return game.isAvailable ? (
-    <GameCardAvailable {...game} />
-  ) : (
-    <GameCardUnavailable {...game} />
-  );
-}
-
-function GameCardAvailable({ name, image, description }: Game) {
+export function GameCard({ name, image, isAvailable }: GameListEntry) {
+  const { themeIsDark } = useTheme();
   const navigate = useNavigate();
-  const classes = getStyle({ available: true });
+
+  const onClick = () => {
+    if (isAvailable) navigate(name);
+  };
+
+  const classes = getClasses();
   return (
-    <Box sx={classes.gameCard} onClick={() => navigate(name)}>
-      <Box sx={classes.imageBox}>
-        <Box component="img" src={image} alt={name} />
+    <Box sx={classes.gameCard} onClick={onClick}>
+      <Box sx={classes.image}>
+        <Box
+          component="img"
+          src={themeIsDark ? image.dark : image.light}
+          alt={name}
+        />
       </Box>
-      <Box sx={classes.textBox}>
-        <Typography variant="h5">{name}</Typography>
-        <Typography variant="body1" sx={classes.description}>
-          {description}
-        </Typography>
-      </Box>
+      <Typography sx={classes.name} variant="h5">
+        {name}
+      </Typography>
     </Box>
   );
-}
 
-function GameCardUnavailable({ name, image }: Game) {
-  const classes = getStyle({ available: false });
-  return (
-    <Box sx={classes.gameCard}>
-      <Box sx={classes.imageBox}>
-        <Box component="img" src={image} alt={name} />
-      </Box>
-      <Box sx={classes.textBox}>
-        <Typography variant="h5">{name}</Typography>
-      </Box>
-    </Box>
-  );
-}
-
-type props = { available: boolean };
-function getStyle({ available }: props) {
-  return {
-    gameCard: [
-      {
-        backgroundColor: "game.features.background",
-        borderRadius: "16px",
-        overflow: "hidden",
-        transform: "scale(1)",
-        transition: "box-shadow 0.3s ease-out, transform 0.3s ease-out",
-        img: {
-          height: "170%",
-          width: "120%",
-          transform: "rotate(-17deg) translate(-8px, -55px)",
-          objectFit: "cover",
+  function getClasses() {
+    return {
+      gameCard: [
+        {
+          position: "relative",
+          overflow: "hidden",
+          aspectRatio: "1.618",
+          borderRadius: "16px",
+          transition: "box-shadow 0.1s ease, \
+          transform 0.1s ease",
         },
-      },
-      available && {
-        boxShadow: 5,
-        cursor: "pointer",
-        "&:hover": {
-          boxShadow: 15,
-          transform: "translate(0px, -2px) scale(1.01)",
+        isAvailable && {
+          cursor: "pointer",
+          boxShadow: 5,
+          ":hover": {
+            boxShadow: 15,
+            transform: "translate(0px, -2px) scale(1.01)",
+          },
         },
-      },
-      !available && {
-        boxShadow: 1,
-        cursor: "default",
-        img: {
-          filter: "grayscale(1) blur(2px)",
+        !isAvailable && {
+          cursor: "default",
         },
-      },
-    ],
-    imageBox: {
-      height: "150px",
-      overflow: "hidden",
-      position: "relative",
-      ":after": {
+      ],
+      image: [
+        {
+          position: "relative",
+          height: "100%",
+          width: "100%",
+          img: {
+            height: "100%",
+            width: "100%",
+            objectFit: "cover",
+          },
+          ":after": {
+            position: "absolute",
+            left: 0,
+            top: 0,
+            content: "''",
+            height: "100%",
+            width: "100%",
+            opacity: "0.95",
+            background: (theme: Theme) =>
+              `linear-gradient(to bottom, rgba(0, 0, 0, 0) 40%,
+                ${theme.palette.game.features.obstacle} 95%)`,
+          },
+        },
+        !isAvailable && {
+          filter: "blur(2pt)",
+        },
+      ],
+      name: {
         position: "absolute",
-        content: "''",
-        left: "0px",
-        top: "0px",
-        height: "100%",
-        width: "100%",
-        background: (theme: Theme) =>
-          `linear-gradient(to bottom, rgba(0, 0, 0, 0) 90%, 
-          ${theme.palette.game.features.background} 100%)`,
+        left: "24px",
+        bottom: "12px",
+        fontWeight: "600",
       },
-    },
-    textBox: {
-      padding: "0px 24px 12px 24px",
-    },
-    description: {
-      paddingTop: "12px",
-    },
-  } as const;
+    };
+  }
 }
