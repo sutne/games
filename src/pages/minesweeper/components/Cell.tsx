@@ -64,31 +64,14 @@ export function Cell(cell: GameCell) {
     return {
       cell: [
         {
-          height: "100%",
-          width: "100%",
-          position: "relative",
           backgroundColor: background(),
           cursor: "default",
-          /* Center content*/
-          flex: "1px",
-          display: "flex",
-          textAlign: "center",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignContent: "center",
-          /* Disable highlighting of the numbers */
-          WebkitTouchCallout: "none",
-          WebkitUserSelect: "none",
-          KhtmlUserSelect: "none",
-          MozUserSelect: "none",
-          MsUserSelect: "none",
-          userSelect: "none",
         },
         !isHidden && {
           zIndex: "-2",
         },
         isHidden && {
-          "&:before": {
+          ":before": {
             position: "absolute",
             height: "100%",
             width: "100%",
@@ -102,7 +85,7 @@ export function Cell(cell: GameCell) {
         isHidden &&
           !game.isOver() && {
             cursor: "pointer",
-            "&:hover": {
+            ":hover": {
               boxShadow: "inset 0 0 5px black",
             },
           },

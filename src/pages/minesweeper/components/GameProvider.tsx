@@ -40,7 +40,7 @@ export function GameProvider({ difficulty, children }: props) {
 export function useGame() {
   const context = React.useContext(GameContext);
   if (context === undefined) {
-    throw new Error("useMinesweeper must be used within a MinesweeperProvider");
+    throw new Error("useGame must be used within a GameProvider");
   }
   return { ...context };
 }
