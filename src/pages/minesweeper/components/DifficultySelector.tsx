@@ -1,5 +1,5 @@
 import React, { SetStateAction } from "react";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 
 import { Card } from "components/cards";
 
@@ -14,11 +14,17 @@ export function DifficultySelector({ setDifficulty }: props) {
     <Card>
       <Box sx={classes.container}>
         <Typography variant="h5">Select Difficulty</Typography>
-        <Button onClick={() => setDifficulty("beginner")}>Beginner</Button>
-        <Button onClick={() => setDifficulty("intermediate")}>
-          Intermediate
-        </Button>
-        <Button onClick={() => setDifficulty("expert")}>Expert</Button>
+        <Stack
+          sx={classes.buttons}
+          direction={{ xs: "column", sm: "row" }}
+          textAlign="center"
+        >
+          <Button onClick={() => setDifficulty("beginner")}>Beginner</Button>
+          <Button onClick={() => setDifficulty("intermediate")}>
+            Intermediate
+          </Button>
+          <Button onClick={() => setDifficulty("expert")}>Expert</Button>
+        </Stack>
       </Box>
     </Card>
   );
@@ -27,6 +33,10 @@ export function DifficultySelector({ setDifficulty }: props) {
     return {
       container: {
         textAlign: "center",
+      },
+      buttons: {
+        maxWidth: "300px",
+        margin: "0 auto",
       },
     };
   }

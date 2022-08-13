@@ -1,6 +1,6 @@
 import React, { SetStateAction, useEffect, useState } from "react";
 import * as Icons from "@mui/icons-material";
-import { Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 
 import { Card, TopListCard } from "components/cards";
 import { StatCard } from "components/cards/StatCard";
@@ -77,16 +77,26 @@ export function GameStats({ setDifficulty }: props) {
     const cleared = toPercentageString(
       stats.tiles.cleared / (stats.tiles.notCleared + stats.tiles.cleared)
     );
+    const isOnPersonalBestBoard =
+      personalBest.findIndex((item) => equals(item, stats)) !== -1;
 
+    const valueBox = (value: any) => (
+      <Box sx={{ color: isOnPersonalBestBoard ? "info.main" : "text.primary" }}>
+        {value}
+      </Box>
+    );
     return (
       <StatCard
         header={game.isWon ? "You won" : "You lost"}
         items={[
-          { title: "Time", value: timeString(stats.time) },
-          { title: "Cleared", value: cleared },
+          {
+            title: "Time",
+            value: valueBox(timeString(stats.time)),
+          },
+          { title: "Cleared", value: valueBox(cleared) },
           {
             title: "Correct Flags",
-            value: `${stats.flags.correct}/${stats.flags.placed}`,
+            value: valueBox(`${stats.flags.correct}/${stats.flags.placed}`),
           },
         ]}
         actions={[
@@ -172,7 +182,7 @@ export function GameStats({ setDifficulty }: props) {
           items={items}
           highlightIndex={userIndex}
           // diffrent color on leaderboard if user item is new or old
-          highlightColor={currentIndex === -1 ? "game.colors.blue" : undefined}
+          highlightColor={currentIndex === -1 ? "game.colors.green" : undefined}
         />
       </AutoScroll>
     );

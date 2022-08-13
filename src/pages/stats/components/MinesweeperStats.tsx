@@ -182,7 +182,7 @@ export function MinesweeperStats() {
           <Typography variant="h3">{"Minesweeper"}</Typography>
         </Grid>
         <Grid container item xs={12}>
-          <Card type="bordered">
+          <Card type="invisible" padding="12px">
             <Grid container columns={{ xs: 6, sm: 12 }} spacing={2}>
               {Stat("Games Played", numGamesPlayed)}
               {Stat("Games Won", numGamesWon)}
