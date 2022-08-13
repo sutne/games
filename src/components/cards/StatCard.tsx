@@ -1,9 +1,9 @@
 import React from "react";
-import { Box, Divider, Stack, Typography } from "@mui/material";
+import { Divider, Stack, Typography } from "@mui/material";
 
 import { Button } from "components/interactive";
 
-import { AutoScroll } from "../functional/AutoScroll";
+import { Card } from "./Card";
 
 type StatItem = {
   title: string;
@@ -31,18 +31,18 @@ export function StatCard({ header, items, actions }: GameStatCardProps) {
   const Stats = () => {
     return (
       <Stack
-        direction="row"
+        direction={{ xs: "column", sm: "row" }}
         divider={<Divider orientation="vertical" flexItem />}
         justifyContent="space-evenly"
         spacing={1}
         sx={classes.statRow}
       >
         {items.map((item) => (
-          <Stack key={item.title} sx={classes.statItem}>
-            <Typography variant="h6" textAlign="center" noWrap>
+          <Stack key={item.title} sx={classes.statItem} textAlign="center">
+            <Typography variant="h6" noWrap>
               {item.title}
             </Typography>
-            <Typography variant="h4" textAlign="center">
+            <Typography variant="h4" fontWeight="600">
               {item.value}
             </Typography>
           </Stack>
@@ -54,7 +54,7 @@ export function StatCard({ header, items, actions }: GameStatCardProps) {
   const Actions = () => {
     if (!actions) return <></>;
     return (
-      <Stack direction="row" spacing={1}>
+      <Stack direction={{ xs: "column", sm: "row" }} spacing={1}>
         {actions.map((item) => (
           <Button
             key={item.description}
@@ -68,23 +68,15 @@ export function StatCard({ header, items, actions }: GameStatCardProps) {
   };
 
   return (
-    <AutoScroll>
-      <Box sx={classes.card}>
-        <Header />
-        <Stats />
-        <Actions />
-      </Box>
-    </AutoScroll>
+    <Card padding="12px">
+      <Header />
+      <Stats />
+      <Actions />
+    </Card>
   );
 
   function getClasses() {
     return {
-      card: {
-        padding: "12px",
-        boxShadow: 5,
-        backgroundColor: "background.paper",
-        borderRadius: "16px",
-      },
       statRow: {
         margin: "16px 0",
       },

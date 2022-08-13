@@ -50,7 +50,7 @@ export const lightTheme = responsiveFontSizes(
           brown: "rgb(157,93,92)",
           red: "rgb(220,77,68)",
           orange: "rgb(208,135,102)",
-          yellow: "rgb(254,197,120)",
+          yellow: "rgb(244,187,110)",
           green: "rgb(105,180,120)",
           blue: "rgb(53,152,183)",
         },

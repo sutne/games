@@ -1,44 +1,60 @@
-import minesweeperImage from "assets/minesweeper.png";
+import minesweeperDark from "assets/dark/minesweeper.png";
+import minesweeperLight from "assets/light/minesweeper.png";
 import pacmanImage from "assets/pacman.png";
 import snakeImage from "assets/snake.jpeg";
 // import sudokuImage from "assets/sudoku.png";
 import tetrisImage from "assets/tetris.jpeg";
 import { Minesweeper } from "pages/minesweeper/Minesweeper";
 
-export type Game = {
+export type GameListEntry = {
   name: string;
   description: string;
-  image: any;
+  image: {
+    light: any;
+    dark: any;
+  };
   element: () => JSX.Element;
   isAvailable: boolean;
 };
 
-export const games: Game[] = [
+export const games: GameListEntry[] = [
   {
     name: "Minesweeper",
     description: "Clear the board of all tiles without stepping on a mine.",
-    image: minesweeperImage,
+    image: {
+      light: minesweeperLight,
+      dark: minesweeperDark,
+    },
     element: Minesweeper,
     isAvailable: true,
   },
   {
     name: "Tetris",
     description: "Classic Minesweeper game with difficulties",
-    image: tetrisImage,
+    image: {
+      light: tetrisImage,
+      dark: tetrisImage,
+    },
     element: Minesweeper,
     isAvailable: false,
   },
   {
     name: "Snake",
     description: "Classic Minesweeper game with difficulties",
-    image: snakeImage,
+    image: {
+      light: snakeImage,
+      dark: snakeImage,
+    },
     element: Minesweeper,
     isAvailable: false,
   },
   {
     name: "Pac-Man",
     description: "Classic Minesweeper game with difficulties",
-    image: pacmanImage,
+    image: {
+      light: pacmanImage,
+      dark: pacmanImage,
+    },
     element: Minesweeper,
     isAvailable: false,
   },

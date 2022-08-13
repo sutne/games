@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 type props = {
   children: JSX.Element | JSX.Element[] | string;
   color?: string;
-  type?: "elevated" | "bordered";
+  type?: "elevated" | "bordered" | "invisible";
   padding?: string;
 };
 export function Card({ type = "elevated", ...props }: props) {
@@ -23,8 +23,11 @@ export function Card({ type = "elevated", ...props }: props) {
           boxShadow: 5,
         },
         type === "bordered" && {
-          boxShadow: "0px 0px 0px 1pt rgba(0,0,0,0.2)",
+          borderColor: "divider",
+          borderStyle: "solid",
+          borderWidth: "1pt",
         },
+        type === "invisible" && {},
       ],
     };
   }

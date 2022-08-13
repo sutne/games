@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Divider, Stack, Typography } from "@mui/material";
 
 import { Card } from "./Card";
 
@@ -21,6 +21,7 @@ export function TopListCard(props: props) {
       <Typography variant="h4" textAlign="center" sx={classes.title}>
         {props.title}
       </Typography>
+      <Divider />
       <Stack direction="column" spacing={classes.spacing.column}>
         {props.headers ? (
           <Stack
@@ -89,7 +90,7 @@ export function TopListCard(props: props) {
       highlight: {
         "& > *": {
           fontSize: "14pt",
-          color: props.highlightColor ?? "info.success",
+          color: props.highlightColor ?? "info.main",
           fontWeight: 900,
         },
       },
