@@ -7,7 +7,7 @@ import { Card } from "./Card";
 
 type StatItem = {
   title: string;
-  value: any;
+  value: string;
 };
 type GameCardAction = {
   icon: JSX.Element;
@@ -19,9 +19,15 @@ type GameStatCardProps = {
   header: string;
   items: StatItem[];
   actions?: GameCardAction[];
+  highlight?: boolean;
 };
 
-export function StatCard({ header, items, actions }: GameStatCardProps) {
+export function StatCard({
+  header,
+  items,
+  actions,
+  highlight,
+}: GameStatCardProps) {
   const classes = getClasses();
 
   const Header = () => {
@@ -42,7 +48,7 @@ export function StatCard({ header, items, actions }: GameStatCardProps) {
             <Typography variant="h6" noWrap>
               {item.title}
             </Typography>
-            <Typography variant="h4" fontWeight="600">
+            <Typography variant="h4" sx={classes.itemValue}>
               {item.value}
             </Typography>
           </Stack>
@@ -83,6 +89,11 @@ export function StatCard({ header, items, actions }: GameStatCardProps) {
       statItem: {
         flex: 1,
         textAlign: "center",
+      },
+      itemValue: {
+        fontWeight: "600",
+        color: highlight ? "info.main" : "text.primary",
+        transition: "color 0.5s ease",
       },
     };
   }

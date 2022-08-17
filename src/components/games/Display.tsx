@@ -1,17 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
 
-interface props<T> {
+type props<T> = {
   pixels: T[][];
   PixelComponent: (val: T) => JSX.Element;
-  maxPixelSize: number;
+  maxPixelSize?: number;
   noZIndex?: boolean;
-}
+  align?: "right" | "left" | "center";
+};
 export function Display<T>({
   pixels,
-  maxPixelSize,
   PixelComponent,
+  maxPixelSize = 32,
   noZIndex,
+  align = "center",
 }: props<T>) {
   const width = pixels[0].length;
   const height = pixels.length;
@@ -58,37 +60,46 @@ export function Display<T>({
     };
 
     return {
-      table: {
-        width: `calc(${pixelSize} * ${width})`,
-        height: `calc(${pixelSize} * ${height})`,
-        tableLayout: "fixed",
-        position: "relative",
-        zIndex: 0,
-        marginLeft: "auto",
-        marginRight: "auto",
-        padding: "0px",
-        boxShadow: 10,
-        backgroundColor: "game.features.background",
-        borderSpacing: "0px",
-        borderRadius: border.radius,
-        borderWidth: border.width,
-        borderStyle: border.style,
-        borderColor: "game.features.obstacle",
-        "&::after": {
-          position: "absolute",
-          top: `calc(-1 * ${border.width})`,
-          left: `calc(-1 * ${border.width})`,
-          content: "''",
-          zIndex: -1,
-          boxShadow: "inset 0px 0px 5px black",
-          height: `calc(100% + 2 * ${border.width})`,
-          width: `calc(100% + 2 * ${border.width})`,
+      table: [
+        {
+          width: `calc(${pixelSize} * ${width})`,
+          height: `calc(${pixelSize} * ${height})`,
+          tableLayout: "fixed",
+          position: "relative",
+          zIndex: 0,
+          padding: "0px",
+          boxShadow: 10,
+          backgroundColor: "game.features.background",
+          borderSpacing: "0px",
           borderRadius: border.radius,
           borderWidth: border.width,
           borderStyle: border.style,
           borderColor: "game.features.obstacle",
+          ":after": {
+            position: "absolute",
+            top: `calc(-1 * ${border.width})`,
+            left: `calc(-1 * ${border.width})`,
+            content: "''",
+            zIndex: -1,
+            boxShadow: "inset 0px 0px 5px black",
+            height: `calc(100% + 2 * ${border.width})`,
+            width: `calc(100% + 2 * ${border.width})`,
+            borderRadius: border.radius,
+            borderWidth: border.width,
+            borderStyle: border.style,
+            borderColor: "game.features.obstacle",
+          },
         },
-      },
+        align === "center" && {
+          margin: "0 auto",
+        },
+        align === "right" && {
+          marginLeft: "auto",
+        },
+        align === "left" && {
+          marginRight: "auto",
+        },
+      ],
       row: {
         borderSpacing: "0px",
         height: pixelSize,
