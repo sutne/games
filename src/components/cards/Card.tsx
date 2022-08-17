@@ -15,7 +15,7 @@ export function Card({ type = "elevated", ...props }: props) {
     return {
       card: [
         {
-          height: "100%",
+          // height: "100%",
           width: "100%",
           backgroundColor: props.color ?? "background.paper",
           borderRadius: "16px",
