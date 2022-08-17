@@ -54,13 +54,18 @@ export function PersonalBest() {
   const currentIndex = personalBest?.findIndex((item) => equals(item, stats));
 
   return (
-    <FadeIn trigger={personalBest !== undefined && game.isOver()}>
+    <FadeIn
+      trigger={
+        game.isOver() &&
+        ((user.isSignedIn && personalBest !== undefined) || !user.isSignedIn)
+      }
+    >
       <AutoScroll>
-        {user.isSignedIn ? (
+        {!user.isSignedIn ? (
           <Card>
             <Typography variant="h4">Personal Best</Typography>
             <SignInPrompt
-              pre="To save/view your games you have to"
+              pre="To save your games you have to"
               post="This also gives you the opportunity to end up on the leaderboard."
             />
           </Card>
