@@ -14,8 +14,7 @@ function convertTime(time: number): [string, string, string, string] {
 
 export function timeString(time: number) {
   const [h, m, s, hs] = convertTime(time);
-  // if (h === "00" && m === "00") return `${s}.${hs}`;
-  if (h === "00") return `${m}:${s}.${hs}`;
-  // if (m === "00") return `${s}.${hs}`;
-  return `${h}:${m}:${s}.${hs}`;
+  if (h === "00" && m === "00") return `${s}.${hs}s`;
+  if (h === "00") return `${m}:${s}`;
+  return `${h}:${m}:${s}`;
 }
