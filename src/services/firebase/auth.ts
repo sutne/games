@@ -14,9 +14,9 @@ const firebaseAuth = getAuth(firebaseApp);
 
 export type User = {
   isSignedIn: boolean;
-  uid: string | null | undefined;
-  username: string | null | undefined;
-  email: string | null | undefined;
+  uid: string | undefined;
+  username: string | undefined;
+  email: string | undefined;
 };
 
 export async function createUser(
@@ -26,9 +26,11 @@ export async function createUser(
 ): Promise<string | void> {
   return createUserWithEmailAndPassword(firebaseAuth, email, password)
     .then(async (credential) => {
-      if (!credential?.user)
+      if (!credential.user)
         return "Something went wrong creating your user, please try again.";
       await updateProfile(credential.user, { displayName: username });
+      await signOut();
+      await signIn(email, password);
     })
     .catch((error) => getAuthErrorMessage(error));
 }
@@ -50,12 +52,13 @@ export async function signOut(): Promise<void | string> {
 
 export function onAuthChanged(callback: (user: User) => void) {
   onAuthStateChanged(firebaseAuth, (firebaseUser) => {
-    callback({
+    const user: User = {
       isSignedIn: firebaseUser !== null,
       uid: firebaseUser?.uid,
-      username: firebaseUser?.displayName,
-      email: firebaseUser?.email,
-    } as User);
+      username: firebaseUser?.displayName ?? undefined,
+      email: firebaseUser?.email ?? undefined,
+    };
+    callback(user);
   });
 }
 
