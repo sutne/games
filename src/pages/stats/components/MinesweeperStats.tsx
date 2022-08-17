@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  Box,
   CircularProgress,
   Divider,
   Grid,
@@ -90,7 +91,9 @@ export function MinesweeperStats() {
   const percentageCleared = toPercentageString(
     doc.tiles.cleared / (doc.tiles.cleared + doc.tiles.notCleared)
   );
-  const flagAccuracy = toPercentageString(doc.flags.correct / doc.flags.placed);
+  const flagAccuracy = toPercentageString(
+    doc.flags.correct / Math.max(doc.flags.placed, 1)
+  );
   const totalTime = timeString(doc.totalTime);
 
   const Stat = (title: string, value: number | string) => {
@@ -107,18 +110,6 @@ export function MinesweeperStats() {
   };
 
   const DifficultyCard = (difficulty: Difficulty) => {
-    if (doc[difficulty].games.played === 0) {
-      return (
-        <Grid item xs={4}>
-          <TopListCard
-            type="bordered"
-            title={difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
-          >
-            <Typography>No games played</Typography>
-          </TopListCard>
-        </Grid>
-      );
-    }
     const headers = ["Time", "Cleared", "Flags"];
     const items = doc[difficulty].best.map((game) => [
       `${timeString(game.time)}`,
@@ -128,8 +119,50 @@ export function MinesweeperStats() {
       `${game.flags.correct}/${game.flags.placed}`,
     ]);
     const winPercentage = toPercentageString(
-      doc[difficulty].games.won / doc[difficulty].games.played
+      doc[difficulty].games.won / Math.max(doc[difficulty].games.played, 1)
     );
+
+    const DifficultyStats = () => {
+      return (
+        <Grid container columns={3}>
+          <Grid item xs={1}>
+            <Stack>
+              <Typography>Played</Typography>
+              <Typography>{doc[difficulty].games.played}</Typography>
+            </Stack>
+          </Grid>
+          <Grid item xs={1}>
+            <Stack>
+              <Typography>Victories</Typography>
+              <Typography>{doc[difficulty].games.won}</Typography>
+            </Stack>
+          </Grid>
+          <Grid item xs={1}>
+            <Stack>
+              <Typography>Win Rate</Typography>
+              <Typography>{winPercentage}</Typography>
+            </Stack>
+          </Grid>
+        </Grid>
+      );
+    };
+
+    if (doc[difficulty].games.played === 0) {
+      return (
+        <Grid item xs={4}>
+          <TopListCard
+            type="bordered"
+            title={difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
+          >
+            <>
+              <Box />
+              <DifficultyStats />
+            </>
+          </TopListCard>
+        </Grid>
+      );
+    }
+
     return (
       <Grid item xs={4}>
         <TopListCard
@@ -144,26 +177,7 @@ export function MinesweeperStats() {
               flexItem
               sx={{ margin: "12px 0" }}
             />
-            <Grid container columns={3}>
-              <Grid item xs={1}>
-                <Stack>
-                  <Typography>Played</Typography>
-                  <Typography>{doc[difficulty].games.played}</Typography>
-                </Stack>
-              </Grid>
-              <Grid item xs={1}>
-                <Stack>
-                  <Typography>Victories</Typography>
-                  <Typography>{doc[difficulty].games.won}</Typography>
-                </Stack>
-              </Grid>
-              <Grid item xs={1}>
-                <Stack>
-                  <Typography>Win Rate</Typography>
-                  <Typography>{winPercentage}</Typography>
-                </Stack>
-              </Grid>
-            </Grid>
+            <DifficultyStats />
           </>
         </TopListCard>
       </Grid>
