@@ -27,7 +27,7 @@ export function PersonalBest() {
 
     const fetch = async () => {
       // Only load if user is signed in
-      if (!user.uid || !user.username) return;
+      if (!user.uid) return;
       const userDoc = await updateAndGetUserDocument(
         user.uid,
         game.difficulty,

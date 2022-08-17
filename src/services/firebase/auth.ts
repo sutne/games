@@ -1,8 +1,11 @@
 import { FirebaseError } from "firebase/app";
 import {
   createUserWithEmailAndPassword,
+  EmailAuthProvider,
   getAuth,
+  linkWithCredential,
   onAuthStateChanged,
+  signInAnonymously as authSignInAnonymously,
   signInWithEmailAndPassword,
   signOut as authSignOut,
   updateProfile,
@@ -14,6 +17,7 @@ const firebaseAuth = getAuth(firebaseApp);
 
 export type User = {
   isSignedIn: boolean;
+  isAnonymous: boolean | undefined;
   uid: string | undefined;
   username: string | undefined;
   email: string | undefined;
@@ -46,6 +50,38 @@ export async function signIn(
     .catch((error) => getAuthErrorMessage(error));
 }
 
+export async function signInAnonymously(): Promise<string | void> {
+  return authSignInAnonymously(firebaseAuth)
+    .then(async (credential) => {
+      if (!credential.user) return "Something went wrong, please try again.";
+    })
+    .catch((error) => getAuthErrorMessage(error));
+}
+
+export async function upgradeAnonymousUser(
+  username: string,
+  email: string,
+  password: string
+) {
+  // 1. Create the email and password credential, to upgrade the
+  // anonymous user.
+  if (
+    firebaseAuth.currentUser === null ||
+    !firebaseAuth.currentUser.isAnonymous
+  )
+    return;
+  const credential = EmailAuthProvider.credential(email, password);
+  return linkWithCredential(firebaseAuth.currentUser, credential)
+    .then(async (credential) => {
+      if (!credential.user)
+        return "Something went wrong creating your user, please try again.";
+      await updateProfile(credential.user, { displayName: username });
+      await signOut();
+      await signIn(email, password);
+    })
+    .catch((error) => getAuthErrorMessage(error));
+}
+
 export async function signOut(): Promise<void | string> {
   return authSignOut(firebaseAuth).catch((error) => getAuthErrorMessage(error));
 }
@@ -54,6 +90,7 @@ export function onAuthChanged(callback: (user: User) => void) {
   onAuthStateChanged(firebaseAuth, (firebaseUser) => {
     const user: User = {
       isSignedIn: firebaseUser !== null,
+      isAnonymous: firebaseUser?.isAnonymous,
       uid: firebaseUser?.uid,
       username: firebaseUser?.displayName ?? undefined,
       email: firebaseUser?.email ?? undefined,
