@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/games/static/js/main.f40e7dff.js",
+    "main.js": "/games/static/js/main.bdecca1f.js",
     "static/media/minesweeper.png": "/games/static/media/minesweeper.be6f9c14b9a1679eee1d.png",
     "static/media/tetris.jpeg": "/games/static/media/tetris.f5514824411678775a2d.jpeg",
     "static/media/pacman.png": "/games/static/media/pacman.022357a6e65d48457b01.png",
     "index.html": "/games/index.html",
-    "main.f40e7dff.js.map": "/games/static/js/main.f40e7dff.js.map"
+    "main.bdecca1f.js.map": "/games/static/js/main.bdecca1f.js.map"
   },
   "entrypoints": [
-    "static/js/main.f40e7dff.js"
+    "static/js/main.bdecca1f.js"
   ]
 }
