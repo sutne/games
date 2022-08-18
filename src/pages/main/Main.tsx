@@ -35,7 +35,7 @@ export function Main() {
               </Typography>
               <Typography>
                 You can also{" "}
-                <Link onClick={() => navigate("/profile/sign-in")}>
+                <Link onClick={() => navigate("/profile/anonymous")}>
                   sign in anonymously
                 </Link>{" "}
               </Typography>

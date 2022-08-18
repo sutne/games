@@ -23,7 +23,7 @@ export function Anonymous() {
 
   return (
     <>
-      <PageHeader header="Create User" />
+      <PageHeader header="Anonymous Sign In" />
       <ProfileCard
         header={
           <Typography textAlign="start" paddingTop="16px">
