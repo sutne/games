@@ -113,7 +113,7 @@ export function Display<T>({
         border: "0px",
         padding: "0px",
         fontSize: `calc(0.65 * ${pixelSize})`,
-        "& > *:first-child": [
+        "& > *:first-of-type": [
           {
             position: "relative",
             height: "100%",

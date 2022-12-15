@@ -5,6 +5,7 @@ import snakeImage from "assets/snake.jpeg";
 // import sudokuImage from "assets/sudoku.png";
 import tetrisImage from "assets/tetris.jpeg";
 import { Minesweeper } from "pages/minesweeper/Minesweeper";
+import { Tetris } from "pages/tetris/Tetris";
 
 export type GameListEntry = {
   name: string;
@@ -30,17 +31,17 @@ export const games: GameListEntry[] = [
   },
   {
     name: "Tetris",
-    description: "Classic Minesweeper game with difficulties",
+    description: "...",
     image: {
       light: tetrisImage,
       dark: tetrisImage,
     },
-    element: Minesweeper,
+    element: Tetris,
     isAvailable: false,
   },
   {
     name: "Snake",
-    description: "Classic Minesweeper game with difficulties",
+    description: "...",
     image: {
       light: snakeImage,
       dark: snakeImage,
@@ -50,7 +51,7 @@ export const games: GameListEntry[] = [
   },
   {
     name: "Pac-Man",
-    description: "Classic Minesweeper game with difficulties",
+    description: "...",
     image: {
       light: pacmanImage,
       dark: pacmanImage,
