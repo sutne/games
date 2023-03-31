@@ -1,8 +1,7 @@
 import React from "react";
 import { Grid, Typography } from "@mui/material";
 
-import { Card } from "components/cards/Card";
-import { PageHeader } from "components/typography";
+import { PageHeader} from "components/typography";
 import { games } from "games";
 
 import { GameCard } from "./components/GameCard";
@@ -27,7 +26,7 @@ export function Main() {
         ))}
         <Grid item xs={12}>
           <Typography variant="h4" textAlign="center">
-            Coming soon(ish)
+            More games might be added in the future!
           </Typography>
         </Grid>
         {disabledGames.map((game) => (

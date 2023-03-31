@@ -11,7 +11,7 @@ import { firebaseApp } from "./firebase";
 const firestore = getFirestore(firebaseApp);
 
 export async function createDocument<T>(path: string, data: T) {
-  return setDoc(doc(firestore, path), data, { merge: true });
+  return setDoc(doc(firestore, path), data as { [x: string]: any; }, { merge: true });
 }
 
 export async function readDocument<T>(path: string): Promise<T | void> {
@@ -21,5 +21,5 @@ export async function readDocument<T>(path: string): Promise<T | void> {
 }
 
 export async function updateDocument<T>(path: string, data: T) {
-  return updateDoc(doc(firestore, path), data);
+  return updateDoc(doc(firestore, path), data as { [x: string]: any; });
 }
