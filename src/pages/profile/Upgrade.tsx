@@ -11,46 +11,40 @@ import {
 } from "components/interactive";
 import { FormProvider, useAuth, useForm } from "components/providers";
 import { PageHeader } from "components/typography";
-import { createUser } from "services/firebase/auth";
+import { upgradeAnonymousUser } from "services/firebase/auth";
 
 import { ProfileCard } from "./components/ProfileCard";
 
-export function CreateUser() {
+export function Upgrade() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user.isSignedIn) navigate("/profile");
+    if (user.isSignedIn && !user.isAnonymous) navigate("/profile");
+    if (!user.isSignedIn) navigate("/profile/sign-in");
   }, [user]);
-
-  if (user.isSignedIn) {
-    return <PageHeader header="Create User" />;
-  }
 
   return (
     <>
-      <PageHeader header="Create User" />
+      <PageHeader header="Upgrade" />
       <ProfileCard
         header={
-          <Typography textAlign="start" paddingTop="16px">
-            Create a user for your played games to be saved, gain access to a
-            detailed stats page for all game types, and appear on global
-            leaderboards (if you manage to beat the other players).
-          </Typography>
+          <>
+            <Typography textAlign="center" paddingTop="16px">
+              Here you can upgrade to a non anonymous user account. This will
+              keep all your personal stats and games.
+            </Typography>
+            <Typography textAlign="center">
+              This will NOT retroactively put you on leaderboards, even if your
+              personal best should be there.
+            </Typography>
+          </>
         }
         footer={
           <Stack direction="row" spacing={2} justifyContent="center">
             <Stack>
-              <Typography>Already have a user? </Typography>
-              <Link onClick={() => navigate("/profile/sign-in")}>Sign In</Link>
-            </Stack>
-            <Stack>
-              <Typography>
-                Don&apos;t want to give any personal info?
-              </Typography>
-              <Link onClick={() => navigate("/profile/anonymous")}>
-                Sign In Anonymously
-              </Link>
+              <Typography>Don&apos;t want to upgrade? </Typography>
+              <Link onClick={() => navigate("/profile")}>Go back</Link>
             </Stack>
           </Stack>
         }
@@ -98,7 +92,7 @@ function CreateUserFormFields() {
     for (const field of Object.values(fields)) {
       if (!field.valid) return;
     }
-    const error = await createUser(
+    const error = await upgradeAnonymousUser(
       fields.username.value,
       fields.email.value,
       fields.password.value
@@ -117,8 +111,8 @@ function CreateUserFormFields() {
       />
       <LoadingButton
         onClick={onSubmit}
-        label="Create User"
-        loadingLabel="Creating User"
+        label="Upgrade to normal account"
+        loadingLabel="Linking account"
       />
       {errorMessage ? (
         <Typography color="error" textAlign="center">

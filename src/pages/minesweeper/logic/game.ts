@@ -15,7 +15,8 @@ export class Game {
   isWon = false;
   startTime = 0;
   elapsedTime = 0;
-  isSaved = false;
+  isSavedToUserDocument = false;
+  isSavedToLeaderboard = false;
 
   copy(): Game {
     const copy = new Game(this.difficulty);
@@ -24,7 +25,8 @@ export class Game {
     copy.isStarted = this.isStarted;
     copy.isLost = this.isLost;
     copy.isWon = this.isWon;
-    copy.isSaved = this.isSaved;
+    copy.isSavedToUserDocument = this.isSavedToUserDocument;
+    copy.isSavedToLeaderboard = this.isSavedToLeaderboard;
     copy.startTime = this.startTime;
     copy.elapsedTime = this.elapsedTime;
     return copy;

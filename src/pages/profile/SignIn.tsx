@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 
 import { LoadingButton } from "components/interactive";
 import { EmailField, PasswordField } from "components/interactive";
@@ -28,12 +28,22 @@ export function SignIn() {
       <PageHeader header="Sign In" />
       <ProfileCard
         footer={
-          <>
-            <Typography>Don&apos;t have a user yet?</Typography>
-            <Link onClick={() => navigate("/profile/create-user")}>
-              Create User
-            </Link>
-          </>
+          <Stack direction="row" spacing={2} justifyContent="center">
+            <Stack>
+              <Typography>Don&apos;t have a user yet?</Typography>
+              <Link onClick={() => navigate("/profile/create-user")}>
+                Create User
+              </Link>
+            </Stack>
+            <Stack>
+              <Typography>
+                Don&apos;t want to give any personal info?{" "}
+              </Typography>
+              <Link onClick={() => navigate("/profile/anonymous")}>
+                Sign In Anonymously
+              </Link>
+            </Stack>
+          </Stack>
         }
       >
         <FormProvider>
