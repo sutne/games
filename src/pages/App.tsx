@@ -7,11 +7,12 @@ import { NavBar } from "components/NavBar";
 import { AuthProvider, ThemeProvider } from "components/providers";
 import { games } from "games";
 import { Main } from "pages/main/Main";
+import { Anonymous } from "pages/profile/Anonymous";
+import { CreateUser } from "pages/profile/CreateUser";
 import { Profile } from "pages/profile/Profile";
+import { SignIn } from "pages/profile/SignIn";
+import { Upgrade } from "pages/profile/Upgrade";
 import { Stats } from "pages/stats/Stats";
-
-import { CreateUser } from "./profile/CreateUser";
-import { SignIn } from "./profile/SignIn";
 
 export function App() {
   // Load preferences from cookies and set theme accordingly
@@ -32,6 +33,8 @@ export function App() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/profile/sign-in" element={<SignIn />} />
                 <Route path="/profile/create-user" element={<CreateUser />} />
+                <Route path="/profile/anonymous" element={<Anonymous />} />
+                <Route path="/profile/upgrade" element={<Upgrade />} />
                 {enabledGames.map((game) => {
                   return (
                     <Route

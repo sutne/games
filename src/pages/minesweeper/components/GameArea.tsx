@@ -2,9 +2,9 @@ import React, { SetStateAction } from "react";
 import { Typography } from "@mui/material";
 
 import { Difficulty } from "../logic/difficulty";
+import { StatsGrid } from "./Stats/StatsGrid";
 import { Board } from "./Board";
 import { useGame } from "./GameProvider";
-import { GameStats } from "./GameStats";
 
 type props = {
   setDifficulty: React.Dispatch<SetStateAction<Difficulty | undefined>>;
@@ -19,7 +19,7 @@ export function GameArea({ setDifficulty }: props) {
         {`${game.numRemainingFlags} 🚩 Remaining`}
       </Typography>
       <Board />
-      <GameStats setDifficulty={setDifficulty} />
+      <StatsGrid setDifficulty={setDifficulty} />
     </>
   );
 
@@ -29,7 +29,7 @@ export function GameArea({ setDifficulty }: props) {
         textAlign: "center",
         padding: "12px",
         fontWeight: "bold",
-        visibility: game?.isOver() ? "hidden" : "",
+        visibility: game?.isOver() ? "hidden" : "visible",
       },
     };
   }

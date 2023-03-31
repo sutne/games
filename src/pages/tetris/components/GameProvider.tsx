@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import { Difficulty } from "../logic/difficulty";
 import { Game } from "../logic/game";
 
 const GameContext = React.createContext<
@@ -13,11 +12,10 @@ const GameContext = React.createContext<
 >(undefined);
 
 type props = {
-  difficulty: Difficulty;
   children: JSX.Element;
 };
-export function GameProvider({ difficulty, children }: props) {
-  const [game, setGame] = useState(new Game(difficulty));
+export function GameProvider({ children }: props) {
+  const [game, setGame] = useState(new Game());
 
   const updateGame = (callback: (prev: Game) => void) => {
     const copy = game.copy();
@@ -26,7 +24,7 @@ export function GameProvider({ difficulty, children }: props) {
   };
 
   const replay = () => {
-    setGame(new Game(game.difficulty));
+    setGame(new Game());
   };
 
   const values = {

@@ -35,7 +35,7 @@ export function NavBar() {
             endIcon={<Icons.AccountCircle />}
             onClick={() => navigate("/profile")}
           >
-            {user.username}
+            {user.username ?? "Anonymous"}
           </Button>
         ) : (
           <IconButton

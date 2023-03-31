@@ -6,7 +6,7 @@ export const darkTheme = responsiveFontSizes(
       mode: "dark",
       background: {
         default: "rgb(29,39,51)",
-        paper: "rgb(47,49,63)",
+        paper: "rgb(44,49,62)",
       },
       game: {
         features: {
@@ -22,6 +22,8 @@ export const darkTheme = responsiveFontSizes(
           yellow: "rgb(242,201,121)",
           green: "rgb(125,200,140)",
           blue: "rgb(177,227,241)",
+          cyan: "rgb(197,247,255)",
+          purple: "rgb(248,70,158)",
         },
       },
     },
@@ -53,6 +55,8 @@ export const lightTheme = responsiveFontSizes(
           yellow: "rgb(244,187,110)",
           green: "rgb(105,180,120)",
           blue: "rgb(53,152,183)",
+          cyan: "rgb(177,227,241)",
+          purple: "rgb(172,38,134)",
         },
       },
     },
