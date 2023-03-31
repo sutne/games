@@ -1,4 +1,4 @@
-import React, { SetStateAction } from "react";
+import React from "react";
 import { Grid } from "@mui/material";
 
 import { GameStats } from "./GameStats";

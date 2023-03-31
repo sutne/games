@@ -4,7 +4,6 @@ import { FadeIn } from "components/animations/FadeIn";
 import { TopListCard } from "components/cards";
 import { AutoScroll } from "components/functional";
 import { useAuth } from "components/providers";
-import { toPercentageString } from "utils/numbers";
 import { timeString } from "utils/time";
 
 import { equals, getStats } from "../../logic/stats";

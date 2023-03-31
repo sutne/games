@@ -1,11 +1,7 @@
 import minesweeperDark from "assets/dark/minesweeper.png";
 import minesweeperLight from "assets/light/minesweeper.png";
-import pacmanImage from "assets/pacman.png";
-import snakeImage from "assets/snake.jpeg";
-// import sudokuImage from "assets/sudoku.png";
-import tetrisImage from "assets/tetris.jpeg";
 import { Minesweeper } from "pages/minesweeper/Minesweeper";
-import { Tetris } from "pages/tetris/Tetris";
+
 
 export type GameListEntry = {
   name: string;
@@ -29,36 +25,36 @@ export const games: GameListEntry[] = [
     element: Minesweeper,
     isAvailable: true,
   },
-  {
-    name: "Tetris",
-    description: "...",
-    image: {
-      light: tetrisImage,
-      dark: tetrisImage,
-    },
-    element: Tetris,
-    isAvailable: false,
-  },
-  {
-    name: "Snake",
-    description: "...",
-    image: {
-      light: snakeImage,
-      dark: snakeImage,
-    },
-    element: Minesweeper,
-    isAvailable: false,
-  },
-  {
-    name: "Pac-Man",
-    description: "...",
-    image: {
-      light: pacmanImage,
-      dark: pacmanImage,
-    },
-    element: Minesweeper,
-    isAvailable: false,
-  },
+  // {
+  //   name: "Tetris",
+  //   description: "...",
+  //   image: {
+  //     light: tetrisImage,
+  //     dark: tetrisImage,
+  //   },
+  //   element: Tetris,
+  //   isAvailable: false,
+  // },
+  // {
+  //   name: "Snake",
+  //   description: "...",
+  //   image: {
+  //     light: snakeImage,
+  //     dark: snakeImage,
+  //   },
+  //   element: Minesweeper,
+  //   isAvailable: false,
+  // },
+  // {
+  //   name: "Pac-Man",
+  //   description: "...",
+  //   image: {
+  //     light: pacmanImage,
+  //     dark: pacmanImage,
+  //   },
+  //   element: Minesweeper,
+  //   isAvailable: false,
+  // },
   // {
   //   name: "Sudoku",
   //   description: "Classic Minesweeper game with difficulties",
