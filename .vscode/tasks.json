@@ -45,7 +45,7 @@
                 "color": "terminal.ansiGreen"
             },
             "type": "shell",
-            "command": "npm predeploy && npm deploy",
+            "command": "npm run deploy",
             "presentation": {
                 "panel": "dedicated",
                 "reveal": "always",
