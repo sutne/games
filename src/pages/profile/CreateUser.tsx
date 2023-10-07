@@ -39,19 +39,17 @@ export function CreateUser() {
           </Typography>
         }
         footer={
-          <Stack direction="row" spacing={2} justifyContent="center">
-            <Stack>
-              <Typography>Already have a user? </Typography>
+          <Stack spacing={1} justifyContent="center">
+            <Typography>
+              Already have a user?{" "}
               <Link onClick={() => navigate("/profile/sign-in")}>Sign In</Link>
-            </Stack>
-            <Stack>
-              <Typography>
-                Don&apos;t want to give any personal info?
-              </Typography>
+            </Typography>
+            <Typography>
+              Don&apos;t want to give any personal info?
               <Link onClick={() => navigate("/profile/anonymous")}>
                 Sign In Anonymously
               </Link>
-            </Stack>
+            </Typography>
           </Stack>
         }
       >

@@ -43,8 +43,10 @@ export function Upgrade() {
         footer={
           <Stack direction="row" spacing={2} justifyContent="center">
             <Stack>
-              <Typography>Don&apos;t want to upgrade? </Typography>
-              <Link onClick={() => navigate("/profile")}>Go back</Link>
+              <Typography>
+                Don&apos;t want to upgrade?{" "}
+                <Link onClick={() => navigate("/profile")}>Go back</Link>
+              </Typography>
             </Stack>
           </Stack>
         }

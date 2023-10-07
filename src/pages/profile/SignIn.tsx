@@ -29,21 +29,19 @@ export function SignIn() {
       <PageHeader header="Sign In" />
       <ProfileCard
         footer={
-          <Stack direction="row" spacing={2} justifyContent="center">
-            <Stack>
-              <Typography>Don&apos;t have a user yet?</Typography>
+          <Stack spacing={1} justifyContent="center">
+            <Typography>
+              Don&apos;t have a user yet?{" "}
               <Link onClick={() => navigate("/profile/create")}>
                 Create User
               </Link>
-            </Stack>
-            <Stack>
-              <Typography>
-                Don&apos;t want to give any personal info?{" "}
-              </Typography>
+            </Typography>
+            <Typography>
+              Don&apos;t want to give any personal info?{" "}
               <Link onClick={() => navigate("/profile/anonymous")}>
                 Sign In Anonymously
               </Link>
-            </Stack>
+            </Typography>
           </Stack>
         }
       >

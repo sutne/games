@@ -34,17 +34,17 @@ export function Anonymous() {
           </Typography>
         }
         footer={
-          <Stack direction="row" spacing={2} justifyContent="center">
-            <Stack>
-              <Typography>Want to create a user instead? </Typography>
+          <Stack spacing={1} justifyContent="center">
+            <Typography>
+              Want to create a user instead?{" "}
               <Link onClick={() => navigate("/profile/create")}>
                 Create User
               </Link>
-            </Stack>
-            <Stack>
-              <Typography>Already have a user? </Typography>
+            </Typography>
+            <Typography>
+              Already have a user?{" "}
               <Link onClick={() => navigate("/profile/sign-in")}>Sign In</Link>
-            </Stack>
+            </Typography>
           </Stack>
         }
       >

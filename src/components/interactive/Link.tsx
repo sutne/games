@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Typography } from "@mui/material";
 
 type props = {
   onClick: () => void;
@@ -9,7 +9,8 @@ type props = {
 export function Link({ onClick, children, center }: props) {
   const classes = getClasses();
   return (
-    <Box
+    <Typography
+      component="span"
       sx={classes.link}
       onClick={(e) => {
         e.preventDefault();
@@ -17,7 +18,7 @@ export function Link({ onClick, children, center }: props) {
       }}
     >
       {children}
-    </Box>
+    </Typography>
   );
 
   function getClasses() {
