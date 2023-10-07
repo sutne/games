@@ -11,11 +11,13 @@ type props = {
   icon?: JSX.Element;
   end?: JSX.Element;
   onKeyDown?: (event: any) => void;
+  disabled?: boolean;
 };
 export function TextField(props: props) {
   return (
     <MuiTextField
       variant="outlined"
+      disabled={props.disabled ?? false}
       onChange={(e) => props.onChange(e.target.value)}
       type={props.type}
       error={props.error}

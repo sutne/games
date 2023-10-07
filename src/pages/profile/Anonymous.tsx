@@ -37,7 +37,7 @@ export function Anonymous() {
           <Stack direction="row" spacing={2} justifyContent="center">
             <Stack>
               <Typography>Want to create a user instead? </Typography>
-              <Link onClick={() => navigate("/profile/create-user")}>
+              <Link onClick={() => navigate("/profile/create")}>
                 Create User
               </Link>
             </Stack>
@@ -60,8 +60,11 @@ function AnonymousFormFields() {
   const [errorMessage, setError] = useState("");
 
   const onSubmit = async () => {
-    const error = await signInAnonymously();
-    if (error) setError(error);
+    try {
+      await signInAnonymously();
+    } catch (error) {
+      setError((error as Error).message);
+    }
   };
 
   return (
@@ -71,12 +74,10 @@ function AnonymousFormFields() {
         label="Sign in anonymously"
         loadingLabel="Signing in"
       />
-      {errorMessage ? (
+      {errorMessage && (
         <Typography color="error" textAlign="center">
           {errorMessage}
         </Typography>
-      ) : (
-        <></>
       )}
     </>
   );

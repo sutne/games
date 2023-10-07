@@ -16,7 +16,7 @@ export function SignInPrompt({ pre, post }: props) {
       {pre ? <Typography key="pre">{pre}</Typography> : <></>}
       <Box key="prompt">
         <Link onClick={() => navigate("/profile/sign-in")}>Sign in</Link> or{" "}
-        <Link onClick={() => navigate("/profile/create-user")}>
+        <Link onClick={() => navigate("/profile/create")}>
           create a user
         </Link>
       </Box>

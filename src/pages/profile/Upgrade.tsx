@@ -92,19 +92,23 @@ function CreateUserFormFields() {
     for (const field of Object.values(fields)) {
       if (!field.valid) return;
     }
-    const error = await upgradeAnonymousUser(
-      fields.username.value,
-      fields.email.value,
-      fields.password.value
-    );
-    if (error) setError(error);
+    try {
+      await upgradeAnonymousUser(
+        fields.username.value,
+        fields.email.value,
+        fields.password.value
+      );
+    } catch (error) {
+      setError((error as Error).message);
+    }
   };
 
   return (
     <>
       <UsernameField field={fields.username} onChange={onFieldChange} />
-      <EmailField field={fields.email} onChange={onFieldChange} />
+      <EmailField id="email" field={fields.email} onChange={onFieldChange} />
       <PasswordField
+        id="password"
         field={fields.password}
         onChange={onFieldChange}
         onEnterPress={onSubmit}
@@ -114,12 +118,10 @@ function CreateUserFormFields() {
         label="Upgrade to normal account"
         loadingLabel="Linking account"
       />
-      {errorMessage ? (
+      {errorMessage && (
         <Typography color="error" textAlign="center">
           {errorMessage}
         </Typography>
-      ) : (
-        <></>
       )}
     </>
   );

@@ -5,11 +5,12 @@ import { TextField } from "components/interactive";
 import { useForm } from "components/providers";
 
 type props = {
+  id: string;
   field: { value: string; valid: boolean };
-  onChange: (field: string, update: { value: string; valid: boolean }) => void;
+  onChange?: (field: string, update: { value: string; valid: boolean }) => void;
 };
 
-export function EmailField({ field, onChange }: props) {
+export function EmailField({ id, field, onChange }: props) {
   const { showValidation } = useForm();
 
   const validate = (email: string) => {
@@ -19,9 +20,10 @@ export function EmailField({ field, onChange }: props) {
 
   return (
     <TextField
-      label="email"
+      disabled={onChange === undefined}
+      label={"email"}
       onChange={(value) =>
-        onChange("email", {
+        onChange?.(id, {
           value: value,
           valid: validate(value) === undefined,
         })

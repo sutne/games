@@ -6,12 +6,13 @@ import { TextField } from "components/interactive";
 import { useForm } from "components/providers/FormProvider";
 
 type props = {
+  id: string;
   field: { value: string; valid: boolean };
   onChange: (field: string, update: { value: string; valid: boolean }) => void;
   onEnterPress?: () => void;
 };
 
-export function PasswordField({ field, onChange, onEnterPress }: props) {
+export function PasswordField({ id, field, onChange, onEnterPress }: props) {
   const { showValidation } = useForm();
   const [hidden, setHidden] = useState(false);
 
@@ -26,9 +27,9 @@ export function PasswordField({ field, onChange, onEnterPress }: props) {
 
   return (
     <TextField
-      label="password"
+      label={"password"}
       onChange={(value) => {
-        onChange("password", {
+        onChange(id, {
           value: value,
           valid: validate(value) === undefined,
         });

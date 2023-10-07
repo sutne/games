@@ -6,8 +6,9 @@ import { LoadingButton } from "components/interactive";
 import { EmailField, PasswordField } from "components/interactive";
 import { Link } from "components/interactive/Link";
 import { FormProvider, useAuth, useForm } from "components/providers";
+import { toast } from "components/toast/toast";
 import { PageHeader } from "components/typography";
-import { signIn } from "services/firebase/auth";
+import { sendResetPasswordEmail, signIn } from "services/firebase/auth";
 
 import { ProfileCard } from "./components/ProfileCard";
 
@@ -31,7 +32,7 @@ export function SignIn() {
           <Stack direction="row" spacing={2} justifyContent="center">
             <Stack>
               <Typography>Don&apos;t have a user yet?</Typography>
-              <Link onClick={() => navigate("/profile/create-user")}>
+              <Link onClick={() => navigate("/profile/create")}>
                 Create User
               </Link>
             </Stack>
@@ -56,6 +57,7 @@ export function SignIn() {
 
 function SignInFormFields() {
   const { setShowValidation } = useForm();
+
   const [errorMessage, setError] = useState("");
 
   useEffect(() => {
@@ -85,14 +87,29 @@ function SignInFormFields() {
     for (const field of Object.values(fields)) {
       if (!field.valid) return;
     }
-    const error = await signIn(fields.email.value, fields.password.value);
-    if (error) setError(error);
+    try {
+      await signIn(fields.email.value, fields.password.value);
+    } catch (error) {
+      setError((error as Error).message);
+    }
   };
+
+  async function resetPassword() {
+    try {
+      await sendResetPasswordEmail(fields.email.value);
+      toast.success("An email has been sent to reset your password!");
+    } catch (error) {
+      toast.error(
+        `Failed to send password reset email!\n${(error as Error).message}`
+      );
+    }
+  }
 
   return (
     <>
-      <EmailField field={fields.email} onChange={onFieldChange} />
+      <EmailField id="email" field={fields.email} onChange={onFieldChange} />
       <PasswordField
+        id="password"
         field={fields.password}
         onChange={onFieldChange}
         onEnterPress={onSubmit}
@@ -102,12 +119,15 @@ function SignInFormFields() {
         label="Sign In"
         loadingLabel="Signing In"
       />
-      {errorMessage ? (
-        <Typography color="error" textAlign="center">
-          {errorMessage}
-        </Typography>
-      ) : (
-        <></>
+      {errorMessage && (
+        <>
+          <Typography color="error" textAlign="center">
+            {errorMessage}
+          </Typography>
+          <Link center onClick={resetPassword}>
+            Forgot your password?
+          </Link>
+        </>
       )}
     </>
   );

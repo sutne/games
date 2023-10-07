@@ -4,8 +4,9 @@ import { Box } from "@mui/material";
 type props = {
   onClick: () => void;
   children: JSX.Element | string;
+  center?: boolean;
 };
-export function Link({ onClick, children }: props) {
+export function Link({ onClick, children, center }: props) {
   const classes = getClasses();
   return (
     <Box
@@ -25,6 +26,7 @@ export function Link({ onClick, children }: props) {
         display: "inline-block",
         cursor: "pointer",
         color: "info.main",
+        textAlign: center ? "center" : "left",
         "&:hover": {
           fontWeight: "500",
         },

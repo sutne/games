@@ -19,7 +19,7 @@ export function Main() {
   return (
     <>
       <PageHeader header="sutne's Minimalistic Games" />
-      {!user.isSignedIn ? (
+      {!user.isSignedIn && (
         <Box sx={{ marginBottom: "24px" }}>
           <Card>
             <Stack textAlign="center">
@@ -42,8 +42,6 @@ export function Main() {
             </Stack>
           </Card>
         </Box>
-      ) : (
-        <></>
       )}
       <Grid
         container

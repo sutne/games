@@ -1,13 +1,18 @@
 import { FirebaseError } from "firebase/app";
 import {
   createUserWithEmailAndPassword,
+  deleteUser,
   EmailAuthProvider,
   getAuth,
   linkWithCredential,
   onAuthStateChanged,
+  reauthenticateWithCredential,
+  sendPasswordResetEmail,
   signInAnonymously as authSignInAnonymously,
   signInWithEmailAndPassword,
   signOut as authSignOut,
+  updateEmail,
+  updatePassword,
   updateProfile,
 } from "firebase/auth";
 
@@ -27,63 +32,131 @@ export async function createUser(
   username: string,
   email: string,
   password: string
-): Promise<string | void> {
-  return createUserWithEmailAndPassword(firebaseAuth, email, password)
-    .then(async (credential) => {
-      if (!credential.user)
-        return "Something went wrong creating your user, please try again.";
-      await updateProfile(credential.user, { displayName: username });
-      await signOut();
-      await signIn(email, password);
-    })
-    .catch((error) => getAuthErrorMessage(error));
+): Promise<void> {
+  try {
+    const credential = await createUserWithEmailAndPassword(
+      firebaseAuth,
+      email,
+      password
+    );
+    if (!credential.user) {
+      throw new Error(
+        "Something went wrong creating your user, please try again."
+      );
+    }
+    await updateProfile(credential.user, { displayName: username });
+    await signOut();
+    await signIn(email, password);
+  } catch (error) {
+    throw new Error(getAuthErrorMessage(error as FirebaseError));
+  }
 }
 
-export async function signIn(
-  email: string,
-  password: string
-): Promise<string | void> {
-  return signInWithEmailAndPassword(firebaseAuth, email, password)
-    .then(() => {
-      return;
-    })
-    .catch((error) => getAuthErrorMessage(error));
+export async function signIn(email: string, password: string): Promise<void> {
+  try {
+    await signInWithEmailAndPassword(firebaseAuth, email, password);
+  } catch (error) {
+    throw new Error(getAuthErrorMessage(error as FirebaseError));
+  }
 }
 
-export async function signInAnonymously(): Promise<string | void> {
-  return authSignInAnonymously(firebaseAuth)
-    .then(async (credential) => {
-      if (!credential.user) return "Something went wrong, please try again.";
-    })
-    .catch((error) => getAuthErrorMessage(error));
+export async function signInAnonymously(): Promise<void> {
+  try {
+    const credential = await authSignInAnonymously(firebaseAuth);
+    if (!credential.user) {
+      throw new Error("Something went wrong, please try again.");
+    }
+  } catch (error) {
+    throw new Error(getAuthErrorMessage(error as FirebaseError));
+  }
 }
 
 export async function upgradeAnonymousUser(
   username: string,
   email: string,
   password: string
-) {
-  // 1. Create the email and password credential, to upgrade the
-  // anonymous user.
-  if (
-    firebaseAuth.currentUser === null ||
-    !firebaseAuth.currentUser.isAnonymous
-  )
-    return;
-  const credential = EmailAuthProvider.credential(email, password);
-  return linkWithCredential(firebaseAuth.currentUser, credential)
-    .then(async (credential) => {
-      if (!credential.user)
-        return "Something went wrong creating your user, please try again.";
-      await updateProfile(credential.user, { displayName: username });
-      await signOut();
-      await signIn(email, password);
-    })
-    .catch((error) => getAuthErrorMessage(error));
+): Promise<void> {
+  if (!firebaseAuth.currentUser?.isAnonymous) return;
+  try {
+    const authCredential = EmailAuthProvider.credential(email, password);
+    const userCredential = await linkWithCredential(
+      firebaseAuth.currentUser,
+      authCredential
+    );
+    if (!userCredential.user)
+      throw new Error(
+        "Something went wrong creating your user, please try again."
+      );
+    await updateProfile(userCredential.user, { displayName: username });
+    await signOut();
+    await signIn(email, password);
+  } catch (error) {
+    throw new Error(getAuthErrorMessage(error as FirebaseError));
+  }
 }
 
-export async function signOut(): Promise<void | string> {
-  return authSignOut(firebaseAuth).catch((error) => getAuthErrorMessage(error));
+export async function signOut(): Promise<void> {
+  try {
+    await authSignOut(firebaseAuth);
+  } catch (error) {
+    throw new Error(getAuthErrorMessage(error as FirebaseError));
+  }
+}
+
+export async function changeEmail(
+  oldEmail: string,
+  newEmail: string,
+  password: string
+): Promise<string | void> {
+  if (!firebaseAuth.currentUser) return;
+  try {
+    const credential = EmailAuthProvider.credential(oldEmail, password);
+    await reauthenticateWithCredential(firebaseAuth.currentUser, credential);
+    await updateEmail(firebaseAuth.currentUser, newEmail);
+  } catch (error) {
+    return getAuthErrorMessage(error as FirebaseError);
+  }
+}
+
+export async function changePassword(
+  email: string,
+  oldPassword: string,
+  newPassword: string
+): Promise<void> {
+  if (!firebaseAuth.currentUser) return;
+  try {
+    const credential = EmailAuthProvider.credential(email, oldPassword);
+    await reauthenticateWithCredential(firebaseAuth.currentUser, credential);
+    await updatePassword(firebaseAuth.currentUser, newPassword);
+  } catch (error) {
+    throw new Error(getAuthErrorMessage(error as FirebaseError));
+  }
+}
+
+export async function sendResetPasswordEmail(
+  email: string
+): Promise<string | void> {
+  try {
+    await sendPasswordResetEmail(firebaseAuth, email, {
+      url: "https://sutne.github.io/games/#/profile/sign-in",
+    });
+  } catch (error) {
+    throw new Error(getAuthErrorMessage(error as FirebaseError));
+  }
+}
+
+export async function deleteAccount(
+  email: string,
+  password: string
+): Promise<void> {
+  if (!firebaseAuth.currentUser) return;
+  try {
+    const credential = EmailAuthProvider.credential(email, password);
+    await reauthenticateWithCredential(firebaseAuth.currentUser, credential);
+    await deleteUser(firebaseAuth.currentUser);
+  } catch (error) {
+    throw new Error(getAuthErrorMessage(error as FirebaseError));
+  }
 }
 
 export function onAuthChanged(callback: (user: User) => void) {
@@ -175,8 +248,7 @@ function getAuthErrorMessage(error: FirebaseError): string {
       "This domain is not authorized for OAuth operations for your Firebase project. Edit the list of authorized domains from the Firebase console.",
     "invalid-action-code":
       "The action code is invalid. This can happen if the code is malformed, expired, or has already been used.",
-    "wrong-password":
-      "The password is invalid or the user does not have a password.",
+    "wrong-password": "The given password was incorrect.",
     "invalid-persistence-type":
       "The specified persistence type is invalid. It can only be local, session or none.",
     "invalid-phone-number":
@@ -276,5 +348,5 @@ function getAuthErrorMessage(error: FirebaseError): string {
   };
   const message = authErrors[error.code.replace("auth/", "")];
   if (message) return message;
-  return "Something went wrong, please try again.";
+  return "An unexpected authentication error occurred, please try again in a little while.";
 }

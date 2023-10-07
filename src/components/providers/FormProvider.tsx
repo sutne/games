@@ -9,7 +9,7 @@ const FormContext = React.createContext<
 >(undefined);
 
 type props = {
-  children: JSX.Element;
+  children: React.ReactNode;
 };
 export function FormProvider({ children }: props) {
   const [showValidation, setShowValidation] = useState(false);
