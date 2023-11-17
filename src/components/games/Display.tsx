@@ -35,7 +35,11 @@ export function Display<T>({
 
   const classes = getStyle();
   return (
-    <Box sx={{ width: "100%" }} ref={container}>
+    <Box
+      sx={{ width: "100%" }}
+      ref={container}
+      onContextMenu={(e) => e.preventDefault()}
+    >
       <Box component="table" sx={classes.table}>
         <Box component="tbody">
           {pixels.map((row, y) => (
