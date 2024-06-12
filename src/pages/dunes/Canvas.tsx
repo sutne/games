@@ -2,13 +2,15 @@ import React from "react";
 
 import { useTheme } from "../../components/providers";
 import { Mouse } from "./logic/Mouse";
+import { Painter } from "./logic/Painter";
 import { World } from "./logic/World";
-import { RuleSet } from "./RuleSet";
 
-export function Canvas(props: { ruleset: RuleSet }) {
-  const mouse = new Mouse();
-  const world = new World(60, 40, props.ruleset);
+export function Canvas({ world, mouse }: { world: World; mouse: Mouse }) {
   let canvas: HTMLCanvasElement;
+
+  const [fps, setFps] = React.useState(0);
+  const [drawTime, setDrawTime] = React.useState(0);
+  const [calcTime, setCalcTime] = React.useState(0);
 
   React.useEffect(() => {
     if (!canvas) {
@@ -18,11 +20,11 @@ export function Canvas(props: { ruleset: RuleSet }) {
       canvas.oncontextmenu = (event) => event.preventDefault();
       console.log("adding listeners");
       canvas.addEventListener("mousemove", (event: MouseEvent) => mouse.onMove(event, canvas));
-      canvas.addEventListener("mousedown", (event: MouseEvent) => mouse.onClick(event));
+      canvas.addEventListener("mousedown", (event: MouseEvent) => mouse.onPress(event));
       window.addEventListener("mouseup", () => mouse.onRelease());
     }
 
-    const context = canvas.getContext("2d") as CanvasRenderingContext2D;
+    const painter = new Painter(canvas.getContext("2d") as CanvasRenderingContext2D);
 
     let mounted = true;
     let lastTime = 0;
@@ -30,14 +32,19 @@ export function Canvas(props: { ruleset: RuleSet }) {
       if (!mounted) return;
       requestAnimationFrame(redraw);
       mouse.interact(world);
-      world.draw(context);
+      const startDraw = performance.now();
+      world.draw(painter);
+      const endDraw = performance.now();
+      setDrawTime(endDraw - startDraw);
 
-      const FPS = 60;
       const elapsed = time - lastTime;
-      if (elapsed < 1000 / FPS) return;
       lastTime = time;
+      setFps(1000 / elapsed);
 
-      world.update();
+      const startCalc = performance.now();
+      world.update(elapsed);
+      const endCalc = performance.now();
+      setCalcTime(endCalc - startCalc);
     };
     requestAnimationFrame(redraw);
     return () => {
@@ -47,7 +54,14 @@ export function Canvas(props: { ruleset: RuleSet }) {
 
   const { theme } = useTheme();
   const style = getStyle();
-  return <canvas id="dunes" style={{ ...style.canvas, imageRendering: "pixelated" }}></canvas>;
+  return (
+    <>
+      <canvas id="dunes" style={{ ...style.canvas, imageRendering: "pixelated" }}></canvas>
+      <div>{"FPS: \t" + fps.toFixed(0)}</div>
+      <div>{"Draw Time: \t" + drawTime.toFixed(0)} ms</div>
+      <div>{"Calc Time: \t" + calcTime.toFixed(0)} ms</div>
+    </>
+  );
 
   function getStyle() {
     return {

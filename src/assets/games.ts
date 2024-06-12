@@ -1,8 +1,8 @@
 import minesweeperDark from 'assets/dark/minesweeper.png';
 import minesweeperLight from 'assets/light/minesweeper.png';
+import { Dunes } from 'pages/dunes/Dunes';
 import { Minesweeper } from 'pages/minesweeper/Minesweeper';
 import type { JSX } from 'react';
-import { Dunes } from './pages/dunes/Dunes';
 
 export type GameListEntry = {
   name: string;
@@ -28,7 +28,7 @@ export const games: GameListEntry[] = [
   },
   {
     name: 'Dunes',
-    description: 'Some relaxing sand simulation.',
+    description: 'Some relaxing falling sand simulation.',
     image: {
       light: minesweeperLight,
       dark: minesweeperDark,

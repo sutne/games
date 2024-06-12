@@ -1,3 +1,4 @@
+import { Painter } from "../Painter";
 import { Position } from "../types/Position";
 import { DunesElement } from "./DunesElement";
 
@@ -6,9 +7,8 @@ export class Air implements DunesElement {
   velocity = { dx: 0, dy: 0 };
   color = "rgb(0, 0, 0, 0)";
 
-  draw(position: Position, context: CanvasRenderingContext2D): void {
-    // context.fillStyle = this.color;
-    // context.fillRect(position.x, position.y, 1, 1);
+  draw(position: Position, painter: Painter): void {
+    painter.drawPixel(position.x, position.y, this.color);
   }
 
   update(): void {

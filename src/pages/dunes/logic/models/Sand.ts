@@ -1,3 +1,4 @@
+import { Painter } from "../Painter";
 import { Position } from "../types/Position";
 import { Velocity } from "../types/Velocity";
 import { World } from "../World";
@@ -17,34 +18,38 @@ export class Sand implements DunesElement {
   velocity: Velocity;
   color: string;
 
-  constructor(velocity: Velocity = { dx: 0, dy: 0 }) {
-    this.velocity = velocity;
+  constructor(velocity: Velocity) {
+    this.velocity = { dx: 0, dy: 1 };
     this.color = colors[Math.floor(Math.random() * colors.length)];
   }
 
-  draw(position: Position, context: CanvasRenderingContext2D): void {
-    context.fillStyle = this.color;
-    context.fillRect(position.x, position.y, 1, 1);
+  draw(position: Position, painter: Painter): void {
+    painter.drawPixel(position.x, position.y, this.color);
   }
 
-  update(position: Position, world: World): void {
-    const { x, y } = position;
-    if (world.isAvailable({ x, y: y + 1 })) {
-      this.velocity.dy += world.ruleset.gravity;
-    }
-    let destination: Position = { x: x + this.velocity.dx, y: y + this.velocity.dy };
-    const path = world.getPath(position, destination);
-    let prev = position;
-    for (const pos of path) {
-      if (!world.isAvailable(pos)) {
-        this.velocity.dy = 0;
-        this.velocity.dx = 0;
-        destination = prev;
-        break;
-      }
-      prev = pos;
+  random(min: number, max: number): number {
+    return Math.random() * (max - min) + min;
+  }
+
+  update(position: Position, world: World, delta: number): void {
+    // Update vectors
+    // if (0 < this.velocity.dx && !world.isAvailable(position.offset(1, 0))) {
+    //   this.velocity.dx = 0;
+    // }
+    // if (this.velocity.dx < 0 && !world.isAvailable(position.offset(-1, 0))) {
+    //   this.velocity.dx = 0;
+    // }
+    if (world.isAvailable(position.offset(0, 1))) {
+      this.velocity.dy += 0.01 * delta;
     }
 
-    world.swap(position, destination);
+    // move along path until blocked to destination
+    const path = world.getPath(position, position.add(this.velocity));
+    let prev = position;
+    for (const pos of path) {
+      if (!world.isAvailable(pos)) break;
+      world.swap(prev, pos);
+      prev = pos;
+    }
   }
 }
