@@ -27,10 +27,10 @@
     "@types/react": "^18.0.31",
     "@types/react-dom": "^18.0.11",
     "@types/react-router-dom": "^5.3.3",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "react-scripts": "^5.0.1",
     "eslint-config-google": "^0.14.0",
-    "eslint-plugin-simple-import-sort": "^10.0.0",
-    "gh-pages": "^5.0.0"
+    "eslint-plugin-simple-import-sort": "^10.0.0"
   },
   "eslintConfig": {
     "extends": [
