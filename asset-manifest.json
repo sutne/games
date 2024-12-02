@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/games/static/css/main.1aa1b982.css",
-    "main.js": "/games/static/js/main.7cc4b2c5.js",
+    "main.js": "/games/static/js/main.dea96278.js",
     "static/media/minesweeper.png": "/games/static/media/minesweeper.be6f9c14b9a1679eee1d.png",
     "index.html": "/games/index.html",
     "main.1aa1b982.css.map": "/games/static/css/main.1aa1b982.css.map",
-    "main.7cc4b2c5.js.map": "/games/static/js/main.7cc4b2c5.js.map"
+    "main.dea96278.js.map": "/games/static/js/main.dea96278.js.map"
   },
   "entrypoints": [
     "static/css/main.1aa1b982.css",
-    "static/js/main.7cc4b2c5.js"
+    "static/js/main.dea96278.js"
   ]
 }
