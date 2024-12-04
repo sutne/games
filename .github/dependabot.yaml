@@ -6,3 +6,9 @@ updates:
       interval: "monthly"
     ignore:
       - dependency-name: "typescript"
+    groups:
+      deps:
+        patterns:
+            - "*"
+    commit-message:
+      prefix: "build"
