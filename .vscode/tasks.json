@@ -9,7 +9,7 @@
         "color": "terminal.ansiYellow"
       },
       "type": "shell",
-      "command": "rm -rf node_modules build && npm install",
+      "command": "rm -rf node_modules dist && npm install",
       "presentation": {
         "panel": "dedicated",
         "reveal": "always",
