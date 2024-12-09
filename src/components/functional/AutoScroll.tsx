@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Box } from "@mui/material";
+import { type JSX } from "react";
 
 type props = {
   children: JSX.Element | string;

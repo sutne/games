@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { type JSX } from "react";
 import { getUser, onAuthChanged, User } from "services/firebase/auth";
 
 type props = {

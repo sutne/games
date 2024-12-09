@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Box, Theme, Typography } from "@mui/material";
 
 import { useTheme } from "components/providers";
-import { GameListEntry } from "games";
+import { GameListEntry } from "assets/games";
 
 export function GameCard({ name, image, isAvailable }: GameListEntry) {
   const { themeIsDark } = useTheme();

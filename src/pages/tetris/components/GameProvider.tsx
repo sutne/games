@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { type JSX } from "react";
 import { Game } from "../logic/game";
 
 const GameContext = React.createContext<

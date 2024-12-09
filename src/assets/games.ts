@@ -1,7 +1,7 @@
+import { type JSX } from "react";
 import minesweeperDark from "assets/dark/minesweeper.png";
 import minesweeperLight from "assets/light/minesweeper.png";
 import { Minesweeper } from "pages/minesweeper/Minesweeper";
-
 
 export type GameListEntry = {
   name: string;

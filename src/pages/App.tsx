@@ -6,7 +6,7 @@ import { RouteNotFound } from "components/404";
 import { NavBar } from "components/NavBar";
 import { AuthProvider, ThemeProvider } from "components/providers";
 import { ToastContainer } from "components/toast/toast";
-import { games } from "games";
+import { games } from "assets/games";
 import { Main } from "pages/main/Main";
 import { Anonymous } from "pages/profile/Anonymous";
 import { ChangeEmail } from "pages/profile/ChangeEmail";

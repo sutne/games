@@ -6,7 +6,7 @@ import { Card } from "components/cards";
 import { Link } from "components/interactive";
 import { useAuth } from "components/providers";
 import { PageHeader } from "components/typography";
-import { games } from "games";
+import { games } from "assets/games";
 
 import { GameCard } from "./components/GameCard";
 

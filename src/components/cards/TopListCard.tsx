@@ -1,4 +1,4 @@
-import React from "react";
+import { type JSX } from "react";
 import { Box, Divider, Stack, Typography } from "@mui/material";
 
 import { Card } from "./Card";

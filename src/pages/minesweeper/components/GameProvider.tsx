@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { type JSX } from "react";
 import { Difficulty } from "../logic/difficulty";
 import { Game } from "../logic/game";
 

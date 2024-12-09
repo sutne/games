@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Stack } from "@mui/material";
-
+import { type JSX } from "react";
 import { Card } from "components/cards/Card";
 
 type props = {
