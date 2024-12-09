@@ -1,9 +1,8 @@
-import React, { SetStateAction } from "react";
-import { Box, Button, Stack, Typography } from "@mui/material";
-
-import { Card } from "components/cards";
-
-import { Difficulty } from "../logic/difficulty";
+import { Box, Button, Stack, Typography } from '@mui/material';
+import { Card } from 'components/cards';
+import type React from 'react';
+import type { SetStateAction } from 'react';
+import type { Difficulty } from '../logic/difficulty';
 
 type props = {
   setDifficulty: React.Dispatch<SetStateAction<Difficulty | undefined>>;
@@ -13,17 +12,17 @@ export function DifficultySelector({ setDifficulty }: props) {
   return (
     <Card>
       <Box sx={classes.container}>
-        <Typography variant="h5">Select Difficulty</Typography>
+        <Typography variant='h5'>Select Difficulty</Typography>
         <Stack
           sx={classes.buttons}
-          direction={{ xs: "column", sm: "row" }}
-          textAlign="center"
+          direction={{ xs: 'column', sm: 'row' }}
+          textAlign='center'
         >
-          <Button onClick={() => setDifficulty("beginner")}>Beginner</Button>
-          <Button onClick={() => setDifficulty("intermediate")}>
+          <Button onClick={() => setDifficulty('beginner')}>Beginner</Button>
+          <Button onClick={() => setDifficulty('intermediate')}>
             Intermediate
           </Button>
-          <Button onClick={() => setDifficulty("expert")}>Expert</Button>
+          <Button onClick={() => setDifficulty('expert')}>Expert</Button>
         </Stack>
       </Box>
     </Card>
@@ -32,11 +31,11 @@ export function DifficultySelector({ setDifficulty }: props) {
   function getClasses() {
     return {
       container: {
-        textAlign: "center",
+        textAlign: 'center',
       },
       buttons: {
-        maxWidth: "300px",
-        margin: "0 auto",
+        maxWidth: '300px',
+        margin: '0 auto',
       },
     };
   }

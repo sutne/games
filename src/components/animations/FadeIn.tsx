@@ -1,5 +1,5 @@
-import { type JSX } from "react";
-import { Box, Grow } from "@mui/material";
+import { Box, Grow } from '@mui/material';
+import type { JSX } from 'react';
 
 type props = {
   children: JSX.Element;

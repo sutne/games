@@ -1,15 +1,14 @@
-import React, { JSX, useState } from "react";
 import {
-  Theme,
   ThemeProvider as MuiThemeProvider,
+  type Theme,
   useMediaQuery,
-} from "@mui/material";
-
+} from '@mui/material';
+import React, { type JSX, useState } from 'react';
 import {
   getCookiePreferences,
   setCookiePreferences,
-} from "services/preferences";
-import { darkTheme, lightTheme } from "themes";
+} from 'services/preferences';
+import { darkTheme, lightTheme } from 'themes';
 
 type props = {
   children: JSX.Element;
@@ -23,12 +22,12 @@ const ThemeContext = React.createContext<
   | undefined
 >(undefined);
 export function ThemeProvider({ children }: props) {
-  const prefersDarkTheme = useMediaQuery("(prefers-color-scheme: dark)");
+  const prefersDarkTheme = useMediaQuery('(prefers-color-scheme: dark)');
   const preferences = getCookiePreferences({
     useDarkTheme: prefersDarkTheme,
   });
   const [theme, setTheme] = useState(
-    preferences.useDarkTheme ? darkTheme : lightTheme
+    preferences.useDarkTheme ? darkTheme : lightTheme,
   );
 
   const swapTheme = () => {
@@ -57,7 +56,7 @@ export function ThemeProvider({ children }: props) {
 export function useTheme() {
   const context = React.useContext(ThemeContext);
   if (context === undefined) {
-    throw new Error("useTheme must be used within a ThemeProvider");
+    throw new Error('useTheme must be used within a ThemeProvider');
   }
   return { ...context };
 }

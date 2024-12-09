@@ -1,18 +1,16 @@
-import React, { useState } from "react";
-
-import { PageHeader } from "components/typography";
-
-import { DifficultySelector } from "./components/DifficultySelector";
-import { GameArea } from "./components/GameArea";
-import { GameProvider } from "./components/GameProvider";
-import { Difficulty } from "./logic/difficulty";
+import { PageHeader } from 'components/typography';
+import { useState } from 'react';
+import { DifficultySelector } from './components/DifficultySelector';
+import { GameArea } from './components/GameArea';
+import { GameProvider } from './components/GameProvider';
+import type { Difficulty } from './logic/difficulty';
 
 export function Minesweeper() {
   const [difficulty, setDifficulty] = useState<Difficulty>();
 
   return (
     <>
-      <PageHeader header="Minesweeper" />
+      <PageHeader header='Minesweeper' />
       {!difficulty ? (
         <DifficultySelector setDifficulty={setDifficulty} />
       ) : (

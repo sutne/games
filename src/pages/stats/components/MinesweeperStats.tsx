@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import {
   Box,
   CircularProgress,
@@ -6,15 +5,15 @@ import {
   Grid,
   Stack,
   Typography,
-} from "@mui/material";
-
-import { Card, TopListCard } from "components/cards";
-import { useAuth } from "components/providers/AuthProvider";
-import { Difficulty } from "pages/minesweeper/logic/difficulty";
-import { UserDocument } from "pages/minesweeper/service/models/userDocument";
-import { readDocument } from "services/firebase/firestore";
-import { toPercentageString } from "utils/numbers";
-import { timeString } from "utils/time";
+} from '@mui/material';
+import { Card, TopListCard } from 'components/cards';
+import { useAuth } from 'components/providers/AuthProvider';
+import type { Difficulty } from 'pages/minesweeper/logic/difficulty';
+import type { UserDocument } from 'pages/minesweeper/service/models/userDocument';
+import { useEffect, useState } from 'react';
+import { readDocument } from 'services/firebase/firestore';
+import { toPercentageString } from 'utils/numbers';
+import { timeString } from 'utils/time';
 
 export function MinesweeperStats() {
   const [hasStats, setHasStats] = useState<boolean>();
@@ -47,10 +46,10 @@ export function MinesweeperStats() {
           container
           columns={{ xs: 4, sm: 8, md: 12 }}
           spacing={2}
-          textAlign="center"
+          textAlign='center'
         >
           <Grid item xs={12}>
-            <Typography variant="h3">{"Minesweeper"}</Typography>
+            <Typography variant='h3'>{'Minesweeper'}</Typography>
           </Grid>
           <Grid item xs={12}>
             <Typography>
@@ -69,10 +68,10 @@ export function MinesweeperStats() {
           container
           columns={{ xs: 4, sm: 8, md: 12 }}
           spacing={2}
-          textAlign="center"
+          textAlign='center'
         >
           <Grid item xs={12}>
-            <Typography variant="h3">{"Minesweeper"}</Typography>
+            <Typography variant='h3'>{'Minesweeper'}</Typography>
           </Grid>
           <Grid item xs={12}>
             <CircularProgress />
@@ -89,10 +88,10 @@ export function MinesweeperStats() {
     doc.beginner.games.won + doc.intermediate.games.won + doc.expert.games.won;
   const percentageWon = toPercentageString(numGamesWon / numGamesPlayed);
   const percentageCleared = toPercentageString(
-    doc.tiles.cleared / (doc.tiles.cleared + doc.tiles.notCleared)
+    doc.tiles.cleared / (doc.tiles.cleared + doc.tiles.notCleared),
   );
   const flagAccuracy = toPercentageString(
-    doc.flags.correct / Math.max(doc.flags.placed, 1)
+    doc.flags.correct / Math.max(doc.flags.placed, 1),
   );
   const totalTime = timeString(doc.totalTime);
 
@@ -101,7 +100,7 @@ export function MinesweeperStats() {
       <Grid item xs={3}>
         <Stack>
           <Typography>{title}</Typography>
-          <Typography variant="h5" fontWeight="bold">
+          <Typography variant='h5' fontWeight='bold'>
             {value}
           </Typography>
         </Stack>
@@ -110,16 +109,16 @@ export function MinesweeperStats() {
   };
 
   const DifficultyCard = (difficulty: Difficulty) => {
-    const headers = ["Time", "Cleared", "Flags"];
+    const headers = ['Time', 'Cleared', 'Flags'];
     const items = doc[difficulty].best.map((game) => [
       `${timeString(game.time)}`,
       `${toPercentageString(
-        game.tiles.cleared / (game.tiles.cleared + game.tiles.notCleared)
+        game.tiles.cleared / (game.tiles.cleared + game.tiles.notCleared),
       )}`,
       `${game.flags.correct}/${game.flags.placed}`,
     ]);
     const winPercentage = toPercentageString(
-      doc[difficulty].games.won / Math.max(doc[difficulty].games.played, 1)
+      doc[difficulty].games.won / Math.max(doc[difficulty].games.played, 1),
     );
 
     const DifficultyStats = () => {
@@ -151,7 +150,7 @@ export function MinesweeperStats() {
       return (
         <Grid item xs={4}>
           <TopListCard
-            type="bordered"
+            type='bordered'
             title={difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
           >
             <>
@@ -166,16 +165,16 @@ export function MinesweeperStats() {
     return (
       <Grid item xs={4}>
         <TopListCard
-          type="bordered"
+          type='bordered'
           title={difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
           headers={headers}
           items={items}
         >
           <>
             <Divider
-              orientation="horizontal"
+              orientation='horizontal'
               flexItem
-              sx={{ margin: "12px 0" }}
+              sx={{ margin: '12px 0' }}
             />
             <DifficultyStats />
           </>
@@ -190,28 +189,28 @@ export function MinesweeperStats() {
         container
         columns={{ xs: 4, sm: 8, md: 12 }}
         spacing={2}
-        textAlign="center"
+        textAlign='center'
       >
         <Grid item xs={12}>
-          <Typography variant="h3">{"Minesweeper"}</Typography>
+          <Typography variant='h3'>{'Minesweeper'}</Typography>
         </Grid>
         <Grid container item xs={12}>
-          <Card type="invisible" padding="12px">
+          <Card type='invisible' padding='12px'>
             <Grid container columns={{ xs: 6, sm: 12 }} spacing={2}>
-              {Stat("Games Played", numGamesPlayed)}
-              {Stat("Games Won", numGamesWon)}
-              {Stat("Win Rate", percentageWon)}
-              {Stat("Time Played", totalTime)}
-              {Stat("Cells Cleared", doc.tiles.cleared)}
-              {Stat("Clear Percentage", percentageCleared)}
-              {Stat("Bombs Flagged", doc.flags.correct)}
-              {Stat("Flag Accuracy", flagAccuracy)}
+              {Stat('Games Played', numGamesPlayed)}
+              {Stat('Games Won', numGamesWon)}
+              {Stat('Win Rate', percentageWon)}
+              {Stat('Time Played', totalTime)}
+              {Stat('Cells Cleared', doc.tiles.cleared)}
+              {Stat('Clear Percentage', percentageCleared)}
+              {Stat('Bombs Flagged', doc.flags.correct)}
+              {Stat('Flag Accuracy', flagAccuracy)}
             </Grid>
           </Card>
         </Grid>
-        {DifficultyCard("beginner")}
-        {DifficultyCard("intermediate")}
-        {DifficultyCard("expert")}
+        {DifficultyCard('beginner')}
+        {DifficultyCard('intermediate')}
+        {DifficultyCard('expert')}
       </Grid>
     </Card>
   );

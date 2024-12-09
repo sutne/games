@@ -2,14 +2,13 @@ import {
   createDocument,
   readDocument,
   updateDocument,
-} from "services/firebase/firestore";
-
-import { Stats } from "../logic/stats";
+} from 'services/firebase/firestore';
+import type { Stats } from '../logic/stats';
 import {
+  type UserDocument,
   emptyUserDocument,
   updateUserDocument,
-  UserDocument,
-} from "./models/userDocument";
+} from './models/userDocument';
 
 /**
  * Reads the user document from the database, updates it with the new stats,
@@ -22,7 +21,7 @@ import {
  */
 export async function updateAndGetUserDocument(
   uid: string,
-  newStats: Stats
+  newStats: Stats,
 ): Promise<UserDocument> {
   const path = `tetris/${uid}`;
   let doc = await readDocument<UserDocument>(path);

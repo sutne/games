@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { type JSX } from "react";
-import { Game } from "../logic/game";
+import React, { useState } from 'react';
+import type { JSX } from 'react';
+import { Game } from '../logic/game';
 
 const GameContext = React.createContext<
   | {
@@ -38,7 +38,7 @@ export function GameProvider({ children }: props) {
 export function useGame() {
   const context = React.useContext(GameContext);
   if (context === undefined) {
-    throw new Error("useGame must be used within a GameProvider");
+    throw new Error('useGame must be used within a GameProvider');
   }
   return { ...context };
 }

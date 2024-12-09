@@ -1,6 +1,5 @@
-import React from "react";
-import { Typography } from "@mui/material";
-import { type JSX } from "react";
+import { Typography } from '@mui/material';
+import type { JSX } from 'react';
 type props = {
   onClick: () => void;
   children: JSX.Element | string;
@@ -10,7 +9,7 @@ export function Link({ onClick, children, center }: props) {
   const classes = getClasses();
   return (
     <Typography
-      component="span"
+      component='span'
       sx={classes.link}
       onClick={(e) => {
         e.preventDefault();
@@ -24,12 +23,12 @@ export function Link({ onClick, children, center }: props) {
   function getClasses() {
     return {
       link: {
-        display: "inline-block",
-        cursor: "pointer",
-        color: "info.main",
-        textAlign: center ? "center" : "left",
-        "&:hover": {
-          fontWeight: "500",
+        display: 'inline-block',
+        cursor: 'pointer',
+        color: 'info.main',
+        textAlign: center ? 'center' : 'left',
+        '&:hover': {
+          fontWeight: '500',
         },
       },
     };

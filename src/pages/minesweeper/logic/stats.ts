@@ -1,4 +1,4 @@
-import { Game } from "./game";
+import type { Game } from './game';
 
 // All relevant stats from a Single Game
 export type Stats = {

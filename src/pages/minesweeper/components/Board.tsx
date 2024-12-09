@@ -1,9 +1,6 @@
-import React from "react";
-
-import { Display } from "components/games/Display";
-
-import { Cell } from "./Cell";
-import { useGame } from "./GameProvider";
+import { Display } from 'components/games/Display';
+import { Cell } from './Cell';
+import { useGame } from './GameProvider';
 
 export function Board() {
   const { game } = useGame();

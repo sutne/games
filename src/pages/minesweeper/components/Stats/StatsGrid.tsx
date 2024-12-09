@@ -1,10 +1,10 @@
-import React, { SetStateAction } from "react";
-import { Grid } from "@mui/material";
-
-import { Difficulty } from "../../logic/difficulty";
-import { GameStats } from "./GameStats";
-import { Leaderboard } from "./Leaderboard";
-import { PersonalBest } from "./PersonalBest";
+import { Grid } from '@mui/material';
+import type React from 'react';
+import type { SetStateAction } from 'react';
+import type { Difficulty } from '../../logic/difficulty';
+import { GameStats } from './GameStats';
+import { Leaderboard } from './Leaderboard';
+import { PersonalBest } from './PersonalBest';
 
 type props = {
   setDifficulty: React.Dispatch<SetStateAction<Difficulty | undefined>>;
@@ -33,8 +33,8 @@ export function StatsGrid({ setDifficulty }: props) {
   function getClasses() {
     return {
       container: {
-        paddingTop: "16px",
-        textAlign: "center",
+        paddingTop: '16px',
+        textAlign: 'center',
       },
     };
   }

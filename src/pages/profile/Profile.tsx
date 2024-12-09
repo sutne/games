@@ -1,35 +1,33 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Stack, Typography } from "@mui/material";
-
-import { Button, EmailField, LoadingButton } from "components/interactive";
-import { FormProvider, useAuth } from "components/providers";
-import { PageHeader } from "components/typography";
-import { signOut } from "services/firebase/auth";
-
-import { ProfileCard } from "./components/ProfileCard";
+import { Stack, Typography } from '@mui/material';
+import { Button, EmailField, LoadingButton } from 'components/interactive';
+import { FormProvider, useAuth } from 'components/providers';
+import { PageHeader } from 'components/typography';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { signOut } from 'services/firebase/auth';
+import { ProfileCard } from './components/ProfileCard';
 
 export function Profile() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user.isSignedIn) navigate("/profile/sign-in");
+    if (!user.isSignedIn) navigate('/profile/sign-in');
   }, [user]);
 
   if (!user) {
-    return <PageHeader header="Profile" />;
+    return <PageHeader header='Profile' />;
   }
 
   return (
     <>
-      <PageHeader header={user.username ?? "Anonymous"} />
+      <PageHeader header={user.username ?? 'Anonymous'} />
       <ProfileCard
         header={
-          <Stack paddingTop="16px">
+          <Stack paddingTop='16px'>
             {user.isAnonymous ? (
               <>
-                <Typography style={{ marginBottom: "8px" }}>
+                <Typography style={{ marginBottom: '8px' }}>
                   You have signed in anonymously.
                 </Typography>
                 <Typography>
@@ -57,39 +55,39 @@ export function Profile() {
         <>
           {user.isAnonymous ? (
             <Button
-              label="Upgrade to proper user"
-              onClick={() => navigate("/profile/upgrade")}
+              label='Upgrade to proper user'
+              onClick={() => navigate('/profile/upgrade')}
             />
           ) : (
             <FormProvider>
               <EmailField
-                id="email"
-                field={{ value: user.email ?? "...", valid: true }}
+                id='email'
+                field={{ value: user.email ?? '...', valid: true }}
               />
               <Button
-                onClick={() => navigate("/profile/change-email")}
-                label="Change Email"
+                onClick={() => navigate('/profile/change-email')}
+                label='Change Email'
               />
               <Button
-                onClick={() => navigate("/profile/change-password")}
-                label="Change Password"
+                onClick={() => navigate('/profile/change-password')}
+                label='Change Password'
               />
             </FormProvider>
           )}
           <LoadingButton
-            color="error"
+            color='error'
             onClick={async () => {
               await signOut();
-              navigate("/");
+              navigate('/');
             }}
-            label="Sign Out"
-            loadingLabel="Signing Out"
+            label='Sign Out'
+            loadingLabel='Signing Out'
           />
           <LoadingButton
-            color="error"
-            onClick={() => navigate("/profile/delete")}
-            label="Delete Account"
-            loadingLabel="Deleting Account"
+            color='error'
+            onClick={() => navigate('/profile/delete')}
+            label='Delete Account'
+            loadingLabel='Deleting Account'
           />
         </>
       </ProfileCard>

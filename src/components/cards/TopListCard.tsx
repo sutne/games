@@ -1,7 +1,6 @@
-import { type JSX } from "react";
-import { Box, Divider, Stack, Typography } from "@mui/material";
-
-import { Card } from "./Card";
+import { Box, Divider, Stack, Typography } from '@mui/material';
+import type { JSX } from 'react';
+import { Card } from './Card';
 
 type props = {
   title: string;
@@ -9,23 +8,23 @@ type props = {
   items?: string[][];
   highlightIndex?: number;
   highlightColor?: string | undefined;
-  type?: "bordered" | "elevated";
+  type?: 'bordered' | 'elevated';
   children?: JSX.Element;
 };
 export function TopListCard(props: props) {
   const classes = getClasses();
   if (props.items && !props.headers)
-    throw new Error("The items need their headers");
+    throw new Error('The items need their headers');
   return (
-    <Card padding="12px" type={props.type ?? "elevated"}>
-      <Typography variant="h4" textAlign="center" sx={classes.title}>
+    <Card padding='12px' type={props.type ?? 'elevated'}>
+      <Typography variant='h4' textAlign='center' sx={classes.title}>
         {props.title}
       </Typography>
       <Divider />
-      <Stack direction="column" spacing={classes.spacing.column}>
+      <Stack direction='column' spacing={classes.spacing.column}>
         {props.headers ? (
           <Stack
-            direction="row"
+            direction='row'
             spacing={classes.spacing.row}
             sx={classes.header}
           >
@@ -41,8 +40,9 @@ export function TopListCard(props: props) {
         )}
         {props.items?.map((item, i) => (
           <Stack
+            // biome-ignore lint/suspicious/noArrayIndexKey: is desired key
             key={i}
-            direction="row"
+            direction='row'
             spacing={classes.spacing.row}
             sx={props.highlightIndex === i ? classes.highlight : undefined}
           >
@@ -66,16 +66,16 @@ export function TopListCard(props: props) {
         column: 1,
       },
       card: {
-        backgroundColor: "background.paper",
-        borderRadius: "16px",
+        backgroundColor: 'background.paper',
+        borderRadius: '16px',
         boxShadow: 5,
-        padding: "12px",
+        padding: '12px',
       },
       title: {
-        marginBottom: "8px",
+        marginBottom: '8px',
       },
       header: {
-        marginTop: "6px",
+        marginTop: '6px',
       },
       rank: {
         flex: 1,
@@ -88,9 +88,9 @@ export function TopListCard(props: props) {
         flex: 3,
       },
       highlight: {
-        "& > *": {
-          fontSize: "14pt",
-          color: props.highlightColor ?? "info.main",
+        '& > *': {
+          fontSize: '14pt',
+          color: props.highlightColor ?? 'info.main',
           fontWeight: 900,
         },
       },

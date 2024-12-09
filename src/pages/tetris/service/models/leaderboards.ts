@@ -1,6 +1,5 @@
-import { Entry, updateLeaderboardList } from "utils/lists";
-
-import { firstIsBest as firstStatIsBest, Stats } from "../../logic/stats";
+import { type Entry, updateLeaderboardList } from 'utils/lists';
+import { type Stats, firstIsBest as firstStatIsBest } from '../../logic/stats';
 
 export interface LeaderboardEntry extends Entry {
   user: string;
@@ -24,14 +23,14 @@ function firstIsBest(A: LeaderboardEntry, B: LeaderboardEntry): boolean {
 export function updateLeaderboards(
   doc: GlobalDocument,
   username: string,
-  stats: Stats
+  stats: Stats,
 ): GlobalDocument {
   const newEntry: LeaderboardEntry = { user: username, game: stats };
   doc.leaderboard = updateLeaderboardList(
     doc.leaderboard,
     newEntry,
     username,
-    firstIsBest
+    firstIsBest,
   );
   return doc;
 }

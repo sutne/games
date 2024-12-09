@@ -1,9 +1,6 @@
-import React from "react";
-import * as Icons from "@mui/icons-material";
-
-import { TextField } from "components/interactive";
-
-import { useForm } from "../providers/FormProvider";
+import * as Icons from '@mui/icons-material';
+import { TextField } from 'components/interactive';
+import { useForm } from '../providers/FormProvider';
 
 type props = {
   field: { value: string; valid: boolean };
@@ -14,26 +11,26 @@ export function UsernameField({ field, onChange }: props) {
 
   const validate = (username: string) => {
     if (username.length < 5 || 12 < username.length)
-      return "Username must be between 5 and 12 characters long";
+      return 'Username must be between 5 and 12 characters long';
   };
 
   return (
     <TextField
-      label="username"
+      label='username'
       icon={<Icons.Person />}
       onChange={(value) => {
-        onChange("username", {
+        onChange('username', {
           value: value,
           valid: validate(value) === undefined,
         });
       }}
       value={field.value}
-      error={showValidation && validate(field.value) ? true : false}
+      error={!!(showValidation && validate(field.value))}
       helperText={
         showValidation && validate(field.value)
           ? validate(field.value)
-          : "Username will be shown on leaderboards for other users, \
-        email and password will never be shown to others"
+          : 'Username will be shown on leaderboards for other users, \
+        email and password will never be shown to others'
       }
     />
   );

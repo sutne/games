@@ -1,4 +1,4 @@
-export type Difficulty = "beginner" | "intermediate" | "expert";
+export type Difficulty = 'beginner' | 'intermediate' | 'expert';
 
 export const DifficultySettings = {
   beginner: {

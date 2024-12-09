@@ -1,5 +1,4 @@
-import React from "react";
-import { Typography } from "@mui/material";
+import { Typography } from '@mui/material';
 
 type props = {
   header: string;
@@ -7,7 +6,7 @@ type props = {
 export function PageHeader({ header }: props) {
   const classes = getClasses();
   return (
-    <Typography variant="h3" sx={classes.title}>
+    <Typography variant='h3' sx={classes.title}>
       {header}
     </Typography>
   );
@@ -15,8 +14,8 @@ export function PageHeader({ header }: props) {
   function getClasses() {
     return {
       title: {
-        textAlign: "center",
-        marginBottom: "16px",
+        textAlign: 'center',
+        marginBottom: '16px',
         fontWeight: 600,
       },
     };

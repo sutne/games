@@ -1,7 +1,7 @@
-import { type JSX } from "react";
-import minesweeperDark from "assets/dark/minesweeper.png";
-import minesweeperLight from "assets/light/minesweeper.png";
-import { Minesweeper } from "pages/minesweeper/Minesweeper";
+import minesweeperDark from 'assets/dark/minesweeper.png';
+import minesweeperLight from 'assets/light/minesweeper.png';
+import { Minesweeper } from 'pages/minesweeper/Minesweeper';
+import type { JSX } from 'react';
 
 export type GameListEntry = {
   name: string;
@@ -16,8 +16,8 @@ export type GameListEntry = {
 
 export const games: GameListEntry[] = [
   {
-    name: "Minesweeper",
-    description: "Clear the board of all tiles without stepping on a mine.",
+    name: 'Minesweeper',
+    description: 'Clear the board of all tiles without stepping on a mine.',
     image: {
       light: minesweeperLight,
       dark: minesweeperDark,
