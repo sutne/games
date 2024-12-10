@@ -10,12 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     name: Build & Deploy
     env:
-      REACT_APP_FIREBASE_API_KEY: ${{ secrets.REACT_APP_FIREBASE_API_KEY  }}
-      REACT_APP_FIREBASE_AUTH_DOMAIN: ${{ secrets.REACT_APP_FIREBASE_AUTH_DOMAIN }}
-      REACT_APP_FIREBASE_PROJECT_ID: ${{ secrets.REACT_APP_FIREBASE_PROJECT_ID }}
-      REACT_APP_FIREBASE_STORAGE_BUCKET: ${{ secrets.REACT_APP_FIREBASE_STORAGE_BUCKET }}
-      REACT_APP_FIREBASE_MESSAGE_SENDER_ID: ${{ secrets.REACT_APP_FIREBASE_MESSAGE_SENDER_ID }}
-      REACT_APP_FIREBASE_APP_ID: ${{ secrets.REACT_APP_FIREBASE_APP_ID }}
+      VITE_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY  }}
+      VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+      VITE_FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+      VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
+      VITE_FIREBASE_MESSAGE_SENDER_ID: ${{ secrets.FIREBASE_MESSAGE_SENDER_ID }}
+      VITE_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
 
     steps:
       - uses: actions/checkout@v4
@@ -30,9 +30,7 @@ jobs:
         run: npm run build
 
       - name: Deploy
-        uses: s0/git-publish-subdir-action@develop
-        env:
-          REPO: self
-          BRANCH: gh-pages
-          FOLDER: dist
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          publish_dir: ./dist
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
