@@ -1,23 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Typography } from "@mui/material";
-
+import { Typography } from '@mui/material';
 import {
   EmailField,
   LoadingButton,
   PasswordField,
-} from "components/interactive";
-import { FormProvider, useAuth, useForm } from "components/providers";
-import { PageHeader } from "components/typography";
-import { changePassword } from "services/firebase/auth";
-
-import { toast } from "../../components/toast/toast";
-import { ProfileCard } from "./components/ProfileCard";
+} from 'components/interactive';
+import { FormProvider, useAuth, useForm } from 'components/providers';
+import { PageHeader } from 'components/typography';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { changePassword } from 'services/firebase/auth';
+import { toast } from '../../components/toast/toast';
+import { ProfileCard } from './components/ProfileCard';
 
 export function ChangePassword() {
   return (
     <>
-      <PageHeader header="Change Password" />
+      <PageHeader header='Change Password' />
       <ProfileCard>
         <FormProvider>
           <UpdateUserFormFields />
@@ -31,7 +29,7 @@ function UpdateUserFormFields() {
   const { setShowValidation } = useForm();
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [errorMessage, setError] = useState("");
+  const [errorMessage, setError] = useState('');
 
   useEffect(() => {
     setShowValidation(false);
@@ -45,18 +43,18 @@ function UpdateUserFormFields() {
       valid: true,
     },
     oldPassword: {
-      value: "",
+      value: '',
       valid: false,
     },
     password: {
-      value: "",
+      value: '',
       valid: false,
     },
   });
 
   const onFieldChange = (
     field: string,
-    update: { value: string; valid: boolean }
+    update: { value: string; valid: boolean },
   ) => {
     setFields({ ...fields, [field]: update });
   };
@@ -70,10 +68,10 @@ function UpdateUserFormFields() {
       await changePassword(
         fields.oldEmail.value,
         fields.oldPassword.value,
-        fields.password.value
+        fields.password.value,
       );
-      navigate("/profile");
-      toast.success("Password updated successfully!");
+      navigate('/profile');
+      toast.success('Password updated successfully!');
     } catch (error) {
       setError((error as Error).message);
     }
@@ -85,25 +83,25 @@ function UpdateUserFormFields() {
         You must re-authenticate with your current email and password in order
         to update your password.
       </Typography>
-      <EmailField id="oldEmail" field={fields.oldEmail} />
+      <EmailField id='oldEmail' field={fields.oldEmail} />
       <PasswordField
-        id="oldPassword"
+        id='oldPassword'
         field={fields.oldPassword}
         onChange={onFieldChange}
       />
       <Typography>Enter your new password below</Typography>
       <PasswordField
-        id="password"
+        id='password'
         field={fields.password}
         onChange={onFieldChange}
       />
       <LoadingButton
         onClick={onSubmit}
-        label="Change Password"
-        loadingLabel="Updating Password"
+        label='Change Password'
+        loadingLabel='Updating Password'
       />
       {errorMessage && (
-        <Typography color="error" textAlign="center">
+        <Typography color='error' textAlign='center'>
           {errorMessage}
         </Typography>
       )}

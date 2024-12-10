@@ -1,13 +1,13 @@
-import React from "react";
-import { Box } from "@mui/material";
+import { Box } from '@mui/material';
+import type { JSX } from 'react';
 
 type props = {
   children: JSX.Element | JSX.Element[] | string;
   color?: string;
-  type?: "elevated" | "bordered" | "invisible";
+  type?: 'elevated' | 'bordered' | 'invisible';
   padding?: string;
 };
-export function Card({ type = "elevated", ...props }: props) {
+export function Card({ type = 'elevated', ...props }: props) {
   const classes = getClasses();
   return <Box sx={classes.card}>{props.children}</Box>;
 
@@ -16,20 +16,20 @@ export function Card({ type = "elevated", ...props }: props) {
       card: [
         {
           // height: "100%",
-          width: "100%",
-          backgroundColor: props.color ?? "background.paper",
-          borderRadius: "16px",
-          padding: props.padding ?? "32px",
+          width: '100%',
+          backgroundColor: props.color ?? 'background.paper',
+          borderRadius: '16px',
+          padding: props.padding ?? '32px',
         },
-        type === "elevated" && {
+        type === 'elevated' && {
           boxShadow: 5,
         },
-        type === "bordered" && {
-          borderColor: "divider",
-          borderStyle: "solid",
-          borderWidth: "1pt",
+        type === 'bordered' && {
+          borderColor: 'divider',
+          borderStyle: 'solid',
+          borderWidth: '1pt',
         },
-        type === "invisible" && {},
+        type === 'invisible' && {},
       ],
     };
   }

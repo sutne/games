@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-
-import { getUser, onAuthChanged, User } from "services/firebase/auth";
+import React, { useEffect, useState } from 'react';
+import type { JSX } from 'react';
+import { type User, getUser, onAuthChanged } from 'services/firebase/auth';
 
 type props = {
   children: JSX.Element;
@@ -25,7 +25,7 @@ export function AuthProvider({ children }: props) {
 export function useAuth() {
   const context = React.useContext(AuthContext);
   if (context === undefined) {
-    throw new Error("useAuth must be used within a AuthProvider");
+    throw new Error('useAuth must be used within a AuthProvider');
   }
   return { ...context };
 }

@@ -1,13 +1,12 @@
-import { remove } from "utils/lists";
-
-import { blocks } from "./blocks";
-import { Player } from "./player";
+import { remove } from 'utils/lists';
+import { blocks } from './blocks';
+import { Player } from './player';
 
 export class Game {
   //Constants
   width = 13;
   height = 20;
-  pieces = "IJLOSTZ";
+  pieces = 'IJLOSTZ';
   // Game Stuff
   next: string;
   stage: string[][];
@@ -44,7 +43,7 @@ export class Game {
     for (let y = 0; y < this.height; y++) {
       const row: string[] = [];
       for (let x = 0; x < this.width; x++) {
-        row.push("0");
+        row.push('0');
       }
       this.stage.push(row);
     }
@@ -52,7 +51,7 @@ export class Game {
     this.player = new Player(
       blocks[this.getRandomPiece()].shape,
       Math.floor(this.width / 2),
-      0
+      0,
     );
   }
 
@@ -63,7 +62,7 @@ export class Game {
 
   start(): void {
     if (this.isStarted) return;
-    console.log("starting");
+    console.log('starting');
     this.isStarted = true;
     this.startTime = new Date().getTime();
   }
@@ -89,14 +88,14 @@ export class Game {
       stageWithPLayer.push(row);
     }
 
-    stageWithPLayer[this.player.y][this.player.x] = "O";
+    stageWithPLayer[this.player.y][this.player.x] = 'O';
     return stageWithPLayer;
   }
 
-  move(direction: "left" | "right" | "down") {
-    if (direction === "left") this.player.x -= 1;
-    if (direction === "right") this.player.x += 1;
-    if (direction === "down") this.player.y += 1;
+  move(direction: 'left' | 'right' | 'down') {
+    if (direction === 'left') this.player.x -= 1;
+    if (direction === 'right') this.player.x += 1;
+    if (direction === 'down') this.player.y += 1;
   }
 
   clearLines() {
@@ -104,7 +103,7 @@ export class Game {
       const row = this.stage[i];
       let hasGap = false;
       for (const cell of row) {
-        if (cell === "0") {
+        if (cell === '0') {
           hasGap = true;
           break;
         }
@@ -116,7 +115,7 @@ export class Game {
       // add new line to top of stage
       const newRow: string[] = [];
       for (let x = 0; x < this.width; x++) {
-        newRow.push("0");
+        newRow.push('0');
       }
       this.stage.push(newRow);
     }

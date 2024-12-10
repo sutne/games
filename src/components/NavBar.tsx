@@ -1,12 +1,10 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import * as Icons from "@mui/icons-material";
-import { Button, Toolbar } from "@mui/material";
-import { Box } from "@mui/system";
-
-import { IconButton } from "components/interactive";
-import { useAuth } from "components/providers/AuthProvider";
-import { useTheme } from "components/providers/ThemeProvider";
+import * as Icons from '@mui/icons-material';
+import { Button, Toolbar } from '@mui/material';
+import { Box } from '@mui/system';
+import { IconButton } from 'components/interactive';
+import { useAuth } from 'components/providers/AuthProvider';
+import { useTheme } from 'components/providers/ThemeProvider';
+import { useNavigate } from 'react-router-dom';
 
 export function NavBar() {
   const navigate = useNavigate();
@@ -17,30 +15,30 @@ export function NavBar() {
   return (
     <Box sx={classes.navbar}>
       <Toolbar>
-        <IconButton icon={<Icons.Home />} onClick={() => navigate("/")} />
+        <IconButton icon={<Icons.Home />} onClick={() => navigate('/')} />
 
         {user.isSignedIn ? (
           <IconButton
             icon={<Icons.EmojiEvents />}
-            onClick={() => navigate("/stats")}
+            onClick={() => navigate('/stats')}
           />
         ) : (
           <></>
         )}
-        <Box sx={{ flex: "1" }} />
+        <Box sx={{ flex: '1' }} />
         {user.isSignedIn ? (
           <Button
-            sx={{ color: "text.secondary", textTransform: "none" }}
-            size="large"
+            sx={{ color: 'text.secondary', textTransform: 'none' }}
+            size='large'
             endIcon={<Icons.AccountCircle />}
-            onClick={() => navigate("/profile")}
+            onClick={() => navigate('/profile')}
           >
-            {user.username ?? "Anonymous"}
+            {user.username ?? 'Anonymous'}
           </Button>
         ) : (
           <IconButton
             icon={<Icons.AccountCircleOutlined />}
-            onClick={() => navigate("/profile")}
+            onClick={() => navigate('/profile')}
           />
         )}
         <IconButton
@@ -54,10 +52,10 @@ export function NavBar() {
   function getClasses() {
     return {
       navbar: {
-        margin: "0 auto",
-        marginBottom: "16px",
-        backgroundColor: "background.paper",
-        borderRadius: "8px",
+        margin: '0 auto',
+        marginBottom: '16px',
+        backgroundColor: 'background.paper',
+        borderRadius: '8px',
         boxShadow: 5,
       },
     };

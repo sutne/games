@@ -2,14 +2,13 @@ import {
   createDocument,
   readDocument,
   updateDocument,
-} from "services/firebase/firestore";
-
-import { Stats } from "../logic/stats";
-import { LeaderboardEntry } from "../service/models/leaderboards";
+} from 'services/firebase/firestore';
+import type { Stats } from '../logic/stats';
+import type { LeaderboardEntry } from '../service/models/leaderboards';
 import {
-  GlobalDocument,
+  type GlobalDocument,
   updateLeaderboards as updateLeaderboard,
-} from "./models/leaderboards";
+} from './models/leaderboards';
 
 /**
  * Reads the leaderboard from the database, updates it with the new stats,
@@ -19,9 +18,9 @@ import {
  */
 export async function updateAndGetLeaderboard(
   stats: Stats,
-  username?: string
+  username?: string,
 ): Promise<LeaderboardEntry[]> {
-  const path = `leaderboards/tetris`;
+  const path = 'leaderboards/tetris';
   let doc = await readDocument<GlobalDocument>(path);
   if (!username) {
     if (!doc) return [];

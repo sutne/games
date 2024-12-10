@@ -1,4 +1,4 @@
-import Cookies from "universal-cookie";
+import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
@@ -8,7 +8,7 @@ type Preferences = {
 
 export function setCookiePreferences(preferences: Preferences) {
   for (const [key, value] of Object.entries(preferences)) {
-    cookies.set(`preferences.${key}`, value, { path: "/" });
+    cookies.set(`preferences.${key}`, value, { path: '/' });
   }
 }
 

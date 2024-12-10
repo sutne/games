@@ -1,7 +1,6 @@
-import { Difficulty } from "pages/minesweeper/logic/difficulty";
-import { updatePersonalBestList } from "utils/lists";
-
-import { firstIsBest, Stats } from "../../logic/stats";
+import type { Difficulty } from 'pages/minesweeper/logic/difficulty';
+import { updatePersonalBestList } from 'utils/lists';
+import { type Stats, firstIsBest } from '../../logic/stats';
 
 type DifficultyStats = {
   games: {
@@ -36,7 +35,7 @@ export type UserDocument = {
 export function updateUserDocument(
   doc: UserDocument,
   difficulty: Difficulty,
-  stats: Stats
+  stats: Stats,
 ): UserDocument {
   doc.totalTime += stats.time;
   doc.flags.correct += stats.flags.correct;
@@ -48,7 +47,7 @@ export function updateUserDocument(
   doc[difficulty].best = updatePersonalBestList(
     doc[difficulty].best,
     stats,
-    firstIsBest
+    firstIsBest,
   );
   return doc;
 }

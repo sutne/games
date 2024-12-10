@@ -1,5 +1,5 @@
-import { Cell } from "./cell";
-import { Difficulty, DifficultySettings } from "./difficulty";
+import { Cell } from './cell';
+import { type Difficulty, DifficultySettings } from './difficulty';
 
 export class Game {
   // Settings
@@ -56,7 +56,7 @@ export class Game {
     // create list of all possible mineIds
     const numTiles = this.width * this.height;
     // make sure there isn't more mines than valid tiles to convert to mines
-    if (numTiles - 9 < this.numMines) throw new Error("Too many mines!");
+    if (numTiles - 9 < this.numMines) throw new Error('Too many mines!');
     let validMineIds: number[] = Array.from(Array(numTiles).keys());
     // remove clicked tile and all its neighbors from list
     const toRemove: Cell[] = [
@@ -65,7 +65,7 @@ export class Game {
     ];
     for (const remove of toRemove) {
       validMineIds = validMineIds.filter(
-        (id) => id !== this._getIndex(remove.x, remove.y)
+        (id) => id !== this._getIndex(remove.x, remove.y),
       );
     }
     // add mines
@@ -194,9 +194,14 @@ export class Game {
     const neighbors = [];
     // prettier-ignore
     const offsets = [
-      [-1,-1], [0,-1],  [1,-1],
-      [-1, 0]/*[x, y]*/,[1, 0],
-      [-1, 1], [0, 1],  [1, 1],
+      [-1, -1],
+      [0, -1],
+      [1, -1],
+      [-1, 0] /*[x, y]*/,
+      [1, 0],
+      [-1, 1],
+      [0, 1],
+      [1, 1],
     ];
     for (const offset of offsets) {
       const [x, y] = [tile.x + offset[0], tile.y + offset[1]];

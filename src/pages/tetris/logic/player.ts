@@ -13,12 +13,12 @@ export class Player {
     this.shape = shape;
   }
 
-  rotate(direction: "clockwise" | "counter-clockwise") {
+  rotate(direction: 'clockwise' | 'counter-clockwise') {
     console.log(direction);
     const transposed = this.shape.map((_, index) =>
-      this.shape.map((col) => col[index])
+      this.shape.map((col) => col[index]),
     );
-    if (direction === "clockwise") {
+    if (direction === 'clockwise') {
       this.shape = transposed.reverse();
     } else {
       this.shape = transposed.map((row) => row.reverse());
