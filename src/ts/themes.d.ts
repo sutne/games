@@ -1,9 +1,9 @@
-/* eslint-enable @typescript-eslint/no-unused-vars */
+import '@mui/material';
 
 // Force custom themes to declare these colors,
 // and give them as type hint when using the theme
 declare module '@mui/material/styles' {
-  // theme.palette.<>
+  // theme.palette.{}
   interface PaletteExtension {
     game: {
       features: {
@@ -25,7 +25,7 @@ declare module '@mui/material/styles' {
     };
   }
 
-  // Apply to both give typehints and declaration warnings
+  // Apply to both to handle typehints and declaration warnings
   interface Palette extends PaletteExtension {}
   interface PaletteOptions extends PaletteExtension {}
 }
