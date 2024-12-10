@@ -26,7 +26,7 @@
         "color": "terminal.ansiBlue"
       },
       "type": "shell",
-      "command": "npm start",
+      "command": "npm install && npm start",
       "presentation": {
         "panel": "dedicated",
         "reveal": "always",
