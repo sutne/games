@@ -1,22 +1,20 @@
-import React from "react";
-import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
-import { Box, CssBaseline } from "@mui/material";
-
-import { RouteNotFound } from "components/404";
-import { NavBar } from "components/NavBar";
-import { AuthProvider, ThemeProvider } from "components/providers";
-import { ToastContainer } from "components/toast/toast";
-import { games } from "games";
-import { Main } from "pages/main/Main";
-import { Anonymous } from "pages/profile/Anonymous";
-import { ChangeEmail } from "pages/profile/ChangeEmail";
-import { ChangePassword } from "pages/profile/ChangePassword";
-import { CreateUser } from "pages/profile/CreateUser";
-import { DeleteAccount } from "pages/profile/DeleteAccount";
-import { Profile } from "pages/profile/Profile";
-import { SignIn } from "pages/profile/SignIn";
-import { Upgrade } from "pages/profile/Upgrade";
-import { Stats } from "pages/stats/Stats";
+import { Box, CssBaseline } from '@mui/material';
+import { games } from 'assets/games';
+import { RouteNotFound } from 'components/404';
+import { NavBar } from 'components/NavBar';
+import { AuthProvider, ThemeProvider } from 'components/providers';
+import { ToastContainer } from 'components/toast/toast';
+import { Main } from 'pages/main/Main';
+import { Anonymous } from 'pages/profile/Anonymous';
+import { ChangeEmail } from 'pages/profile/ChangeEmail';
+import { ChangePassword } from 'pages/profile/ChangePassword';
+import { CreateUser } from 'pages/profile/CreateUser';
+import { DeleteAccount } from 'pages/profile/DeleteAccount';
+import { Profile } from 'pages/profile/Profile';
+import { SignIn } from 'pages/profile/SignIn';
+import { Upgrade } from 'pages/profile/Upgrade';
+import { Stats } from 'pages/stats/Stats';
+import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 export function App() {
   // Load preferences from cookies and set theme accordingly
@@ -33,22 +31,22 @@ export function App() {
               <HashRouter>
                 <NavBar />
                 <Routes>
-                  <Route path="/" element={<Main />} />
-                  <Route path="/stats" element={<Stats />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/profile/sign-in" element={<SignIn />} />
-                  <Route path="/profile/create" element={<CreateUser />} />
+                  <Route path='/' element={<Main />} />
+                  <Route path='/stats' element={<Stats />} />
+                  <Route path='/profile' element={<Profile />} />
+                  <Route path='/profile/sign-in' element={<SignIn />} />
+                  <Route path='/profile/create' element={<CreateUser />} />
                   <Route
-                    path="/profile/change-email"
+                    path='/profile/change-email'
                     element={<ChangeEmail />}
                   />
                   <Route
-                    path="/profile/change-password"
+                    path='/profile/change-password'
                     element={<ChangePassword />}
                   />
-                  <Route path="/profile/anonymous" element={<Anonymous />} />
-                  <Route path="/profile/upgrade" element={<Upgrade />} />
-                  <Route path="/profile/delete" element={<DeleteAccount />} />
+                  <Route path='/profile/anonymous' element={<Anonymous />} />
+                  <Route path='/profile/upgrade' element={<Upgrade />} />
+                  <Route path='/profile/delete' element={<DeleteAccount />} />
                   {enabledGames.map((game) => {
                     return (
                       <Route
@@ -58,8 +56,8 @@ export function App() {
                       />
                     );
                   })}
-                  <Route path="/404" element={<RouteNotFound />} />
-                  <Route path="*" element={<Navigate replace to="/404" />} />
+                  <Route path='/404' element={<RouteNotFound />} />
+                  <Route path='*' element={<Navigate replace to='/404' />} />
                 </Routes>
               </HashRouter>
             </Box>
@@ -73,16 +71,16 @@ export function App() {
   function getClasses() {
     return {
       content: {
-        width: "100%",
-        backgroundColor: "background.default",
-        color: "text.primary",
-        WebKitFontSmoothing: "antialiased",
-        MozOsxFontSmoothing: "grayscale",
+        width: '100%',
+        backgroundColor: 'background.default',
+        color: 'text.primary',
+        WebKitFontSmoothing: 'antialiased',
+        MozOsxFontSmoothing: 'grayscale',
       },
       wrapper: {
-        width: "min(1024px, 100%)",
-        margin: "0 auto",
-        padding: "12px 24px 24px 24px",
+        width: 'min(1024px, 100%)',
+        margin: '0 auto',
+        padding: '12px 24px 24px 24px',
       },
     };
   }

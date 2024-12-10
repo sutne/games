@@ -1,6 +1,5 @@
-import { updatePersonalBestList } from "utils/lists";
-
-import { firstIsBest, Stats } from "../../logic/stats";
+import { updatePersonalBestList } from 'utils/lists';
+import { type Stats, firstIsBest } from '../../logic/stats';
 
 export type UserDocument = {
   totalTime: number;
@@ -19,7 +18,7 @@ export type UserDocument = {
  */
 export function updateUserDocument(
   doc: UserDocument,
-  stats: Stats
+  stats: Stats,
 ): UserDocument {
   doc.totalTime += stats.time;
   doc.totalScore += stats.score;

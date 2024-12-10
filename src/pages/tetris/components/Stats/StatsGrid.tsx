@@ -1,10 +1,7 @@
-import React from "react";
-import { Grid } from "@mui/material";
-
-import { GameStats } from "./GameStats";
-import { Leaderboard } from "./Leaderboard";
-import { PersonalBest } from "./PersonalBest";
-
+import { Grid } from '@mui/material';
+import { GameStats } from './GameStats';
+import { Leaderboard } from './Leaderboard';
+import { PersonalBest } from './PersonalBest';
 
 export function StatsGrid() {
   const classes = getClasses();
@@ -30,8 +27,8 @@ export function StatsGrid() {
   function getClasses() {
     return {
       container: {
-        paddingTop: "16px",
-        textAlign: "center",
+        paddingTop: '16px',
+        textAlign: 'center',
       },
     };
   }

@@ -2,15 +2,14 @@ import {
   createDocument,
   readDocument,
   updateDocument,
-} from "services/firebase/firestore";
-
-import { Difficulty } from "../logic/difficulty";
-import { Stats } from "../logic/stats";
+} from 'services/firebase/firestore';
+import type { Difficulty } from '../logic/difficulty';
+import type { Stats } from '../logic/stats';
 import {
+  type UserDocument,
   emptyUserDocument,
   updateUserDocument,
-  UserDocument,
-} from "./models/userDocument";
+} from './models/userDocument';
 
 /**
  * Reads the user document from the database, updates it with the new stats,
@@ -24,7 +23,7 @@ import {
 export async function updateAndGetUserDocument(
   uid: string,
   difficulty: Difficulty,
-  newStats: Stats
+  newStats: Stats,
 ): Promise<UserDocument> {
   const path = `minesweeper/${uid}`;
   let doc = await readDocument<UserDocument>(path);

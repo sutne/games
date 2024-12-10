@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import * as Icons from "@mui/icons-material";
-import { IconButton } from "@mui/material";
-
-import { TextField } from "components/interactive";
-import { useForm } from "components/providers/FormProvider";
+import * as Icons from '@mui/icons-material';
+import { IconButton } from '@mui/material';
+import { TextField } from 'components/interactive';
+import { useForm } from 'components/providers/FormProvider';
+import { useState } from 'react';
 
 type props = {
   id: string;
@@ -18,16 +17,16 @@ export function PasswordField({ id, field, onChange, onEnterPress }: props) {
 
   const validate = (password: string) => {
     if (password.length < 6)
-      return "Password must be at least 6 characters long";
+      return 'Password must be at least 6 characters long';
   };
 
   const handleKeyDown = (event: any) => {
-    if (event.key === "Enter" && onEnterPress) onEnterPress();
+    if (event.key === 'Enter' && onEnterPress) onEnterPress();
   };
 
   return (
     <TextField
-      label={"password"}
+      label={'password'}
       onChange={(value) => {
         onChange(id, {
           value: value,
@@ -35,13 +34,13 @@ export function PasswordField({ id, field, onChange, onEnterPress }: props) {
         });
       }}
       onKeyDown={handleKeyDown}
-      error={showValidation && validate(field.value) ? true : false}
+      error={!!(showValidation && validate(field.value))}
       helperText={showValidation && validate(field.value)}
-      type={hidden ? "text" : "password"}
+      type={hidden ? 'text' : 'password'}
       value={field.value}
       icon={<Icons.Key />}
       end={
-        <IconButton onClick={() => setHidden((hidden) => !hidden)} edge="end">
+        <IconButton onClick={() => setHidden((hidden) => !hidden)} edge='end'>
           {hidden ? <Icons.VisibilityOff /> : <Icons.Visibility />}
         </IconButton>
       }

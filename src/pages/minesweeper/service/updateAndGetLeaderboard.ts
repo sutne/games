@@ -2,12 +2,11 @@ import {
   createDocument,
   readDocument,
   updateDocument,
-} from "services/firebase/firestore";
-
-import { Difficulty } from "../logic/difficulty";
-import { Stats } from "../logic/stats";
-import { LeaderboardEntry } from "../service/models/leaderboards";
-import { Leaderboards, updateLeaderboards } from "./models/leaderboards";
+} from 'services/firebase/firestore';
+import type { Difficulty } from '../logic/difficulty';
+import type { Stats } from '../logic/stats';
+import type { LeaderboardEntry } from '../service/models/leaderboards';
+import { type Leaderboards, updateLeaderboards } from './models/leaderboards';
 
 /**
  * Reads the leaderboard from the database, updates it with the new stats,
@@ -18,9 +17,9 @@ import { Leaderboards, updateLeaderboards } from "./models/leaderboards";
 export async function updateAndGetLeaderboard(
   difficulty: Difficulty,
   stats: Stats,
-  username?: string
+  username?: string,
 ): Promise<LeaderboardEntry[]> {
-  const path = `leaderboards/minesweeper`;
+  const path = 'leaderboards/minesweeper';
   let leaderboards = await readDocument<Leaderboards>(path);
   if (!username) {
     if (!leaderboards) return [];
@@ -40,7 +39,7 @@ export async function updateAndGetLeaderboard(
       leaderboards,
       difficulty,
       username,
-      stats
+      stats,
     );
     await updateDocument(path, leaderboards);
   }

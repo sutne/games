@@ -1,51 +1,49 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Stack, Typography } from "@mui/material";
-
+import { Stack, Typography } from '@mui/material';
 import {
   EmailField,
   Link,
   LoadingButton,
   PasswordField,
   UsernameField,
-} from "components/interactive";
-import { FormProvider, useAuth, useForm } from "components/providers";
-import { PageHeader } from "components/typography";
-import { upgradeAnonymousUser } from "services/firebase/auth";
-
-import { ProfileCard } from "./components/ProfileCard";
+} from 'components/interactive';
+import { FormProvider, useAuth, useForm } from 'components/providers';
+import { PageHeader } from 'components/typography';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { upgradeAnonymousUser } from 'services/firebase/auth';
+import { ProfileCard } from './components/ProfileCard';
 
 export function Upgrade() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user.isSignedIn && !user.isAnonymous) navigate("/profile");
-    if (!user.isSignedIn) navigate("/profile/sign-in");
+    if (user.isSignedIn && !user.isAnonymous) navigate('/profile');
+    if (!user.isSignedIn) navigate('/profile/sign-in');
   }, [user]);
 
   return (
     <>
-      <PageHeader header="Upgrade" />
+      <PageHeader header='Upgrade' />
       <ProfileCard
         header={
           <>
-            <Typography textAlign="center" paddingTop="16px">
+            <Typography textAlign='center' paddingTop='16px'>
               Here you can upgrade to a non anonymous user account. This will
               keep all your personal stats and games.
             </Typography>
-            <Typography textAlign="center">
+            <Typography textAlign='center'>
               This will NOT retroactively put you on leaderboards, even if your
               personal best should be there.
             </Typography>
           </>
         }
         footer={
-          <Stack direction="row" spacing={2} justifyContent="center">
+          <Stack direction='row' spacing={2} justifyContent='center'>
             <Stack>
               <Typography>
-                Don&apos;t want to upgrade?{" "}
-                <Link onClick={() => navigate("/profile")}>Go back</Link>
+                Don&apos;t want to upgrade?{' '}
+                <Link onClick={() => navigate('/profile')}>Go back</Link>
               </Typography>
             </Stack>
           </Stack>
@@ -61,7 +59,7 @@ export function Upgrade() {
 
 function CreateUserFormFields() {
   const { setShowValidation } = useForm();
-  const [errorMessage, setError] = useState("");
+  const [errorMessage, setError] = useState('');
 
   useEffect(() => {
     setShowValidation(false);
@@ -69,22 +67,22 @@ function CreateUserFormFields() {
 
   const [fields, setFields] = useState({
     email: {
-      value: "",
+      value: '',
       valid: false,
     },
     password: {
-      value: "",
+      value: '',
       valid: false,
     },
     username: {
-      value: "",
+      value: '',
       valid: false,
     },
   });
 
   const onFieldChange = (
     field: string,
-    update: { value: string; valid: boolean }
+    update: { value: string; valid: boolean },
   ) => {
     setFields({ ...fields, [field]: update });
   };
@@ -98,7 +96,7 @@ function CreateUserFormFields() {
       await upgradeAnonymousUser(
         fields.username.value,
         fields.email.value,
-        fields.password.value
+        fields.password.value,
       );
     } catch (error) {
       setError((error as Error).message);
@@ -108,20 +106,20 @@ function CreateUserFormFields() {
   return (
     <>
       <UsernameField field={fields.username} onChange={onFieldChange} />
-      <EmailField id="email" field={fields.email} onChange={onFieldChange} />
+      <EmailField id='email' field={fields.email} onChange={onFieldChange} />
       <PasswordField
-        id="password"
+        id='password'
         field={fields.password}
         onChange={onFieldChange}
         onEnterPress={onSubmit}
       />
       <LoadingButton
         onClick={onSubmit}
-        label="Upgrade to normal account"
-        loadingLabel="Linking account"
+        label='Upgrade to normal account'
+        loadingLabel='Linking account'
       />
       {errorMessage && (
-        <Typography color="error" textAlign="center">
+        <Typography color='error' textAlign='center'>
           {errorMessage}
         </Typography>
       )}

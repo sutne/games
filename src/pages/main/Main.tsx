@@ -1,14 +1,11 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Box, Grid, Stack, Typography } from "@mui/material";
-
-import { Card } from "components/cards";
-import { Link } from "components/interactive";
-import { useAuth } from "components/providers";
-import { PageHeader } from "components/typography";
-import { games } from "games";
-
-import { GameCard } from "./components/GameCard";
+import { Box, Grid, Stack, Typography } from '@mui/material';
+import { games } from 'assets/games';
+import { Card } from 'components/cards';
+import { Link } from 'components/interactive';
+import { useAuth } from 'components/providers';
+import { PageHeader } from 'components/typography';
+import { useNavigate } from 'react-router-dom';
+import { GameCard } from './components/GameCard';
 
 export function Main() {
   const { user } = useAuth();
@@ -20,24 +17,24 @@ export function Main() {
     <>
       <PageHeader header="sutne's Minimalistic Games" />
       {!user.isSignedIn && (
-        <Box sx={{ marginBottom: "24px" }}>
+        <Box sx={{ marginBottom: '24px' }}>
           <Card>
-            <Stack textAlign="center">
+            <Stack textAlign='center'>
               <Typography>
-                I highly recommend{" "}
-                <Link onClick={() => navigate("/profile/sign-in")}>
+                I highly recommend{' '}
+                <Link onClick={() => navigate('/profile/sign-in')}>
                   signing in
-                </Link>{" "}
+                </Link>{' '}
                 before playing.
               </Typography>
               <Typography>
                 Doing this, you will get personal stats for each game.
               </Typography>
               <Typography>
-                You can also{" "}
-                <Link onClick={() => navigate("/profile/anonymous")}>
+                You can also{' '}
+                <Link onClick={() => navigate('/profile/anonymous')}>
                   sign in anonymously
-                </Link>{" "}
+                </Link>{' '}
               </Typography>
             </Stack>
           </Card>
@@ -46,7 +43,7 @@ export function Main() {
       <Grid
         container
         spacing={3}
-        alignItems="stretch"
+        alignItems='stretch'
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
         {enabledGames.map((game) => (
@@ -55,7 +52,7 @@ export function Main() {
           </Grid>
         ))}
         <Grid item xs={12}>
-          <Typography variant="h4" textAlign="center">
+          <Typography variant='h4' textAlign='center'>
             More games might be added in the future!
           </Typography>
         </Grid>

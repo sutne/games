@@ -4,10 +4,8 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
-    ignore:
-      - dependency-name: "typescript"
     groups:
-      deps:
+      dependencies:
         patterns:
             - "*"
     commit-message:

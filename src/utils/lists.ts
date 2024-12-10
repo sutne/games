@@ -34,7 +34,7 @@ export function replace<T>(list: T[], index: number, item: T) {
 export function updatePersonalBestList<T>(
   list: T[],
   newEntry: T,
-  firstIsBest: (A: T, B: T) => boolean
+  firstIsBest: (A: T, B: T) => boolean,
 ): T[] {
   let inserted = false;
   for (let i = 0; i < list.length; i++) {
@@ -67,7 +67,7 @@ export function updateLeaderboardList<T extends Entry>(
   list: T[],
   newEntry: T,
   username: string,
-  firstIsBest: (A: T, B: T) => boolean
+  firstIsBest: (A: T, B: T) => boolean,
 ): T[] {
   // If user already has entry on the leaderboard
   // we want to replace it (if it is better of course)

@@ -1,7 +1,6 @@
-import { Entry, updateLeaderboardList } from "utils/lists";
-
-import { Difficulty } from "../../logic/difficulty";
-import { firstIsBest as firstStatIsBest, Stats } from "../../logic/stats";
+import { type Entry, updateLeaderboardList } from 'utils/lists';
+import type { Difficulty } from '../../logic/difficulty';
+import { type Stats, firstIsBest as firstStatIsBest } from '../../logic/stats';
 
 export interface LeaderboardEntry extends Entry {
   user: string;
@@ -31,14 +30,14 @@ export function updateLeaderboards(
   doc: Leaderboards,
   difficulty: Difficulty,
   username: string,
-  stats: Stats
+  stats: Stats,
 ): Leaderboards {
   const newEntry: LeaderboardEntry = { user: username, game: stats };
   doc[difficulty] = updateLeaderboardList(
     doc[difficulty],
     newEntry,
     username,
-    firstIsBest
+    firstIsBest,
   );
   return doc;
 }

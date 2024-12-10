@@ -1,12 +1,9 @@
-import React from "react";
+import { useTheme } from 'components/providers';
 import {
-  toast as toastify,
   ToastContainer as ToastifyContainer,
-} from "react-toastify";
-
-import { useTheme } from "components/providers";
-
-import "react-toastify/dist/ReactToastify.css";
+  toast as toastify,
+} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function ToastContainer() {
   const { theme } = useTheme();
@@ -19,7 +16,7 @@ export function ToastContainer() {
         background: theme.palette.background.paper,
         color: theme.palette.text.primary,
         boxShadow: theme.shadows[5],
-        whiteSpace: "pre-wrap",
+        whiteSpace: 'pre-wrap',
       }}
     />
   );

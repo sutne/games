@@ -1,4 +1,4 @@
-import React, { SetStateAction, useState } from "react";
+import React, { type SetStateAction, useState } from 'react';
 
 const FormContext = React.createContext<
   | {
@@ -29,7 +29,7 @@ export function FormProvider({ children }: props) {
 export function useForm() {
   const context = React.useContext(FormContext);
   if (context === undefined) {
-    throw new Error("useForm must be used within a FormProvider");
+    throw new Error('useForm must be used within a FormProvider');
   }
   return { ...context };
 }

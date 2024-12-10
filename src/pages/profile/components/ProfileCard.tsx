@@ -1,7 +1,6 @@
-import React from "react";
-import { Box, Stack } from "@mui/material";
-
-import { Card } from "components/cards/Card";
+import { Box, Stack } from '@mui/material';
+import { Card } from 'components/cards/Card';
+import type { JSX } from 'react';
 
 type props = {
   children: JSX.Element | JSX.Element[] | string;
@@ -24,16 +23,16 @@ export function ProfileCard({ children, header, footer }: props) {
   function getClasses() {
     return {
       header: {
-        textAlign: "center",
-        paddingBottom: "32px",
+        textAlign: 'center',
+        paddingBottom: '32px',
       },
       main: {
-        maxWidth: "400px",
-        margin: "0 auto",
+        maxWidth: '400px',
+        margin: '0 auto',
       },
       footer: {
-        paddingTop: "32px",
-        textAlign: "center",
+        paddingTop: '32px',
+        textAlign: 'center',
       },
     };
   }

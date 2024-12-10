@@ -1,3 +1,3 @@
-import { AutoScroll } from "./AutoScroll";
+import { AutoScroll } from './AutoScroll';
 
 export { AutoScroll };

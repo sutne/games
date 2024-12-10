@@ -1,22 +1,20 @@
-import React, { useState } from "react";
-import { CircularProgress } from "@mui/material";
-
-import { useTheme } from "components/providers/ThemeProvider";
-
-import { Button } from ".";
+import { CircularProgress } from '@mui/material';
+import { useTheme } from 'components/providers/ThemeProvider';
+import { useState } from 'react';
+import { Button } from '.';
 
 type props = {
   label: string;
   onClick: () => void;
   loadingLabel?: string;
   color?:
-    | "error"
-    | "primary"
-    | "inherit"
-    | "secondary"
-    | "success"
-    | "info"
-    | "warning"
+    | 'error'
+    | 'primary'
+    | 'inherit'
+    | 'secondary'
+    | 'success'
+    | 'info'
+    | 'warning'
     | undefined;
 };
 export function LoadingButton({ color, onClick, label, loadingLabel }: props) {
@@ -31,7 +29,7 @@ export function LoadingButton({ color, onClick, label, loadingLabel }: props) {
 
   return (
     <Button
-      label={loading ? loadingLabel ?? label : label}
+      label={loading ? (loadingLabel ?? label) : label}
       color={color}
       onClick={handleClick}
       icon={

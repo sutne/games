@@ -1,9 +1,7 @@
-import React from "react";
-import { Divider, Stack, Typography } from "@mui/material";
-
-import { Button } from "components/interactive";
-
-import { Card } from "./Card";
+import { Divider, Stack, Typography } from '@mui/material';
+import { Button } from 'components/interactive';
+import type { JSX } from 'react';
+import { Card } from './Card';
 
 type StatItem = {
   title: string;
@@ -31,24 +29,24 @@ export function StatCard({
   const classes = getClasses();
 
   const Header = () => {
-    return <Typography variant="h4">{header}</Typography>;
+    return <Typography variant='h4'>{header}</Typography>;
   };
 
   const Stats = () => {
     return (
       <Stack
-        direction={{ xs: "column", sm: "row" }}
-        divider={<Divider orientation="vertical" flexItem />}
-        justifyContent="space-evenly"
+        direction={{ xs: 'column', sm: 'row' }}
+        divider={<Divider orientation='vertical' flexItem />}
+        justifyContent='space-evenly'
         spacing={1}
         sx={classes.statRow}
       >
         {items.map((item) => (
-          <Stack key={item.title} sx={classes.statItem} textAlign="center">
-            <Typography variant="h6" noWrap>
+          <Stack key={item.title} sx={classes.statItem} textAlign='center'>
+            <Typography variant='h6' noWrap>
               {item.title}
             </Typography>
-            <Typography variant="h4" sx={classes.itemValue}>
+            <Typography variant='h4' sx={classes.itemValue}>
               {item.value}
             </Typography>
           </Stack>
@@ -60,7 +58,7 @@ export function StatCard({
   const Actions = () => {
     if (!actions) return <></>;
     return (
-      <Stack direction={{ xs: "column", sm: "row" }} spacing={1}>
+      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
         {actions.map((item) => (
           <Button
             key={item.description}
@@ -74,7 +72,7 @@ export function StatCard({
   };
 
   return (
-    <Card padding="12px">
+    <Card padding='12px'>
       <Header />
       <Stats />
       <Actions />
@@ -84,16 +82,16 @@ export function StatCard({
   function getClasses() {
     return {
       statRow: {
-        margin: "16px 0",
+        margin: '16px 0',
       },
       statItem: {
         flex: 1,
-        textAlign: "center",
+        textAlign: 'center',
       },
       itemValue: {
-        fontWeight: "600",
-        color: highlight ? "info.main" : "text.primary",
-        transition: "color 0.5s ease",
+        fontWeight: '600',
+        color: highlight ? 'info.main' : 'text.primary',
+        transition: 'color 0.5s ease',
       },
     };
   }
