@@ -3,7 +3,12 @@ import type { GameListEntry } from 'assets/games';
 import { useTheme } from 'components/providers';
 import { useNavigate } from 'react-router-dom';
 
-export function GameCard({ name, image, isAvailable }: GameListEntry) {
+export function GameCard({
+  name,
+  description,
+  image,
+  isAvailable,
+}: GameListEntry) {
   const { themeIsDark } = useTheme();
   const navigate = useNavigate();
 
@@ -21,9 +26,12 @@ export function GameCard({ name, image, isAvailable }: GameListEntry) {
           alt={name}
         />
       </Box>
-      <Typography sx={classes.name} variant='h5'>
-        {name}
-      </Typography>
+      <Box sx={classes.details}>
+        <Typography sx={classes.name} variant='h5'>
+          {name}
+        </Typography>
+        <Typography sx={classes.description}>{description}</Typography>
+      </Box>
     </Box>
   );
 
@@ -68,20 +76,26 @@ export function GameCard({ name, image, isAvailable }: GameListEntry) {
             content: "''",
             height: '100%',
             width: '100%',
-            opacity: '0.95',
+            opacity: '1',
             background: (theme: Theme) =>
-              `linear-gradient(to bottom, rgba(0, 0, 0, 0) 40%,
-                ${theme.palette.game.features.obstacle} 95%)`,
+              `linear-gradient(to bottom, rgba(0, 0, 0, 0) 20%,
+                ${theme.palette.game.features.obstacle} 75%)`,
           },
         },
         !isAvailable && {
           filter: 'blur(2pt)',
         },
       ],
-      name: {
+      details: {
         position: 'absolute',
         left: '24px',
         bottom: '12px',
+        fontWeight: '600',
+      },
+      name: {
+        fontWeight: '600',
+      },
+      description: {
         fontWeight: '600',
       },
     };

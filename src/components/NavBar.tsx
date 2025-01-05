@@ -52,6 +52,7 @@ export function NavBar() {
   function getClasses() {
     return {
       navbar: {
+        width: '100%',
         margin: '0 auto',
         marginBottom: '16px',
         backgroundColor: 'background.paper',

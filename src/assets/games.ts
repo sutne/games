@@ -1,5 +1,7 @@
+import dunesDark from 'assets/dark/dunes.png';
 import minesweeperDark from 'assets/dark/minesweeper.png';
 import minesweeperLight from 'assets/light/minesweeper.png';
+import { Dunes } from 'pages/dunes/Dunes';
 import { Minesweeper } from 'pages/minesweeper/Minesweeper';
 import type { JSX } from 'react';
 
@@ -7,8 +9,8 @@ export type GameListEntry = {
   name: string;
   description: string;
   image: {
-    light: any;
-    dark: any;
+    light: string;
+    dark: string;
   };
   element: () => JSX.Element;
   isAvailable: boolean;
@@ -17,12 +19,22 @@ export type GameListEntry = {
 export const games: GameListEntry[] = [
   {
     name: 'Minesweeper',
-    description: 'Clear the board of all tiles without stepping on a mine.',
+    description: 'Locate all the mines.',
     image: {
       light: minesweeperLight,
       dark: minesweeperDark,
     },
     element: Minesweeper,
+    isAvailable: true,
+  },
+  {
+    name: 'Dunes',
+    description: 'Relaxing sand simulation.',
+    image: {
+      light: dunesDark,
+      dark: dunesDark,
+    },
+    element: Dunes,
     isAvailable: true,
   },
   // {
