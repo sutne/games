@@ -11,9 +11,9 @@ import {
 } from '@mui/icons-material';
 import { Stack } from '@mui/material';
 import { useCallback, useState } from 'react';
-import { Button } from '../../../components/interactive';
-import { useRules } from '../contexts/Rules';
-import type { World } from '../logic/World';
+import { Button } from '../../../../components/interactive';
+import { useRules } from '../../contexts/Rules';
+import type { World } from '../../logic/World';
 
 /** a basic canvas application where each pixel represents a pice of sand */
 export function AdjustRules(props: {

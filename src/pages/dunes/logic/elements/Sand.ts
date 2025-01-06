@@ -1,10 +1,10 @@
-import type { PixelPainter } from '../../components/Canvas/renderers/PixelPainter';
+import type { PixelPainter } from '../../components/WorldCanvas/Canvas/renderers/PixelPainter';
 import type { World } from '../World';
 import type { Color } from '../types/Color';
+import type { DunesElement } from '../types/DunesElement';
 import { Direction, Position } from '../types/Position';
 import type { Velocity } from '../types/Velocity';
 import { randomElementNormal, randomNormal, randomSign } from '../util/random';
-import type { DunesElement } from './DunesElement';
 
 const GRAVITY = 512; // pixels/s²
 const BOUNCE_FACTOR = 0.4; // how much energy is "preserved" when bouncing of sideways

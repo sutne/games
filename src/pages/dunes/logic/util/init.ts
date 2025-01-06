@@ -1,6 +1,6 @@
-import { Air } from '../models/Air';
-import type { DunesElement } from '../models/DunesElement';
-import { Solid } from '../models/Solid';
+import { Air } from '../elements/Air';
+import { Solid } from '../elements/Solid';
+import type { DunesElement } from '../types/DunesElement';
 import { Position } from '../types/Position';
 
 export function initializeElements(
