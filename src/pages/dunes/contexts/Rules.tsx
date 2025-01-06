@@ -56,8 +56,6 @@ export function RulesProvider(props: { children: JSX.Element }) {
 
 export function useRules() {
   const context = useContext(RulesContext);
-  if (context === undefined) {
-    throw new Error('useRules must be used within a RulesProvider');
-  }
-  return { ...context };
+  if (!context) throw new Error('useRules must be used within a RulesProvider');
+  return context;
 }
