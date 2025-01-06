@@ -1,8 +1,8 @@
-import type { PixelPainter } from '../../components/Canvas/renderers/PixelPainter';
+import type { PixelPainter } from '../../components/WorldCanvas/Canvas/renderers/PixelPainter';
 import type { World } from '../World';
-import type { Color } from '../types/Color';
-import type { Position } from '../types/Position';
-import type { Velocity } from '../types/Velocity';
+import type { Color } from './Color';
+import type { Position } from './Position';
+import type { Velocity } from './Velocity';
 
 export interface DunesElement {
   position: Position;
@@ -15,5 +15,5 @@ export interface DunesElement {
   /** Define how this element should be drawn at the given position */
   draw: (painter: PixelPainter) => void;
   /** Define how this element should be visualized while debugging */
-  debug: (painter: PixelPainter) => void;
+  debug?: (painter: PixelPainter) => void;
 }

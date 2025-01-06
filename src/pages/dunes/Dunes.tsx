@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material';
 import { PageHeader } from 'components/typography';
 import { useRef } from 'react';
-import { Canvas } from './components/Canvas/Canvas';
+import { Canvas } from './components/WorldCanvas/Canvas/Canvas';
 import { RulesProvider } from './contexts/Rules';
 import { Mouse } from './logic/Mouse';
 import { World } from './logic/World';

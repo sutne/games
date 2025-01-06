@@ -1,9 +1,9 @@
-import type { PixelPainter } from '../../components/Canvas/renderers/PixelPainter';
+import type { PixelPainter } from '../../components/WorldCanvas/Canvas/renderers/PixelPainter';
 import type { Color } from '../types/Color';
+import type { DunesElement } from '../types/DunesElement';
 import type { Position } from '../types/Position';
 import type { Velocity } from '../types/Velocity';
 import { randomElementNormal } from '../util/random';
-import type { DunesElement } from './DunesElement';
 
 const colors: Color[] = [
   { r: 48, g: 42, b: 34 },

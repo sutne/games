@@ -1,8 +1,8 @@
-import type { PixelPainter } from '../../components/Canvas/renderers/PixelPainter';
+import type { PixelPainter } from '../../components/WorldCanvas/Canvas/renderers/PixelPainter';
 import type { Color } from '../types/Color';
+import type { DunesElement } from '../types/DunesElement';
 import type { Position } from '../types/Position';
 import type { Velocity } from '../types/Velocity';
-import type { DunesElement } from './DunesElement';
 
 export class Air implements DunesElement {
   position: Position;
@@ -19,7 +19,6 @@ export class Air implements DunesElement {
   draw(painter: PixelPainter) {
     painter.setPixel(this.position, this.color);
   }
-  debug = this.draw;
 
   update() {
     // nothing to update

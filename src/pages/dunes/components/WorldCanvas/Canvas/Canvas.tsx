@@ -1,14 +1,14 @@
 import { Box } from '@mui/material';
 import { useCallback, useEffect, useRef } from 'react';
-import { useTheme } from '../../../../components/providers';
-import { AdjustRules } from '../../Canvas/AdjustRules';
-import { useRules } from '../../contexts/Rules';
-import type { Mouse } from '../../logic/Mouse';
-import type { World } from '../../logic/World';
-import { Position } from '../../logic/types/Position';
+import { useTheme } from '../../../../../components/providers';
+import { useRules } from '../../../contexts/Rules';
+import type { Mouse } from '../../../logic/Mouse';
+import type { World } from '../../../logic/World';
+import { Position } from '../../../logic/types/Position';
+import { AdjustRules } from '../../AdjustRules/AdjustRules';
 import { PixelPainter } from './renderers/PixelPainter';
 import './Canvas.css';
-import { Air } from '../../logic/models/Air';
+import { Air } from '../../../logic/elements/Air';
 import { useAnimationFrame } from './hooks/useAnimationFrame';
 import { TextWriter } from './renderers/TextWriter';
 
@@ -89,11 +89,7 @@ export function Canvas(props: {
     const endUpdate = performance.now();
 
     const startDraw = performance.now();
-    if (rules.isDebugMode) {
-      props.world.debug(painter);
-    } else {
-      props.world.draw(painter);
-    }
+      props.world.draw(painter, rules.isDebugMode);
     const endDraw = performance.now();
 
     if (rules.isDebugMode) {

@@ -1,10 +1,10 @@
-import type { PixelPainter } from '../components/Canvas/renderers/PixelPainter';
+import { PixelPainter } from '../components/WorldCanvas/Canvas/renderers/PixelPainter';
 import type { RightClickAction } from '../contexts/Rules';
 import type { Mouse } from './Mouse';
-import { Air } from './models/Air';
-import type { DunesElement } from './models/DunesElement';
-import { Sand } from './models/Sand';
-import { Solid } from './models/Solid';
+import { Air } from './elements/Air';
+import { Sand } from './elements/Sand';
+import { Solid } from './elements/Solid';
+import type { DunesElement } from './types/DunesElement';
 import type { Position } from './types/Position';
 import { initializeElements } from './util/init';
 import { getPath } from './util/paths';
@@ -84,16 +84,13 @@ export class World {
     destinationElement.position = origin;
   }
 
-  draw(painter: PixelPainter): void {
+  draw(painter: PixelPainter, isDebugMode: boolean): void {
     this.forEachElement((element) => {
-      element.draw(painter);
-    });
-    painter.draw();
-  }
-
-  debug(painter: PixelPainter): void {
-    this.forEachElement((element) => {
-      element.debug(painter);
+      if(isDebugMode && element.debug){
+        element.debug(painter);
+      }else{
+        element.draw(painter);
+      }
     });
     painter.draw();
   }
