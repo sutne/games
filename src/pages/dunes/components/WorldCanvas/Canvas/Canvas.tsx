@@ -2,21 +2,21 @@ import { Box } from '@mui/material';
 import { useCallback, useEffect, useRef } from 'react';
 import { useTheme } from '../../../../../components/providers';
 import { useRules } from '../../../contexts/Rules';
-import type { Mouse } from '../../../logic/Mouse';
 import type { World } from '../../../logic/World';
 import { Position } from '../../../logic/types/Position';
 import { AdjustRules } from '../../AdjustRules/AdjustRules';
 import { PixelPainter } from './renderers/PixelPainter';
 import './Canvas.css';
+import { useMouse } from '../../../contexts/Mouse';
 import { Air } from '../../../logic/elements/Air';
 import { useAnimationFrame } from './hooks/useAnimationFrame';
 import { TextWriter } from './renderers/TextWriter';
 
 export function Canvas(props: {
   world: World;
-  mouse: Mouse;
 }) {
   const rules = useRules();
+  const mouse = useMouse();
 
   const worldCanvasRef = useRef<HTMLCanvasElement>(null);
   const textCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -77,10 +77,13 @@ export function Canvas(props: {
     if (!painter || !writer) return;
 
     props.world.handleMouseInteraction(
-      props.mouse,
+      mouse.previousInteractionPosition,
+      mouse.position,
+      mouse.button,
       rules.cursorSize,
       rules.rightClickAction,
     );
+    mouse.previousInteractionPosition = mouse.position;
 
     const startUpdate = performance.now();
     if (!rules.isPaused) {
@@ -89,7 +92,7 @@ export function Canvas(props: {
     const endUpdate = performance.now();
 
     const startDraw = performance.now();
-      props.world.draw(painter, rules.isDebugMode);
+    props.world.draw(painter, rules.isDebugMode);
     const endDraw = performance.now();
 
     if (rules.isDebugMode) {
@@ -98,10 +101,10 @@ export function Canvas(props: {
         `draw: ${(endDraw - startDraw).toFixed(0)}ms`,
         `update: ${(endUpdate - startUpdate).toFixed(0)}ms`,
       ];
-      if (props.world.isInside(props.mouse.position)) {
-        const e = props.world.get(props.mouse.position);
+      if (props.world.isInside(mouse.position)) {
+        const e = props.world.get(mouse.position);
         lines.push(
-          `mouse: Pos(x=${props.mouse.position.int_x},y=${props.mouse.position.int_y}): ${e.constructor.name}`,
+          `mouse: Pos(x=${mouse.position.int_x},y=${mouse.position.int_y}): ${e.constructor.name}`,
         );
         if (!(e instanceof Air)) {
           lines.push(
@@ -145,18 +148,11 @@ export function Canvas(props: {
           ref={interactionCanvasRef}
           onContextMenu={(e) => e.preventDefault()}
           onMouseMove={(e) => {
-            e.preventDefault();
             if (!worldCanvasRef.current) return;
-            props.mouse.onMove(e, worldCanvasRef.current);
+            mouse.onMove(e, worldCanvasRef.current);
           }}
-          onMouseDown={(e) => {
-            e.preventDefault();
-            props.mouse.onPress(e);
-            // window.addEventListener('mouseup', () => props.mouse.onRelease());
-          }}
-          onMouseUp={(_) => {
-            props.mouse.onRelease();
-          }}
+          onMouseDown={(e) => mouse.onPress(e)} // window.addEventListener('mouseup', () => mouse.onRelease());
+          onMouseUp={(_) => mouse.onRelease()}
         />
       </Box>
       <Box sx={style.buttonsContainer}>

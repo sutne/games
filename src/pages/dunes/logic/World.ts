@@ -1,6 +1,6 @@
-import { PixelPainter } from '../components/WorldCanvas/Canvas/renderers/PixelPainter';
+import type { PixelPainter } from '../components/WorldCanvas/Canvas/renderers/PixelPainter';
+import type { MouseButton } from '../contexts/Mouse';
 import type { RightClickAction } from '../contexts/Rules';
-import type { Mouse } from './Mouse';
 import { Air } from './elements/Air';
 import { Sand } from './elements/Sand';
 import { Solid } from './elements/Solid';
@@ -86,9 +86,9 @@ export class World {
 
   draw(painter: PixelPainter, isDebugMode: boolean): void {
     this.forEachElement((element) => {
-      if(isDebugMode && element.debug){
+      if (isDebugMode && element.debug) {
         element.debug(painter);
-      }else{
+      } else {
         element.draw(painter);
       }
     });
@@ -109,14 +109,15 @@ export class World {
   }
 
   handleMouseInteraction(
-    mouse: Mouse,
+    start: Position | undefined,
+    end: Position,
+    button: MouseButton,
     cursorSize: number,
     rightClickAction: RightClickAction,
   ) {
     const radius = Math.floor(cursorSize / 2);
-    const start = mouse.previousInteractionPosition ?? mouse.position;
-    const mousePositions: Position[] = getPath(start, mouse.position);
-    mousePositions.push(start);
+    const mousePositions: Position[] = getPath(start ?? end, end);
+    mousePositions.push(start ?? end);
     const interactPositions: Position[] = [];
 
     for (const mousePos of mousePositions) {
@@ -130,25 +131,26 @@ export class World {
       }
     }
 
-    if (mouse.isLeftButtonPressed) {
+    if (button === 'left') {
       for (const pos of interactPositions) {
         if (!this.isAvailable(pos)) continue;
         if (Math.random() > 1 / cursorSize) continue;
         this.set(pos, new Sand(pos));
       }
-    } else if (mouse.isRightButtonPressed) {
+    }
+    if (button === 'right') {
       if (rightClickAction === 'erase') {
         for (const pos of interactPositions) {
           if (this.isAvailable(pos)) continue;
           this.set(pos, new Air(pos));
         }
-      } else {
+      }
+      if (rightClickAction === 'solid') {
         for (const pos of interactPositions) {
           if (this.get(pos) instanceof Solid) continue;
           this.set(pos, new Solid(pos));
         }
       }
     }
-    mouse.previousInteractionPosition = mouse.position;
   }
 }
