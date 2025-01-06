@@ -76,11 +76,9 @@ export function App() {
         color: 'text.primary',
         WebKitFontSmoothing: 'antialiased',
         MozOsxFontSmoothing: 'grayscale',
-        height: '100vh',
       },
       wrapper: {
         width: 'min(1024px, 100%)',
-        height: '100%',
         margin: '0 auto',
         padding: '12px 24px 24px 24px',
         display: 'flex',

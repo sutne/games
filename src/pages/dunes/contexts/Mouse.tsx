@@ -15,7 +15,7 @@ export class Mouse {
     this.button = undefined;
   }
 
-  onMove(event: React.MouseEvent, canvas: HTMLCanvasElement): void {
+  onMove(event: React.PointerEvent, canvas: HTMLCanvasElement): void {
     const rect = canvas.getBoundingClientRect();
     this.position = new Position(
       Math.floor(((event.clientX - rect.left) * canvas.width) / rect.width),
@@ -23,7 +23,7 @@ export class Mouse {
     );
   }
 
-  onPress(event: React.MouseEvent): void {
+  onPress(event: React.PointerEvent): void {
     if (event.button === 0) {
       this.button = 'left';
       return;
