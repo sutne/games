@@ -1,16 +1,14 @@
 import { Box } from '@mui/material';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTheme } from '../../../../../components/providers';
 import { useRules } from '../../../contexts/Rules';
 import type { World } from '../../../logic/World';
-import { Position } from '../../../logic/types/Position';
 import { AdjustRules } from '../../AdjustRules/AdjustRules';
 import { PixelPainter } from './renderers/PixelPainter';
 import './Canvas.css';
 import { useMouse } from '../../../contexts/Mouse';
 import { Air } from '../../../logic/elements/Air';
 import { useAnimationFrame } from './hooks/useAnimationFrame';
-import { TextWriter } from './renderers/TextWriter';
 
 export function Canvas(props: {
   world: World;
@@ -19,11 +17,11 @@ export function Canvas(props: {
   const mouse = useMouse();
 
   const worldCanvasRef = useRef<HTMLCanvasElement>(null);
-  const textCanvasRef = useRef<HTMLCanvasElement>(null);
   const interactionCanvasRef = useRef<HTMLCanvasElement>(null);
 
   const painterRef = useRef<PixelPainter>(null);
-  const writerRef = useRef<TextWriter>(null);
+
+  const [debugText, setDebugText] = useState<string[]>([]);
 
   useEffect(() => {
     const worldCanvas = worldCanvasRef.current;
@@ -34,15 +32,6 @@ export function Canvas(props: {
         worldCanvas.getContext('2d') as CanvasRenderingContext2D,
         props.world.width,
         props.world.height,
-      );
-    }
-    const textCanvas = textCanvasRef.current;
-    if (textCanvas) {
-      textCanvas.width = textCanvas.offsetWidth;
-      textCanvas.height = textCanvas.offsetHeight;
-      writerRef.current = new TextWriter(
-        textCanvas.getContext('2d') as CanvasRenderingContext2D,
-        new Position(10, 10),
       );
     }
     const interactionCanvas = interactionCanvasRef.current;
@@ -72,9 +61,8 @@ export function Canvas(props: {
   }, [handleKeyPress, rules.isDebugMode]);
 
   const runRenderCycle = (elapsedSeconds: number) => {
-    const writer = writerRef.current;
     const painter = painterRef.current;
-    if (!painter || !writer) return;
+    if (!painter) return;
 
     props.world.handleMouseInteraction(
       mouse.previousInteractionPosition,
@@ -97,27 +85,25 @@ export function Canvas(props: {
 
     if (rules.isDebugMode) {
       const lines = [
-        `FPS: ${(1 / elapsedSeconds).toFixed(0)}`,
-        `draw: ${(endDraw - startDraw).toFixed(0)}ms`,
-        `update: ${(endUpdate - startUpdate).toFixed(0)}ms`,
+        `FPS: \t${(1 / elapsedSeconds).toFixed(0)}`,
+        `draw: \t${(endDraw - startDraw).toFixed(0)}ms`,
+        `update:\t${(endUpdate - startUpdate).toFixed(0)}ms`,
       ];
       if (props.world.isInside(mouse.position)) {
         const e = props.world.get(mouse.position);
         lines.push(
-          `mouse: Pos(x=${mouse.position.int_x},y=${mouse.position.int_y}): ${e.constructor.name}`,
+          `mouse(x=${mouse.position.int_x},y=${mouse.position.int_y}): ${e.constructor.name}`,
         );
         if (!(e instanceof Air)) {
           lines.push(
-            `    Pos(x=${e.position.x.toFixed(3)},y=${e.position.y.toFixed(3)})`,
+            `\tPos(x=${e.position.x.toFixed(3)},y=${e.position.y.toFixed(3)})`,
           );
           lines.push(
-            `    Velocity(dx=${e.velocity.dx.toFixed(3)},dy=${e.velocity.dy.toFixed(3)})`,
+            `\tVelocity(dx=${e.velocity.dx.toFixed(3)},dy=${e.velocity.dy.toFixed(3)})`,
           );
         }
       }
-      writer.write(lines);
-    } else {
-      writer.clear();
+      setDebugText(lines);
     }
   };
   useAnimationFrame(runRenderCycle);
@@ -143,7 +129,9 @@ export function Canvas(props: {
           id='pixel-canvas'
           style={style.worldCanvas}
         />
-        <canvas ref={textCanvasRef} />
+        {rules.isDebugMode && (
+          <Box sx={style.debugText}>{debugText.join('\n')}</Box>
+        )}
         <canvas
           ref={interactionCanvasRef}
           onContextMenu={(e) => e.preventDefault()}
@@ -183,6 +171,16 @@ export function Canvas(props: {
         boxShadow: 'inset 0 0 24px rgba(0, 0, 0, 0.5)',
         borderRadius: '8px',
         overflow: 'hidden',
+      },
+      debugText: {
+        position: 'absolute',
+        top: 18,
+        left: 18,
+        font: '14px monospace',
+        whiteSpace: 'pre',
+        background: 'rgba(0,0,0,0.2)',
+        borderRadius: '8px',
+        padding: '8px 12px 8px 12px',
       },
       buttonsContainer: {
         backgroundColor: 'background.paper',
