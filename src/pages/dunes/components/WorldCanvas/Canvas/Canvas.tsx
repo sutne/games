@@ -78,16 +78,18 @@ export function Canvas(props: {
       props.world.update(elapsedSeconds);
     }
     const endUpdate = performance.now();
+    const updateMS = endUpdate - startUpdate;
 
     const startDraw = performance.now();
     props.world.draw(painter, rules.isDebugMode);
     const endDraw = performance.now();
+    const drawMS = endDraw - startDraw;
 
     if (rules.isDebugMode) {
       const lines = [
-        `FPS: \t${(1 / elapsedSeconds).toFixed(0)}`,
-        `draw: \t${(endDraw - startDraw).toFixed(0)}ms`,
-        `update:\t${(endUpdate - startUpdate).toFixed(0)}ms`,
+        `FPS: \t${(1 / elapsedSeconds).toFixed(0)} (${(1 / ((drawMS + updateMS) / 1000)).toFixed(0)})`,
+        `draw: \t${(drawMS).toFixed(0)}ms`,
+        `update:\t${(updateMS).toFixed(0)}ms`,
       ];
       if (props.world.isInside(mouse.position)) {
         const e = props.world.get(mouse.position);
@@ -135,12 +137,12 @@ export function Canvas(props: {
         <canvas
           ref={interactionCanvasRef}
           onContextMenu={(e) => e.preventDefault()}
-          onMouseMove={(e) => {
+          onPointerMove={(e) => {
             if (!worldCanvasRef.current) return;
             mouse.onMove(e, worldCanvasRef.current);
           }}
-          onMouseDown={(e) => mouse.onPress(e)} // window.addEventListener('mouseup', () => mouse.onRelease());
-          onMouseUp={(_) => mouse.onRelease()}
+          onPointerDown={(e) => mouse.onPress(e)} // window.addEventListener('mouseup', () => mouse.onRelease());
+          onPointerUp={(_) => mouse.onRelease()}
         />
       </Box>
       <Box sx={style.buttonsContainer}>
