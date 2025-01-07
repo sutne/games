@@ -2,19 +2,18 @@ import { Box } from '@mui/material';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTheme } from '../../../../../components/providers';
 import { useRules } from '../../../contexts/Rules';
-import type { World } from '../../../logic/World';
 import { AdjustRules } from '../../AdjustRules/AdjustRules';
 import { PixelPainter } from './renderers/PixelPainter';
 import './Canvas.css';
 import { useMouse } from '../../../contexts/Mouse';
 import { Air } from '../../../logic/elements/Air';
 import { useAnimationFrame } from './hooks/useAnimationFrame';
+import { useWorld } from '../../../contexts/World';
 
-export function Canvas(props: {
-  world: World;
-}) {
+export function Canvas() {
   const rules = useRules();
   const mouse = useMouse();
+  const world = useWorld();
 
   const worldCanvasRef = useRef<HTMLCanvasElement>(null);
   const interactionCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -26,30 +25,30 @@ export function Canvas(props: {
   useEffect(() => {
     const worldCanvas = worldCanvasRef.current;
     if (worldCanvas) {
-      worldCanvas.width = props.world.width;
-      worldCanvas.height = props.world.height;
+      worldCanvas.width = world.width;
+      worldCanvas.height = world.height;
       painterRef.current = new PixelPainter(
         worldCanvas.getContext('2d') as CanvasRenderingContext2D,
-        props.world.width,
-        props.world.height,
+        world.width,
+        world.height,
       );
     }
     const interactionCanvas = interactionCanvasRef.current;
     if (interactionCanvas) {
-      interactionCanvas.width = props.world.width;
-      interactionCanvas.height = props.world.height;
+      interactionCanvas.width = world.width;
+      interactionCanvas.height = world.height;
     }
-  }, [props.world.height, props.world.width]);
+  }, [world.height, world.width]);
 
   const handleKeyPress = useCallback(
     (e: KeyboardEvent) => {
       if (rules.isPaused) {
         if (e.key === 'ArrowRight') {
-          props.world.update(0.001);
+          world.update(0.001);
         }
       }
     },
-    [props.world, rules.isPaused],
+    [world, rules.isPaused],
   );
 
   useEffect(() => {
@@ -64,7 +63,7 @@ export function Canvas(props: {
     const painter = painterRef.current;
     if (!painter) return;
 
-    props.world.handleMouseInteraction(
+    world.handleMouseInteraction(
       mouse.previousInteractionPosition,
       mouse.position,
       mouse.button,
@@ -75,13 +74,13 @@ export function Canvas(props: {
 
     const startUpdate = performance.now();
     if (!rules.isPaused) {
-      props.world.update(elapsedSeconds);
+      world.update(elapsedSeconds);
     }
     const endUpdate = performance.now();
     const updateMS = endUpdate - startUpdate;
 
     const startDraw = performance.now();
-    props.world.draw(painter, rules.isDebugMode);
+    world.draw(painter, rules.isDebugMode);
     const endDraw = performance.now();
     const drawMS = endDraw - startDraw;
 
@@ -91,8 +90,8 @@ export function Canvas(props: {
         `draw: \t${(drawMS).toFixed(0)}ms`,
         `update:\t${(updateMS).toFixed(0)}ms`,
       ];
-      if (props.world.isInside(mouse.position)) {
-        const e = props.world.get(mouse.position);
+      if (world.isInside(mouse.position)) {
+        const e = world.get(mouse.position);
         lines.push(
           `mouse(x=${mouse.position.int_x},y=${mouse.position.int_y}): ${e.constructor.name}`,
         );
@@ -146,7 +145,7 @@ export function Canvas(props: {
         />
       </Box>
       <Box sx={style.buttonsContainer}>
-        <AdjustRules world={props.world} toggleFullscreen={toggleFullscreen} />
+        <AdjustRules world={world} toggleFullscreen={toggleFullscreen} />
       </Box>
     </Box>
   );
@@ -163,7 +162,7 @@ export function Canvas(props: {
       canvasContainer: {
         flexGrow: 1,
         position: 'relative',
-        aspectRatio: props.world.width / props.world.height,
+        aspectRatio: world.width / world.height,
         height: '100%',
         width: '100%',
         boxShadow: '5',

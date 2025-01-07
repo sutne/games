@@ -91,6 +91,7 @@ export class World {
       } else {
         element.draw(painter);
       }
+      element.isUpdated = false;
     });
     painter.draw();
   }
@@ -102,9 +103,6 @@ export class World {
       element.update(this, deltaS);
       element.isUpdated = true;
       this.swap(previousPosition, element.position);
-    });
-    this.forEachElement((element) => {
-      element.isUpdated = false;
     });
   }
 
