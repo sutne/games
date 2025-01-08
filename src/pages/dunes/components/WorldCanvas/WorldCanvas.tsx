@@ -1,18 +1,19 @@
 import { Box } from '@mui/material';
 import { useCallback, useRef, useState } from 'react';
-import { useTheme } from '../../../../components/providers';
 import { useRules } from '../../contexts/Rules';
 import './WorldCanvas.css';
+import { useTheme } from '../../../../components/providers';
 import { useMouse } from '../../contexts/Mouse';
 import { useWorld } from '../../contexts/World';
 import { useAnimationFrame } from '../../hooks/useAnimationFrame';
 import { Air } from '../../logic/elements/Air';
 import type { PixelPainter } from '../../logic/renderers/PixelPainter';
-import { Canvas } from './Canvas/Canvas';
 import { DebugInfo } from './DebugInfo/DebugInfo';
 import { InteractionCanvas } from './InteractionCanvas/InteractionCanvas';
+import { PixelCanvas } from './PixelCanvas/PixelCanvas';
 
 export function WorldCanvas() {
+  const { theme } = useTheme();
   const rules = useRules();
   const mouse = useMouse();
   const world = useWorld();
@@ -29,6 +30,7 @@ export function WorldCanvas() {
       mouse.position,
       mouse.button,
       rules.cursorSize,
+      rules.leftClickAction,
       rules.rightClickAction,
     );
     mouse.previousInteractionPosition = mouse.position;
@@ -81,11 +83,10 @@ export function WorldCanvas() {
     [world, rules.isPaused, rules.isDebugMode],
   );
 
-  const { theme } = useTheme();
   const style = getStyle();
   return (
     <Box sx={style.canvasContainer}>
-      <Canvas
+      <PixelCanvas
         width={world.width}
         height={world.height}
         painterRef={painterRef}
@@ -106,10 +107,10 @@ export function WorldCanvas() {
         aspectRatio: world.width / world.height,
         height: '100%',
         width: '100%',
-        backgroundColor: theme.palette.background.paper,
         boxShadow: 'inset 0 0 24px rgba(0, 0, 0, 0.5)',
         borderRadius: '8px',
         overflow: 'hidden',
+        backgroundColor: theme.palette.background.paper,
       },
     };
   }

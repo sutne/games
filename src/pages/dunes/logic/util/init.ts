@@ -1,5 +1,5 @@
 import { Air } from '../elements/Air';
-import { Solid } from '../elements/Solid';
+import { Rock } from '../elements/Rock';
 import type { DunesElement } from '../types/DunesElement';
 import { Position } from '../types/Position';
 
@@ -27,7 +27,7 @@ export function initializeElements(
       const isRight = x >= width - thickness;
       if (isTop || isBottom || isRight || isLeft) {
         const pos = new Position(x, y);
-        array[y][x] = new Solid(pos);
+        array[y][x] = new Rock(pos);
       }
     }
   }

@@ -1,8 +1,9 @@
 import type { MouseButton } from '../contexts/Mouse';
-import type { RightClickAction } from '../contexts/Rules';
+import type { LeftClickAction, RightClickAction } from '../contexts/Rules';
 import { Air } from './elements/Air';
+import { Rock } from './elements/Rock';
 import { Sand } from './elements/Sand';
-import { Solid } from './elements/Solid';
+import { Water } from './elements/Water';
 import type { PixelPainter } from './renderers/PixelPainter';
 import type { DunesElement } from './types/DunesElement';
 import { Position } from './types/Position';
@@ -63,6 +64,13 @@ export class World {
     return this.get(position) instanceof Air;
   }
 
+  isSolid(position: Position): boolean {
+    if (!this.isInside(position)) return false;
+    if (this.get(position) instanceof Rock) return true;
+    if (this.get(position) instanceof Sand) return true;
+    return false;
+  }
+
   isInside(position: Position): boolean {
     if (!position) return false;
     if (!(0 <= position.int_x && position.int_x < this.width)) return false;
@@ -78,6 +86,10 @@ export class World {
     }
     const originElement = this.get(origin);
     const destinationElement = this.get(destination);
+    if (destinationElement instanceof Water) {
+      destinationElement.velocity.dy = -0.5 * originElement.velocity.dy;
+      destinationElement.velocity.dx = 1.5 * originElement.velocity.dx;
+    }
     this.set(origin, destinationElement);
     this.set(destination, originElement);
     originElement.position = destination;
@@ -111,13 +123,14 @@ export class World {
     end: Position,
     button: MouseButton,
     cursorSize: number,
+    leftClickAction: LeftClickAction,
     rightClickAction: RightClickAction,
   ) {
-    const radius = Math.floor(cursorSize / 2);
     const mousePositions: Position[] = getPath(start ?? end, end);
     mousePositions.push(start ?? end);
-    const interactPositions: Position[] = [];
 
+    const interactPositions: Position[] = [];
+    const radius = Math.floor(cursorSize / 2);
     for (const mousePos of mousePositions) {
       for (let x = -radius; x <= radius; x++) {
         for (let y = -radius; y <= radius; y++) {
@@ -133,20 +146,25 @@ export class World {
       for (const pos of interactPositions) {
         if (!this.isAvailable(pos)) continue;
         if (Math.random() > 1 / cursorSize) continue;
-        this.set(pos, new Sand(new Position(pos.int_x + 0.5, pos.int_y + 0.5)));
+        const centered = new Position(pos.int_x + 0.5, pos.int_y + 0.5);
+        if (leftClickAction === 'sand') {
+          this.set(pos, new Sand(centered));
+        } else if (leftClickAction === 'water') {
+          this.set(pos, new Water(centered));
+        }
       }
     }
     if (button === 'right') {
-      if (rightClickAction === 'erase') {
+      if (rightClickAction === 'remove') {
         for (const pos of interactPositions) {
           if (this.isAvailable(pos)) continue;
           this.set(pos, new Air(pos));
         }
       }
-      if (rightClickAction === 'solid') {
+      if (rightClickAction === 'rock') {
         for (const pos of interactPositions) {
-          if (this.get(pos) instanceof Solid) continue;
-          this.set(pos, new Solid(pos));
+          if (this.get(pos) instanceof Rock) continue;
+          this.set(pos, new Rock(pos));
         }
       }
     }
