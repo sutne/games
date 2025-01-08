@@ -30,8 +30,14 @@ export function AdjustRules(props: { toggleFullscreen: () => void }) {
     forceUpdate();
   }
 
+  function toggleLeftClickAction() {
+    rules.setLeftClickAction((prev) => (prev === 'sand' ? 'water' : 'sand'));
+  }
+
   function toggleRightClickAction() {
-    rules.setRightClickAction((prev) => (prev === 'erase' ? 'solid' : 'erase'));
+    rules.setRightClickAction((prev) =>
+      prev === 'remove' ? 'rock' : 'remove',
+    );
   }
 
   function swapCursorSize() {
@@ -65,6 +71,11 @@ export function AdjustRules(props: { toggleFullscreen: () => void }) {
             icon={<Brush />}
             label={`Brush size: ${rules.cursorSize}`}
             onClick={swapCursorSize}
+          />
+          <Button
+            icon={<Mouse />}
+            label={`left: ${rules.leftClickAction}`}
+            onClick={toggleLeftClickAction}
           />
           <Button
             icon={<Mouse />}

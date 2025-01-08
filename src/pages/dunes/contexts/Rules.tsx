@@ -1,12 +1,15 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import type { JSX, SetStateAction } from 'react';
 
-export type RightClickAction = 'solid' | 'erase';
+export type LeftClickAction = 'sand' | 'water';
+export type RightClickAction = 'rock' | 'remove';
 
 const RulesContext = createContext<
   | {
       cursorSize: number;
       setCursorSize: React.Dispatch<SetStateAction<number>>;
+      leftClickAction: LeftClickAction;
+      setLeftClickAction: React.Dispatch<SetStateAction<LeftClickAction>>;
       rightClickAction: RightClickAction;
       setRightClickAction: React.Dispatch<SetStateAction<RightClickAction>>;
       isPaused: boolean;
@@ -20,8 +23,10 @@ const RulesContext = createContext<
 >(undefined);
 export function RulesProvider(props: { children: JSX.Element }) {
   const [cursorSize, setCursorSize] = useState(13);
+  const [leftClickAction, setLeftClickAction] =
+    useState<LeftClickAction>('water');
   const [rightClickAction, setRightClickAction] =
-    useState<RightClickAction>('solid');
+    useState<RightClickAction>('rock');
   const [isPaused, setIsPaused] = useState(false);
   const [isDebugMode, setIsDebugMode] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -39,6 +44,8 @@ export function RulesProvider(props: { children: JSX.Element }) {
       value={{
         cursorSize,
         setCursorSize,
+        leftClickAction,
+        setLeftClickAction,
         rightClickAction,
         setRightClickAction,
         isPaused,

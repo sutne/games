@@ -8,7 +8,7 @@ import { randomElementNormal, randomNormal, randomSign } from '../util/random';
 
 const GRAVITY = 512; // pixels/s²
 const BOUNCE_FACTOR = 0.6; // how much energy is "preserved" when bouncing
-const FRICTION_FACTOR = 0.8; // 0=no friction
+const FRICTION_FACTOR = 4; // 0=no friction
 const MAX_COLLISION_COUNT = 16; // max collisions per element to handle in a single "update"
 
 const colors: Color[] = [
@@ -41,9 +41,9 @@ export class Sand implements DunesElement {
 
   debug(painter: PixelPainter) {
     painter.setPixel(this.position, {
-      r: 5 * Math.abs(this.velocity.dx),
-      g: 0.5 * Math.abs(this.velocity.dy),
-      b: 255 / 2,
+      r: 255 / 2,
+      g: 5 * Math.abs(this.velocity.dx),
+      b: 0.5 * Math.abs(this.velocity.dy),
     });
   }
 
@@ -85,7 +85,7 @@ function move(
 
   for (let i = 0; i < pathLength; i++) {
     const pos = newPosition.move({ dx, dy });
-    if (pos.equals(newPosition) || world.isAvailable(pos)) {
+    if (pos.equals(newPosition) || !world.isSolid(pos)) {
       newPosition = pos;
       continue;
     }
@@ -95,10 +95,10 @@ function move(
       Math.abs(pos.int_x - newPosition.int_x) === 1 &&
       Math.abs(pos.int_y - newPosition.int_y) === 1
     ) {
-      if (world.isAvailable(newPosition.offset(0, Math.sign(dy)))) {
+      if (!world.isSolid(newPosition.offset(0, Math.sign(dy)))) {
         newPosition = new Position(newPosition.x, newPosition.y + dy);
       }
-      if (world.isAvailable(newPosition.offset(Math.sign(dx), 0))) {
+      if (!world.isSolid(newPosition.offset(Math.sign(dx), 0))) {
         newPosition = new Position(newPosition.x + dx, newPosition.y);
       }
     }
@@ -122,8 +122,12 @@ function updateVelocity(
   deltaS: number,
 ): Velocity {
   const newVelocity = { ...velocity };
-  if (world.isAvailable(position.offset(0, 1))) {
+  if (!world.isSolid(position.offset(0, 1))) {
     newVelocity.dy += GRAVITY * deltaS;
+    if (!world.isAvailable(position.offset(0, 1))) {
+      newVelocity.dy = Math.max(0.2 * GRAVITY, newVelocity.dy * 0.85);
+      newVelocity.dx = newVelocity.dx * 0.9 + randomNormal(-20, 20);
+    }
   } else {
     const below = world.get(position.offset(0, 1));
     newVelocity.dy = below.velocity.dy;
@@ -133,13 +137,12 @@ function updateVelocity(
       velocity.dx !== 0 ? (Math.sign(velocity.dx) as 1 | -1) : randomSign();
     let hasFreeSide = false;
     for (const dir of [dxDirection, -1 * dxDirection]) {
-      if (world.isAvailable(position.offset(dir, 1))) {
+      if (!world.isSolid(position.offset(dir, 1))) {
         if (dyChange < 0) {
           newVelocity.dx += dir * dyChange * randomNormal(0.5, 0.9);
         }
         const diagonalVelocity = GRAVITY * deltaS;
         newVelocity.dx += dir * diagonalVelocity;
-        newVelocity.dy += diagonalVelocity;
         hasFreeSide = true;
         break;
       }
@@ -151,7 +154,7 @@ function updateVelocity(
 
   if (newVelocity.dx !== 0) {
     const dir = Math.sign(newVelocity.dx);
-    if (!world.isAvailable(position.offset(dir, 0))) {
+    if (world.isSolid(position.offset(dir, 0))) {
       newVelocity.dx *= -BOUNCE_FACTOR;
     }
   }

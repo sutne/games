@@ -12,7 +12,7 @@ const colors: Color[] = [
   { r: 59, g: 42, b: 34 },
 ];
 
-export class Solid implements DunesElement {
+export class Rock implements DunesElement {
   position: Position;
   velocity: Velocity;
   color: Color;

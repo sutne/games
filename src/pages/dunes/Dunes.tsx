@@ -9,8 +9,9 @@ import { WorldProvider } from './contexts/World';
 /** a basic canvas application where each pixel represents a pice of sand */
 export function Dunes() {
   const { isPhone } = useTheme();
-  const width = isPhone ? 256 : 512;
-  const height = isPhone ? 256 : 256;
+  const isDebug = false;
+  const width = isDebug ? 128 : isPhone ? 256 : 512;
+  const height = isDebug ? 64 : isPhone ? 256 : 256;
 
   return (
     <Stack direction='column' style={{ flexGrow: 1 }}>
