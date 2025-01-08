@@ -5,7 +5,7 @@ import { Air } from './elements/Air';
 import { Sand } from './elements/Sand';
 import { Solid } from './elements/Solid';
 import type { DunesElement } from './types/DunesElement';
-import type { Position } from './types/Position';
+import { Position } from './types/Position';
 import { initializeElements } from './util/init';
 import { getPath } from './util/paths';
 import { randomBoolean } from './util/random';
@@ -121,7 +121,7 @@ export class World {
     for (const mousePos of mousePositions) {
       for (let x = -radius; x <= radius; x++) {
         for (let y = -radius; y <= radius; y++) {
-          const pos = mousePos._offset(x, y);
+          const pos = mousePos.offset(x, y);
           if (this.isInside(pos) && pos.distance(mousePos) <= radius) {
             interactPositions.push(pos);
           }
@@ -133,7 +133,7 @@ export class World {
       for (const pos of interactPositions) {
         if (!this.isAvailable(pos)) continue;
         if (Math.random() > 1 / cursorSize) continue;
-        this.set(pos, new Sand(pos));
+        this.set(pos, new Sand(new Position(pos.int_x + 0.5, pos.int_y + 0.5)));
       }
     }
     if (button === 'right') {

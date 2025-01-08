@@ -1,14 +1,5 @@
 import type { Velocity } from './Velocity';
 
-export enum Direction {
-  UP = 0,
-  DOWN = 1,
-  LEFT = 2,
-  RIGHT = 3,
-  DOWN_LEFT = 4,
-  DOWN_RIGHT = 5,
-}
-
 export class Position {
   // actual (float) position
   readonly x: number;
@@ -25,25 +16,8 @@ export class Position {
     this.int_y = Math.floor(y);
   }
 
-  _offset(x: number, y: number): Position {
+  offset(x: number, y: number): Position {
     return new Position(this.x + x, this.y + y);
-  }
-
-  offset(direction: Direction): Position {
-    switch (direction) {
-      case Direction.UP:
-        return this._offset(0, -1);
-      case Direction.DOWN:
-        return this._offset(0, 1);
-      case Direction.LEFT:
-        return this._offset(-1, 0);
-      case Direction.RIGHT:
-        return this._offset(1, 0);
-      case Direction.DOWN_LEFT:
-        return this._offset(-1, 1);
-      case Direction.DOWN_RIGHT:
-        return this._offset(1, 1);
-    }
   }
 
   move(velocity: Velocity): Position {

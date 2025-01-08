@@ -2,7 +2,7 @@ import type { Color } from '../../../../logic/types/Color';
 import type { Position } from '../../../../logic/types/Position';
 
 export class PixelPainter {
-  context: CanvasRenderingContext2D;
+  private context: CanvasRenderingContext2D;
   private image: ImageData;
 
   constructor(

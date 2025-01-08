@@ -86,7 +86,7 @@ export function Canvas() {
 
     if (rules.isDebugMode) {
       const lines = [
-        `FPS: \t${(1 / elapsedSeconds).toFixed(0)} (${(1 / ((drawMS + updateMS) / 1000)).toFixed(0)})`,
+        `FPS: \t${(1 / elapsedSeconds).toFixed(0)} (${(1 / (Math.max(1, drawMS + updateMS) / 1000)).toFixed(0)})`,
         `draw: \t${(drawMS).toFixed(0)}ms`,
         `update:\t${(updateMS).toFixed(0)}ms`,
       ];
@@ -95,7 +95,7 @@ export function Canvas() {
         lines.push(
           `mouse(x=${mouse.position.int_x},y=${mouse.position.int_y}): ${e.constructor.name}`,
         );
-        if (!(e instanceof Air)) {
+        if (rules.isPaused && !(e instanceof Air)) {
           lines.push(
             `\tPos(x=${e.position.x.toFixed(3)},y=${e.position.y.toFixed(3)})`,
           );
@@ -142,6 +142,7 @@ export function Canvas() {
           }}
           onPointerDown={(e) => mouse.onPress(e)} // window.addEventListener('mouseup', () => mouse.onRelease());
           onPointerUp={(_) => mouse.onRelease()}
+          style={style.interactionCanvas}
         />
       </Box>
       <Box sx={style.buttonsContainer}>
@@ -182,6 +183,9 @@ export function Canvas() {
         background: 'rgba(0,0,0,0.2)',
         borderRadius: '8px',
         padding: '8px 12px 8px 12px',
+      },
+      interactionCanvas: {
+        cursor: 'crosshair',
       },
       buttonsContainer: {
         backgroundColor: 'background.paper',
