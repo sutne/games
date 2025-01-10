@@ -1,4 +1,4 @@
-import type { PixelPainter } from '../../components/WorldCanvas/Canvas/renderers/PixelPainter';
+import type { PixelPainter } from '../renderers/PixelPainter';
 import type { Color } from '../types/Color';
 import type { DunesElement } from '../types/DunesElement';
 import type { Position } from '../types/Position';

@@ -1,17 +1,16 @@
-import type { Color } from '../../../../logic/types/Color';
-import type { Position } from '../../../../logic/types/Position';
+import type { Color } from '../types/Color';
+import type { Position } from '../types/Position';
 
 export class PixelPainter {
   private context: CanvasRenderingContext2D;
   private image: ImageData;
 
-  constructor(
-    context: CanvasRenderingContext2D,
-    width: number,
-    height: number,
-  ) {
+  constructor(context: CanvasRenderingContext2D) {
     this.context = context;
-    this.image = this.context.createImageData(width, height);
+    this.image = this.context.createImageData(
+      this.context.canvas.width,
+      this.context.canvas.height,
+    );
   }
 
   setPixel(position: Position, color: Color) {
