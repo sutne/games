@@ -50,7 +50,9 @@ export function GameArea() {
     const interval = setInterval(() => {
       updateGame((old) => old.move('down'));
     }, dropTime);
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+    };
   }, [game.isStarted, game.isOver, dropTime]);
 
   const Cell = (value: string) => {

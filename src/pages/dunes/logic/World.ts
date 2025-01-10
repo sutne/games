@@ -1,9 +1,9 @@
-import type { PixelPainter } from '../components/WorldCanvas/Canvas/renderers/PixelPainter';
 import type { MouseButton } from '../contexts/Mouse';
 import type { RightClickAction } from '../contexts/Rules';
 import { Air } from './elements/Air';
 import { Sand } from './elements/Sand';
 import { Solid } from './elements/Solid';
+import type { PixelPainter } from './renderers/PixelPainter';
 import type { DunesElement } from './types/DunesElement';
 import { Position } from './types/Position';
 import { initializeElements } from './util/init';

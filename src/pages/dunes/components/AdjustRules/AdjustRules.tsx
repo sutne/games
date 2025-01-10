@@ -9,22 +9,21 @@ import {
   PlayArrow,
   RestartAlt,
 } from '@mui/icons-material';
-import { Stack, useMediaQuery } from '@mui/material';
+import { Stack } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { Button } from '../../../../components/interactive';
 import { useTheme } from '../../../../components/providers';
 import { useRules } from '../../contexts/Rules';
-import type { World } from '../../logic/World';
+import { useWorld } from '../../contexts/World';
 
 /** a basic canvas application where each pixel represents a pice of sand */
-export function AdjustRules(props: {
-  world: World;
-  toggleFullscreen: () => void;
-}) {
+export function AdjustRules(props: { toggleFullscreen: () => void }) {
+  const world = useWorld();
+  const rules = useRules();
+  const { isPhone } = useTheme();
+
   const [, updateState] = useState({});
   const forceUpdate = useCallback(() => updateState({}), []);
-
-  const rules = useRules();
 
   function togglePause() {
     rules.setIsPaused((prev) => !prev);
@@ -44,16 +43,15 @@ export function AdjustRules(props: {
   }
 
   function clearSand() {
-    props.world.clearSand();
+    world.clearSand();
     forceUpdate();
   }
 
   function reset() {
-    props.world.clear();
+    world.clear();
     forceUpdate();
   }
 
-  const isPhone = useMediaQuery(useTheme().theme.breakpoints.down('sm'));
   if (!isPhone) {
     return (
       <Stack direction='column' gap='8px'>

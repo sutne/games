@@ -18,6 +18,7 @@ const ThemeContext = React.createContext<
       theme: Theme;
       swapTheme: () => void;
       themeIsDark: boolean;
+      isPhone: boolean;
     }
   | undefined
 >(undefined);
@@ -44,6 +45,7 @@ export function ThemeProvider({ children }: props) {
     theme,
     swapTheme,
     themeIsDark: theme === darkTheme,
+    isPhone: useMediaQuery(theme.breakpoints.down('sm')),
   };
 
   return (
