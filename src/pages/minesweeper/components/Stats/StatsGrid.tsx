@@ -18,13 +18,13 @@ export function StatsGrid({ setDifficulty }: props) {
       spacing={2}
       sx={classes.container}
     >
-      <Grid item xs={12}>
+      <Grid size={12}>
         <GameStats {...{ setDifficulty }} />
       </Grid>
-      <Grid item xs={6} sm={5}>
+      <Grid size={{ xs: 6, sm: 5 }}>
         <PersonalBest />
       </Grid>
-      <Grid item xs={6} sm={7}>
+      <Grid size={{ xs: 6, sm: 7 }}>
         <Leaderboard />
       </Grid>
     </Grid>

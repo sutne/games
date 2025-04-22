@@ -48,10 +48,10 @@ export function MinesweeperStats() {
           spacing={2}
           textAlign='center'
         >
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Typography variant='h3'>{'Minesweeper'}</Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Typography>
               {"You don't have any stats for this gametype yet :("}
             </Typography>
@@ -70,10 +70,10 @@ export function MinesweeperStats() {
           spacing={2}
           textAlign='center'
         >
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Typography variant='h3'>{'Minesweeper'}</Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <CircularProgress />
           </Grid>
         </Grid>
@@ -97,7 +97,7 @@ export function MinesweeperStats() {
 
   const Stat = (title: string, value: number | string) => {
     return (
-      <Grid item xs={3}>
+      <Grid size={3}>
         <Stack>
           <Typography>{title}</Typography>
           <Typography variant='h5' fontWeight='bold'>
@@ -124,19 +124,19 @@ export function MinesweeperStats() {
     const DifficultyStats = () => {
       return (
         <Grid container columns={3}>
-          <Grid item xs={1}>
+          <Grid size={1}>
             <Stack>
               <Typography>Played</Typography>
               <Typography>{doc[difficulty].games.played}</Typography>
             </Stack>
           </Grid>
-          <Grid item xs={1}>
+          <Grid size={1}>
             <Stack>
               <Typography>Victories</Typography>
               <Typography>{doc[difficulty].games.won}</Typography>
             </Stack>
           </Grid>
-          <Grid item xs={1}>
+          <Grid size={1}>
             <Stack>
               <Typography>Win Rate</Typography>
               <Typography>{winPercentage}</Typography>
@@ -148,7 +148,7 @@ export function MinesweeperStats() {
 
     if (doc[difficulty].games.played === 0) {
       return (
-        <Grid item xs={4}>
+        <Grid size={4}>
           <TopListCard
             type='bordered'
             title={difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
@@ -163,7 +163,7 @@ export function MinesweeperStats() {
     }
 
     return (
-      <Grid item xs={4}>
+      <Grid size={4}>
         <TopListCard
           type='bordered'
           title={difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
@@ -191,10 +191,10 @@ export function MinesweeperStats() {
         spacing={2}
         textAlign='center'
       >
-        <Grid item xs={12}>
+        <Grid size={12}>
           <Typography variant='h3'>{'Minesweeper'}</Typography>
         </Grid>
-        <Grid container item xs={12}>
+        <Grid container size={12}>
           <Card type='invisible' padding='12px'>
             <Grid container columns={{ xs: 6, sm: 12 }} spacing={2}>
               {Stat('Games Played', numGamesPlayed)}
