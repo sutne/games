@@ -77,13 +77,13 @@ export function GameArea() {
   return (
     <>
       <Grid container columns={{ xs: 5, md: 12 }} spacing={2}>
-        <Grid item xs={12}>
+        <Grid size={12}>
           <Next />
         </Grid>
-        <Grid item xs={12}>
+        <Grid size={12}>
           <Typography textAlign='center'>{dropTime}</Typography>
         </Grid>
-        <Grid item xs={12}>
+        <Grid size={12}>
           <Stage />
         </Grid>
       </Grid>

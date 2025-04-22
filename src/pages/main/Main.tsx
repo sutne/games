@@ -47,17 +47,17 @@ export function Main() {
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
         {enabledGames.map((game) => (
-          <Grid item xs={4} key={game.name}>
+          <Grid size={4} key={game.name}>
             <GameCard {...game} />
           </Grid>
         ))}
-        <Grid item xs={12}>
+        <Grid size={12}>
           <Typography variant='h4' textAlign='center'>
             More games might be added in the future!
           </Typography>
         </Grid>
         {disabledGames.map((game) => (
-          <Grid item xs={4} key={game.name}>
+          <Grid size={4} key={game.name}>
             <GameCard {...game} />
           </Grid>
         ))}
