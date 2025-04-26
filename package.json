@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "start": "vite --open --host",
-    "fix": "biome check --write --unsafe --diagnostic-level=error",
-    "lint": "biome ci --diagnostic-level=error && tsc --noEmit && tsc -b",
-    "build": "tsc -b && vite build"
+    "check": "biome check --write --unsafe --diagnostic-level=error",
+    "compile": "tsc -b",
+    "build": "vite build"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
