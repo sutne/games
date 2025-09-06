@@ -1,5 +1,5 @@
 import { type Entry, updateLeaderboardList } from 'utils/lists';
-import { type Stats, firstIsBest as firstStatIsBest } from '../../logic/stats';
+import { firstIsBest as firstStatIsBest, type Stats } from '../../logic/stats';
 
 export interface LeaderboardEntry extends Entry {
   user: string;

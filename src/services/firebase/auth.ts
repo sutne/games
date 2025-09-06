@@ -1,10 +1,10 @@
 import type { FirebaseError } from 'firebase/app';
 import {
-  EmailAuthProvider,
   signInAnonymously as authSignInAnonymously,
   signOut as authSignOut,
   createUserWithEmailAndPassword,
   deleteUser,
+  EmailAuthProvider,
   getAuth,
   linkWithCredential,
   onAuthStateChanged,

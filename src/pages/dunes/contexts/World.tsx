@@ -1,4 +1,4 @@
-import { type JSX, createContext, useContext, useRef } from 'react';
+import { createContext, type JSX, useContext, useRef } from 'react';
 import { World } from '../logic/World';
 
 const WorldContext = createContext<World | undefined>(undefined);

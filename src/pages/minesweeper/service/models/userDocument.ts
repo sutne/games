@@ -1,6 +1,6 @@
 import type { Difficulty } from 'pages/minesweeper/logic/difficulty';
 import { updatePersonalBestList } from 'utils/lists';
-import { type Stats, firstIsBest } from '../../logic/stats';
+import { firstIsBest, type Stats } from '../../logic/stats';
 
 type DifficultyStats = {
   games: {

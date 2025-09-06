@@ -1,5 +1,5 @@
 import { updatePersonalBestList } from 'utils/lists';
-import { type Stats, firstIsBest } from '../../logic/stats';
+import { firstIsBest, type Stats } from '../../logic/stats';
 
 export type UserDocument = {
   totalTime: number;

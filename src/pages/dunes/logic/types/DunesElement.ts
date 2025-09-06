@@ -1,5 +1,5 @@
-import type { World } from '../World';
 import type { PixelPainter } from '../renderers/PixelPainter';
+import type { World } from '../World';
 import type { Color } from './Color';
 import type { Position } from './Position';
 import type { Velocity } from './Velocity';

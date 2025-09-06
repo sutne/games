@@ -1,10 +1,10 @@
-import type { World } from '../World';
 import type { PixelPainter } from '../renderers/PixelPainter';
 import type { Color } from '../types/Color';
 import type { DunesElement } from '../types/DunesElement';
 import { Position } from '../types/Position';
 import type { Velocity } from '../types/Velocity';
 import { randomElementNormal, randomNormal, randomSign } from '../util/random';
+import type { World } from '../World';
 
 const GRAVITY = 512; // pixels/s²
 const BOUNCE_FACTOR = 0.6; // how much energy is "preserved" when bouncing

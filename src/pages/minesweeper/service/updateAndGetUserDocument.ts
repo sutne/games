@@ -6,8 +6,8 @@ import {
 import type { Difficulty } from '../logic/difficulty';
 import type { Stats } from '../logic/stats';
 import {
-  type UserDocument,
   emptyUserDocument,
+  type UserDocument,
   updateUserDocument,
 } from './models/userDocument';
 
