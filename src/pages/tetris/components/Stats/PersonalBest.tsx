@@ -6,7 +6,7 @@ import { useAuth } from 'components/providers';
 import { SignInPrompt } from 'components/typography';
 import { useEffect, useState } from 'react';
 import { timeString } from 'utils/time';
-import { type Stats, equals, getStats } from '../../logic/stats';
+import { equals, getStats, type Stats } from '../../logic/stats';
 import { updateAndGetUserDocument } from '../../service/updateAndGetUserDocument';
 import { useGame } from '../GameProvider';
 

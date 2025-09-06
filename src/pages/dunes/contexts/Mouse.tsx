@@ -1,4 +1,4 @@
-import { type JSX, createContext, useContext, useRef } from 'react';
+import { createContext, type JSX, useContext, useRef } from 'react';
 import { Position } from '../logic/types/Position';
 
 export type MouseButton = undefined | 'left' | 'right';

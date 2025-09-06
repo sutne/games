@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
-import { useEffect, useRef, useState } from 'react';
 import type { JSX } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
 type props<T> = {
   pixels: T[][];
   PixelComponent: (val: T) => JSX.Element;

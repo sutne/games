@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material';
 import type { JSX } from 'react';
+
 type props = {
   onClick: () => void;
   children: JSX.Element | string;

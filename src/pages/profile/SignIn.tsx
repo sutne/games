@@ -1,6 +1,9 @@
 import { Stack, Typography } from '@mui/material';
-import { LoadingButton } from 'components/interactive';
-import { EmailField, PasswordField } from 'components/interactive';
+import {
+  EmailField,
+  LoadingButton,
+  PasswordField,
+} from 'components/interactive';
 import { Link } from 'components/interactive/Link';
 import { FormProvider, useAuth, useForm } from 'components/providers';
 import { toast } from 'components/toast/toast';

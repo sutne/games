@@ -1,5 +1,6 @@
 import { Button as MuiButton } from '@mui/material';
 import type { JSX } from 'react';
+
 type props = {
   onClick: () => void;
   label: string;

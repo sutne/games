@@ -1,5 +1,5 @@
-import { createContext, useContext, useEffect, useState } from 'react';
 import type { JSX, SetStateAction } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 export type LeftClickAction = 'sand' | 'water';
 export type RightClickAction = 'rock' | 'remove';

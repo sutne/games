@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import { type User, getUser, onAuthChanged } from 'services/firebase/auth';
+import React, { useEffect, useState } from 'react';
+import { getUser, onAuthChanged, type User } from 'services/firebase/auth';
 
 type props = {
   children: JSX.Element;
