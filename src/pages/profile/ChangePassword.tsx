@@ -35,11 +35,9 @@ function UpdateUserFormFields() {
     setShowValidation(false);
   }, []);
 
-  if (!user.email) return <></>;
-
   const [fields, setFields] = useState({
     oldEmail: {
-      value: user.email,
+      value: user.email ?? '',
       valid: true,
     },
     oldPassword: {
@@ -51,6 +49,8 @@ function UpdateUserFormFields() {
       valid: false,
     },
   });
+
+  if (!user.email) return <></>;
 
   const onFieldChange = (
     field: string,

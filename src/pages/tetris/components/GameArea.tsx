@@ -2,6 +2,7 @@ import { Box, Grid, Typography } from '@mui/material';
 import { Display } from 'components/games/Display';
 import { useEffect, useState } from 'react';
 import { blocks } from '../logic/blocks';
+import type { Game } from '../logic/game';
 import { previews } from '../logic/preview';
 import { useGame } from './GameProvider';
 import { StatsGrid } from './Stats/StatsGrid';
@@ -55,39 +56,37 @@ export function GameArea() {
     };
   }, [game.isStarted, game.isOver, dropTime]);
 
-  const Cell = (value: string) => {
-    return <Box sx={{ backgroundColor: blocks[value].color }} />;
-  };
-
-  const Stage = () => {
-    return <Display pixels={game.getStageWithPlayer()} PixelComponent={Cell} />;
-  };
-
-  const Next = () => {
-    const block = game.next;
-    return (
-      <Display
-        pixels={previews[block]}
-        PixelComponent={Cell}
-        maxPixelSize={24}
-      />
-    );
-  };
-
   return (
     <>
       <Grid container columns={{ xs: 5, md: 12 }} spacing={2}>
         <Grid size={12}>
-          <Next />
+          <Next game={game} />
         </Grid>
         <Grid size={12}>
           <Typography textAlign='center'>{dropTime}</Typography>
         </Grid>
         <Grid size={12}>
-          <Stage />
+          <Stage game={game} />
         </Grid>
       </Grid>
       <StatsGrid />
     </>
+  );
+}
+
+function Cell(value: string) {
+  return <Box sx={{ backgroundColor: blocks[value].color }} />;
+}
+
+function Stage(props: { game: Game }) {
+  return (
+    <Display pixels={props.game.getStageWithPlayer()} PixelComponent={Cell} />
+  );
+}
+
+function Next(props: { game: Game }) {
+  const block = props.game.next;
+  return (
+    <Display pixels={previews[block]} PixelComponent={Cell} maxPixelSize={24} />
   );
 }
