@@ -1,5 +1,4 @@
 import { Box, Divider, Stack, Typography } from '@mui/material';
-import type { JSX } from 'react';
 import { Card } from './Card';
 
 type props = {
@@ -9,7 +8,7 @@ type props = {
   highlightIndex?: number;
   highlightColor?: string | undefined;
   type?: 'bordered' | 'elevated';
-  children?: JSX.Element;
+  children?: React.ReactNode;
 };
 export function TopListCard(props: props) {
   const classes = getClasses();

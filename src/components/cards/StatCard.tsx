@@ -1,6 +1,5 @@
 import { Divider, Stack, Typography } from '@mui/material';
 import { Button } from 'components/interactive';
-import type { JSX } from 'react';
 import { Card } from './Card';
 
 type StatItem = {
@@ -8,7 +7,7 @@ type StatItem = {
   value: string;
 };
 type GameCardAction = {
-  icon: JSX.Element;
+  icon: React.ReactNode;
   description: string;
   action: () => any;
 };

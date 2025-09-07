@@ -1,4 +1,4 @@
-import { createContext, type JSX, useContext, useRef } from 'react';
+import { createContext, useContext, useRef } from 'react';
 import { Position } from '../logic/types/Position';
 
 export type MouseButton = undefined | 'left' | 'right';
@@ -42,7 +42,7 @@ export class Mouse {
 }
 
 const MouseContext = createContext<Mouse | undefined>(undefined);
-export const MouseProvider = (props: { children: JSX.Element }) => {
+export const MouseProvider = (props: { children: React.ReactNode }) => {
   const mouseRef = useRef<Mouse>(new Mouse());
   return (
     <MouseContext.Provider value={mouseRef.current}>

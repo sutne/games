@@ -1,8 +1,7 @@
 import { IconButton as MuiIconButton } from '@mui/material';
-import type { JSX } from 'react';
 
 type props = {
-  icon: JSX.Element;
+  icon: React.ReactNode;
   onClick: () => void;
 };
 export function IconButton(props: props) {

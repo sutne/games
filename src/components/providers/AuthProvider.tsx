@@ -1,9 +1,8 @@
-import type { JSX } from 'react';
 import React, { useEffect, useState } from 'react';
 import { getUser, onAuthChanged, type User } from 'services/firebase/auth';
 
 type props = {
-  children: JSX.Element;
+  children: React.ReactNode;
 };
 const AuthContext = React.createContext<{ user: User } | undefined>(undefined);
 export function AuthProvider({ children }: props) {

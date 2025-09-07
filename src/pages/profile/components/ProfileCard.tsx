@@ -1,11 +1,10 @@
 import { Box, Stack } from '@mui/material';
 import { Card } from 'components/cards/Card';
-import type { JSX } from 'react';
 
 type props = {
-  children: JSX.Element | JSX.Element[] | string;
-  header?: JSX.Element | string;
-  footer?: JSX.Element | string;
+  children: React.ReactNode;
+  header?: React.ReactNode;
+  footer?: React.ReactNode;
 };
 export function ProfileCard({ children, header, footer }: props) {
   const classes = getClasses();

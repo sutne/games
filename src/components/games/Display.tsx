@@ -1,10 +1,9 @@
 import { Box } from '@mui/material';
-import type { JSX } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
 type props<T> = {
   pixels: T[][];
-  PixelComponent: (val: T) => JSX.Element;
+  PixelComponent: (val: T) => React.ReactNode;
   maxPixelSize?: number;
   noZIndex?: boolean;
   align?: 'right' | 'left' | 'center';

@@ -1,4 +1,4 @@
-import type { JSX, SetStateAction } from 'react';
+import type { SetStateAction } from 'react';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 export type LeftClickAction = 'sand' | 'water';
@@ -21,7 +21,7 @@ const RulesContext = createContext<
     }
   | undefined
 >(undefined);
-export function RulesProvider(props: { children: JSX.Element }) {
+export function RulesProvider(props: { children: React.ReactNode }) {
   const [cursorSize, setCursorSize] = useState(13);
   const [leftClickAction, setLeftClickAction] =
     useState<LeftClickAction>('water');

@@ -1,11 +1,11 @@
-import { createContext, type JSX, useContext, useRef } from 'react';
+import { createContext, useContext, useRef } from 'react';
 import { World } from '../logic/World';
 
 const WorldContext = createContext<World | undefined>(undefined);
 export const WorldProvider = (props: {
   width: number;
   height: number;
-  children: JSX.Element;
+  children: React.ReactNode;
 }) => {
   const mouseRef = useRef<World>(new World(props.width, props.height));
   return (
