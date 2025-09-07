@@ -1,9 +1,8 @@
 import { Box } from '@mui/material';
-import type { JSX } from 'react';
 import { useEffect, useRef } from 'react';
 
 type props = {
-  children: JSX.Element | string;
+  children: React.ReactNode;
 };
 
 /** Automatically scrolls to its content on render */

@@ -1,4 +1,3 @@
-import type { JSX } from 'react';
 import React, { useState } from 'react';
 import type { Difficulty } from '../logic/difficulty';
 import { Game } from '../logic/game';
@@ -14,7 +13,7 @@ const GameContext = React.createContext<
 
 type props = {
   difficulty: Difficulty;
-  children: JSX.Element;
+  children: React.ReactNode;
 };
 export function GameProvider({ difficulty, children }: props) {
   const [game, setGame] = useState(new Game(difficulty));

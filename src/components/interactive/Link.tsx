@@ -1,9 +1,8 @@
 import { Typography } from '@mui/material';
-import type { JSX } from 'react';
 
 type props = {
   onClick: () => void;
-  children: JSX.Element | string;
+  children: React.ReactNode;
   center?: boolean;
 };
 export function Link({ onClick, children, center }: props) {

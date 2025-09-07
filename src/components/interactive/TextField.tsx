@@ -1,5 +1,4 @@
 import { InputAdornment, TextField as MuiTextField } from '@mui/material';
-import type { JSX } from 'react';
 
 type props = {
   error: boolean | undefined;
@@ -8,8 +7,8 @@ type props = {
   value: string | undefined;
   type?: string;
   onChange: (value: string) => void;
-  icon?: JSX.Element;
-  end?: JSX.Element;
+  icon?: React.ReactNode;
+  end?: React.ReactNode;
   onKeyDown?: (event: any) => void;
   disabled?: boolean;
 };

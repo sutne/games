@@ -1,8 +1,7 @@
 import { Box, Grow } from '@mui/material';
-import type { JSX } from 'react';
 
 type props = {
-  children: JSX.Element;
+  children: React.ReactNode;
   trigger?: boolean;
 };
 export function FadeIn(props: props) {

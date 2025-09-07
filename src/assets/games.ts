@@ -3,7 +3,6 @@ import minesweeperDark from 'assets/dark/minesweeper.png';
 import minesweeperLight from 'assets/light/minesweeper.png';
 import { Dunes } from 'pages/dunes/Dunes';
 import { Minesweeper } from 'pages/minesweeper/Minesweeper';
-import type { JSX } from 'react';
 
 export type GameListEntry = {
   name: string;
@@ -12,7 +11,7 @@ export type GameListEntry = {
     light: string;
     dark: string;
   };
-  element: () => JSX.Element;
+  element: () => React.ReactNode;
   isAvailable: boolean;
 };
 

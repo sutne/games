@@ -1,8 +1,7 @@
 import { Box } from '@mui/material';
-import type { JSX } from 'react';
 
 type props = {
-  children: JSX.Element | JSX.Element[] | string;
+  children: React.ReactNode;
   color?: string;
   type?: 'elevated' | 'bordered' | 'invisible';
   padding?: string;

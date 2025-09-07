@@ -3,7 +3,7 @@ import {
   type Theme,
   useMediaQuery,
 } from '@mui/material';
-import React, { type JSX, useState } from 'react';
+import React, { useState } from 'react';
 import {
   getCookiePreferences,
   setCookiePreferences,
@@ -11,7 +11,7 @@ import {
 import { darkTheme, lightTheme } from 'themes';
 
 type props = {
-  children: JSX.Element;
+  children: React.ReactNode;
 };
 const ThemeContext = React.createContext<
   | {

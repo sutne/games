@@ -1,5 +1,4 @@
 import { Button as MuiButton } from '@mui/material';
-import type { JSX } from 'react';
 
 type props = {
   onClick: () => void;
@@ -13,7 +12,7 @@ type props = {
     | 'info'
     | 'warning'
     | undefined;
-  icon?: JSX.Element;
+  icon?: React.ReactNode;
 };
 export function Button(props: props) {
   return (
