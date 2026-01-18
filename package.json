@@ -5,9 +5,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "vite --open --host",
-    "check": "biome check",
-    "fix": "biome check --write --unsafe --diagnostic-level=error",
+    "check": "biome check --write --diagnostic-level=error",
     "compile": "tsc -b",
     "build": "vite build"
   },

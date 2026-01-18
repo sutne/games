@@ -1,0 +1,16 @@
+[install-dependencies]
+    description = "Install dependencies"
+    run         = "npm install"
+
+[serve]
+    description = "Serve the app with live preview"
+    depends     = "install-dependencies"
+    run         = "npx vite --open --host"
+
+[clean]
+    description = "Remove all untracked or safe to remove files"
+    run         = "git clean -fdx -e .env"
+
+[format]
+    description = "Format all files"
+    run         = ["mise fmt", "npm run check"]
