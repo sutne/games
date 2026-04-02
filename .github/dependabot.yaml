@@ -4,6 +4,12 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    groups:
+      ci:
+        patterns:
+          - "*"
+    commit-message:
+      prefix: "ci"
 
   - package-ecosystem: "npm"
     directory: "/"
