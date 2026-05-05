@@ -28,18 +28,18 @@ export function Upgrade() {
       <ProfileCard
         header={
           <>
-            <Typography textAlign='center' paddingTop='16px'>
+            <Typography sx={{ textAlign: 'center', paddingTop: '16px' }}>
               Here you can upgrade to a non anonymous user account. This will
               keep all your personal stats and games.
             </Typography>
-            <Typography textAlign='center'>
+            <Typography sx={{ textAlign: 'center' }}>
               This will NOT retroactively put you on leaderboards, even if your
               personal best should be there.
             </Typography>
           </>
         }
         footer={
-          <Stack direction='row' spacing={2} justifyContent='center'>
+          <Stack direction='row' spacing={2} sx={{ justifyContent: 'center' }}>
             <Stack>
               <Typography>
                 Don&apos;t want to upgrade?{' '}
@@ -119,7 +119,7 @@ function CreateUserFormFields() {
         loadingLabel='Linking account'
       />
       {errorMessage && (
-        <Typography color='error' textAlign='center'>
+        <Typography color='error' sx={{ textAlign: 'center' }}>
           {errorMessage}
         </Typography>
       )}

@@ -97,7 +97,7 @@ function ChangeEmailFormFields() {
         loadingLabel='Deleting all your data'
       />
       {errorMessage && (
-        <Typography color='error' textAlign='center'>
+        <Typography color='error' sx={{ textAlign: 'center' }}>
           {errorMessage}
         </Typography>
       )}

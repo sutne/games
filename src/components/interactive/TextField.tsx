@@ -25,17 +25,19 @@ export function TextField(props: props) {
       autoComplete={props.label}
       value={props.value}
       onKeyDown={props.onKeyDown}
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position='start'>
-            {props.icon ? props.icon : <></>}
-          </InputAdornment>
-        ),
-        endAdornment: (
-          <InputAdornment position='end'>
-            {props.end ? props.end : <></>}
-          </InputAdornment>
-        ),
+      slotProps={{
+        input: {
+          startAdornment: (
+            <InputAdornment position='start'>
+              {props.icon ? props.icon : <></>}
+            </InputAdornment>
+          ),
+          endAdornment: (
+            <InputAdornment position='end'>
+              {props.end ? props.end : <></>}
+            </InputAdornment>
+          ),
+        },
       }}
     />
   );

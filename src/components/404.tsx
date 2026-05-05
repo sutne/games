@@ -6,13 +6,12 @@ export function RouteNotFound() {
     <Card>
       <Typography
         variant='h2'
-        fontWeight={700}
-        textAlign='center'
         color='game.colors.red'
+        sx={{ fontWeight: 700, textAlign: 'center' }}
       >
         404
       </Typography>
-      <Typography textAlign='center'>
+      <Typography sx={{ textAlign: 'center' }}>
         Oops, looks like you are looking for a page that doesn&apos;t currently
         exist
       </Typography>

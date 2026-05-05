@@ -60,8 +60,8 @@ export function AdjustRules(props: { toggleFullscreen: () => void }) {
 
   if (!isPhone) {
     return (
-      <Stack direction='column' gap='8px'>
-        <Stack direction='row' gap='8px'>
+      <Stack direction='column' sx={{ gap: '8px' }}>
+        <Stack direction='row' sx={{ gap: '8px' }}>
           <Button
             icon={rules.isPaused ? <PlayArrow /> : <Pause />}
             label={rules.isPaused ? 'Play' : 'Pause'}
@@ -83,7 +83,7 @@ export function AdjustRules(props: { toggleFullscreen: () => void }) {
             onClick={toggleRightClickAction}
           />
         </Stack>
-        <Stack direction='row' gap='8px'>
+        <Stack direction='row' sx={{ gap: '8px' }}>
           <Button
             icon={<BugReport />}
             label={`debug mode: ${rules.isDebugMode}`}
@@ -105,8 +105,8 @@ export function AdjustRules(props: { toggleFullscreen: () => void }) {
     );
   }
   return (
-    <Stack direction='column' gap='8px'>
-      <Stack direction='row' gap='8px'>
+    <Stack direction='column' sx={{ gap: '8px' }}>
+      <Stack direction='row' sx={{ gap: '8px' }}>
         <Button
           icon={rules.isPaused ? <PlayArrow /> : <Pause />}
           label={rules.isPaused ? 'Play' : 'Pause'}
@@ -118,7 +118,7 @@ export function AdjustRules(props: { toggleFullscreen: () => void }) {
           onClick={swapCursorSize}
         />
       </Stack>
-      <Stack direction='row' gap='8px'>
+      <Stack direction='row' sx={{ gap: '8px' }}>
         <Button
           icon={<BugReport />}
           label={`debug mode: ${rules.isDebugMode}`}

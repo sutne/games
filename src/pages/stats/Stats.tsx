@@ -8,7 +8,7 @@ export function Stats() {
 
   if (!user.isSignedIn) {
     return (
-      <Box textAlign='center'>
+      <Box sx={{ textAlign: 'center' }}>
         <PageHeader header='Stats' />
         <SignInPrompt pre='To save/view your stats you have to' />
       </Box>

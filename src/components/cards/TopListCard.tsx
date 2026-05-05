@@ -16,7 +16,7 @@ export function TopListCard(props: props) {
     throw new Error('The items need their headers');
   return (
     <Card padding='12px' type={props.type ?? 'elevated'}>
-      <Typography variant='h4' textAlign='center' sx={classes.title}>
+      <Typography variant='h4' sx={{ ...classes.title, textAlign: 'center' }}>
         {props.title}
       </Typography>
       <Divider />

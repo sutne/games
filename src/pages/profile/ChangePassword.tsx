@@ -101,7 +101,7 @@ function UpdateUserFormFields() {
         loadingLabel='Updating Password'
       />
       {errorMessage && (
-        <Typography color='error' textAlign='center'>
+        <Typography color='error' sx={{ textAlign: 'center' }}>
           {errorMessage}
         </Typography>
       )}

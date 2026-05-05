@@ -101,7 +101,7 @@ function ChangeEmailFormFields() {
         loadingLabel='Updating Email'
       />
       {errorMessage && (
-        <Typography color='error' textAlign='center'>
+        <Typography color='error' sx={{ textAlign: 'center' }}>
           {errorMessage}
         </Typography>
       )}

@@ -14,9 +14,8 @@ export function DifficultySelector({ setDifficulty }: props) {
       <Box sx={classes.container}>
         <Typography variant='h5'>Select Difficulty</Typography>
         <Stack
-          sx={classes.buttons}
+          sx={{ ...classes.buttons, textAlign: 'center' }}
           direction={{ xs: 'column', sm: 'row' }}
-          textAlign='center'
         >
           <Button onClick={() => setDifficulty('beginner')}>Beginner</Button>
           <Button onClick={() => setDifficulty('intermediate')}>
