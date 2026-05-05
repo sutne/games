@@ -24,7 +24,7 @@ export function Profile() {
       <PageHeader header={user.username ?? 'Anonymous'} />
       <ProfileCard
         header={
-          <Stack paddingTop='16px'>
+          <Stack sx={{ paddingTop: '16px' }}>
             {user.isAnonymous ? (
               <>
                 <Typography style={{ marginBottom: '8px' }}>

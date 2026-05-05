@@ -30,14 +30,14 @@ export function CreateUser() {
       <PageHeader header='Create User' />
       <ProfileCard
         header={
-          <Typography textAlign='start' paddingTop='16px'>
+          <Typography sx={{ textAlign: 'start', paddingTop: '16px' }}>
             Create a user for your played games to be saved, gain access to a
             detailed stats page for all game types, and appear on global
             leaderboards (if you manage to beat the other players).
           </Typography>
         }
         footer={
-          <Stack spacing={1} justifyContent='center'>
+          <Stack spacing={1} sx={{ justifyContent: 'center' }}>
             <Typography>
               Already have a user?{' '}
               <Link onClick={() => navigate('/profile/sign-in')}>Sign In</Link>
@@ -121,7 +121,7 @@ function CreateUserFormFields() {
         loadingLabel='Creating User'
       />
       {errorMessage && (
-        <Typography color='error' textAlign='center'>
+        <Typography color='error' sx={{ textAlign: 'center' }}>
           {errorMessage}
         </Typography>
       )}

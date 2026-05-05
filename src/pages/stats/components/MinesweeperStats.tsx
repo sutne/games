@@ -46,7 +46,7 @@ export function MinesweeperStats() {
           container
           columns={{ xs: 4, sm: 8, md: 12 }}
           spacing={2}
-          textAlign='center'
+          sx={{ textAlign: 'center' }}
         >
           <Grid size={12}>
             <Typography variant='h3'>{'Minesweeper'}</Typography>
@@ -68,7 +68,7 @@ export function MinesweeperStats() {
           container
           columns={{ xs: 4, sm: 8, md: 12 }}
           spacing={2}
-          textAlign='center'
+          sx={{ textAlign: 'center' }}
         >
           <Grid size={12}>
             <Typography variant='h3'>{'Minesweeper'}</Typography>
@@ -101,7 +101,7 @@ export function MinesweeperStats() {
         container
         columns={{ xs: 4, sm: 8, md: 12 }}
         spacing={2}
-        textAlign='center'
+        sx={{ textAlign: 'center' }}
       >
         <Grid size={12}>
           <Typography variant='h3'>{'Minesweeper'}</Typography>
@@ -133,7 +133,7 @@ function Stat(props: { title: string; value: number | string }) {
     <Grid size={3}>
       <Stack>
         <Typography>{props.title}</Typography>
-        <Typography variant='h5' fontWeight='bold'>
+        <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
           {props.value}
         </Typography>
       </Stack>

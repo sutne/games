@@ -24,7 +24,7 @@ export function Anonymous() {
       <PageHeader header='Anonymous Sign In' />
       <ProfileCard
         header={
-          <Typography textAlign='start' paddingTop='16px'>
+          <Typography sx={{ textAlign: 'start', paddingTop: '16px' }}>
             By signing in anonymously you don&apos;t have to provide any private
             details. You will be able to see and save your personal stats and
             best games. However, anonymous users will not appear on
@@ -32,7 +32,7 @@ export function Anonymous() {
           </Typography>
         }
         footer={
-          <Stack spacing={1} justifyContent='center'>
+          <Stack spacing={1} sx={{ justifyContent: 'center' }}>
             <Typography>
               Want to create a user instead?{' '}
               <Link onClick={() => navigate('/profile/create')}>
@@ -73,7 +73,7 @@ function AnonymousFormFields() {
         loadingLabel='Signing in'
       />
       {errorMessage && (
-        <Typography color='error' textAlign='center'>
+        <Typography color='error' sx={{ textAlign: 'center' }}>
           {errorMessage}
         </Typography>
       )}

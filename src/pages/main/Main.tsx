@@ -19,7 +19,7 @@ export function Main() {
       {!user.isSignedIn && (
         <Box sx={{ marginBottom: '24px' }}>
           <Card>
-            <Stack textAlign='center'>
+            <Stack sx={{ textAlign: 'center' }}>
               <Typography>
                 I highly recommend{' '}
                 <Link onClick={() => navigate('/profile/sign-in')}>
@@ -43,8 +43,8 @@ export function Main() {
       <Grid
         container
         spacing={3}
-        alignItems='stretch'
         columns={{ xs: 4, sm: 8, md: 12 }}
+        sx={{ alignItems: 'stretch' }}
       >
         {enabledGames.map((game) => (
           <Grid size={4} key={game.name}>
@@ -52,7 +52,7 @@ export function Main() {
           </Grid>
         ))}
         <Grid size={12}>
-          <Typography variant='h4' textAlign='center'>
+          <Typography variant='h4' sx={{ textAlign: 'center' }}>
             More games might be added in the future!
           </Typography>
         </Grid>

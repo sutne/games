@@ -63,7 +63,7 @@ export function GameArea() {
           <Next game={game} />
         </Grid>
         <Grid size={12}>
-          <Typography textAlign='center'>{dropTime}</Typography>
+          <Typography sx={{ textAlign: 'center' }}>{dropTime}</Typography>
         </Grid>
         <Grid size={12}>
           <Stage game={game} />

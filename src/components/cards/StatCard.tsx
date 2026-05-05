@@ -45,12 +45,14 @@ function Stats(props: { items: StatItem[]; highlight?: boolean }) {
     <Stack
       direction={{ xs: 'column', sm: 'row' }}
       divider={<Divider orientation='vertical' flexItem />}
-      justifyContent='space-evenly'
       spacing={1}
-      sx={classes.statRow}
+      sx={{ ...classes.statRow, justifyContent: 'space-evenly' }}
     >
       {props.items.map((item) => (
-        <Stack key={item.title} sx={classes.statItem} textAlign='center'>
+        <Stack
+          key={item.title}
+          sx={{ ...classes.statItem, textAlign: 'center' }}
+        >
           <Typography variant='h6' noWrap>
             {item.title}
           </Typography>

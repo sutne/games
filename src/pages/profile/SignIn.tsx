@@ -30,7 +30,7 @@ export function SignIn() {
       <PageHeader header='Sign In' />
       <ProfileCard
         footer={
-          <Stack spacing={1} justifyContent='center'>
+          <Stack spacing={1} sx={{ justifyContent: 'center' }}>
             <Typography>
               Don&apos;t have a user yet?{' '}
               <Link onClick={() => navigate('/profile/create')}>
@@ -120,7 +120,7 @@ function SignInFormFields() {
       />
       {errorMessage && (
         <>
-          <Typography color='error' textAlign='center'>
+          <Typography color='error' sx={{ textAlign: 'center' }}>
             {errorMessage}
           </Typography>
           <Link center onClick={resetPassword}>
