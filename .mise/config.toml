@@ -5,10 +5,10 @@ node = "24"
 _.file = ".env"
 
 [task_config]
-includes = [".mise/tasks/general.toml"]
+includes = [".mise/tasks/*.toml"]
 
 [settings]
 experimental = true
 
 [hooks]
-postinstall = ["mise run install-dependencies"]
+postinstall = ["npm install"]
