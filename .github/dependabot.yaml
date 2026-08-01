@@ -1,23 +1,26 @@
 version: 2
 updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "monthly"
+  - package-ecosystem: github-actions
+    directory: /
     groups:
       ci:
-        patterns:
-          - "*"
-    commit-message:
-      prefix: "ci"
-
-  - package-ecosystem: "npm"
-    directory: "/"
+        patterns: ["*"]
     schedule:
-      interval: "monthly"
+      interval: cron
+      cronjob: "0 0 1 1,7 *"
+    cooldown:
+      default-days: 7
+
+  - package-ecosystem: npm
+    directory: /
     groups:
-      dependencies:
-        patterns:
-          - "*"
-    commit-message:
-      prefix: "build"
+      npm:
+        patterns: ["*"]
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
+    schedule:
+      interval: cron
+      cronjob: "0 0 1 1,7 *"
+    cooldown:
+      default-days: 7
