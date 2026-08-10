@@ -1,0 +1,15 @@
+["lint:biome"]
+description = "Run biome linting and auto-fix errors"
+run = "npx biome check --write --diagnostic-level=error"
+
+["lint:compile"]
+description = "Compile to typecheck the project"
+run = "npx tsc -b"
+
+[lint]
+description = "Run all lint tasks"
+run = [
+    "mise fmt", 
+    "mise run lint:biome",
+    "mise run lint:compile"
+]

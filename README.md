@@ -25,9 +25,7 @@ For this purpose i set up this repo where the idea is that i can add/tweak games
 
 To setup the dev environment:
 
-1. Install [mise][mise], make sure to also:
-   - add auto-activation for your shell
-   - add autocompletion (if it wasn't done automatically)
+1. Install [mise][mise]
 2. Run `mise install`
 3. Create the file `.env` in the root of the project and add the following environment variables from the firebase console:
     ```sh
@@ -46,8 +44,6 @@ Once the dev environment is configured, serve the app with:
 ```sh
 mise serve
 ```
-
-> To show all available commands write `mise run` and hit **tab**.
 
 [on-push-main-action]: https://github.com/sutne/games/actions/workflows/on-push-main.yaml
 [on-push-main-action-badge]: https://github.com/sutne/games/actions/workflows/on-push-main.yaml/badge.svg

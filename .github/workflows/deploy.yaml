@@ -1,0 +1,36 @@
+name: deploy
+
+on:
+  workflow_call:
+
+env:
+  VITE_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY  }}
+  VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+  VITE_FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+  VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
+  VITE_FIREBASE_MESSAGE_SENDER_ID: ${{ secrets.FIREBASE_MESSAGE_SENDER_ID }}
+  VITE_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up environment
+        uses: ./.github/actions/setup-environment
+
+      - name: Build
+        run: mise run build
+
+      - name: Publish to GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v5.0.0
+        with:
+          build_dir: dist/
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
