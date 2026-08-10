@@ -2,10 +2,11 @@
 description = "Remove all untracked or safe to remove files"
 run = "git clean -fdx -e .env"
 
+[build]
+description = "Build the app for production"
+run = "npx vite build"
+
 [serve]
-description = "Serve the app with live preview"
+description = "Serve the app locally with live preview"
 run = "npx vite --open --host"
 
-[lint]
-description = "Lint all files"
-run = ["mise fmt", "npm run check", "npm run compile"]
