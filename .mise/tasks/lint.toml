@@ -1,10 +1,10 @@
 ["lint:biome"]
 description = "Run biome linting and auto-fix errors"
-run = "npx biome check --write --diagnostic-level=error"
+run = "npx --no-install biome check --write --diagnostic-level=error"
 
 ["lint:compile"]
 description = "Compile to typecheck the project"
-run = "npx tsc -b"
+run = "npx --no-install tsc -b"
 
 [lint]
 description = "Run all lint tasks"
